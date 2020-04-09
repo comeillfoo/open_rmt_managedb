@@ -1,9 +1,7 @@
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.*;
-import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.SocketChannel;
 import java.util.InputMismatchException;
@@ -50,20 +48,23 @@ public class ClientRun {
     try (
         SocketChannel suck = SocketChannel.open(new InetSocketAddress(InetAddress.getByAddress(ip), port));
         Scanner receiver = new Scanner(suck);
-        OutputStream sender = Channels.newOutputStream(suck);
+        PrintWriter sender = new PrintWriter(Channels.newOutputStream(suck), true);
     ) {
 
       System.out.print("Введите сообщение: ");
       String message = dialog.nextLine();
       // реализуем эхо
       // отправляем байты на сервер
-      sender.write(message.getBytes());
+      sender.println(message);
       // принимаем результат
       while (dialog.nextInt() != 0) {
+        dialog.nextLine();
         if (receiver.hasNextLine())
           message = receiver.nextLine();
         System.out.println(message);
-        sender.write(message.getBytes());
+        System.out.print("Введите сообщение: ");
+        message = dialog.nextLine();
+        sender.println(message);
       }
     } catch (UnknownHostException e) {
       e.printStackTrace();
@@ -73,7 +74,7 @@ public class ClientRun {
   }
 
   private static byte[] parseIP(String ip) throws InputMismatchException {
-    String[] bytes = ip.split(".");
+    String[] bytes = ip.split("\\.");
     if (bytes == null || bytes.length != 4) throw new InputMismatchException("Неправильный формат IPv4");
     else {
       byte[] result = new byte[4];

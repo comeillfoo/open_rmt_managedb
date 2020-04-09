@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.nio.channels.ServerSocketChannel;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,7 +12,7 @@ public class ServerRun {
       System.out.println("java -jar {jarname}.jar [ip] [port]");
       System.out.println("e.g. java -jar program.jar 192.168.0.1 80");
       while (ip == null) {
-        System.out.print("Введите IP сервера, к которому хотите подключиться: ");
+        System.out.print("Введите IP сервера: ");
         ip = parseIP(dialog.nextLine());
       }
       while (port == -1) {
@@ -42,33 +41,27 @@ public class ServerRun {
       }
     }
     Server hardParty = new Server(ip, port);
-    // задаем задачу сервера
-    Runnable serverTask = new Runnable() {
-      @Override
-      public void run() {
-        // устанавливаем подключение
-        try (
-            ServerSocket suck = new ServerSocket(hardParty.getPort(), 0, hardParty.getAddress());
-            Socket clientSucks = suck.accept();
-            BufferedReader receiver = new BufferedReader(new InputStreamReader(clientSucks.getInputStream()));
-            PrintWriter sender = new PrintWriter(clientSucks.getOutputStream(), true);
-        ) {
-          String message = null;
-          while (clientSucks.isConnected()) {
-            message = receiver.readLine();
-            sender.println(message);
-          }
-        } catch (UnknownHostException e) {
-          e.printStackTrace();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+    // устанавливаем подключение
+    try (
+        ServerSocket suck = new ServerSocket(hardParty.getPort(), 0, hardParty.getAddress());
+        Socket clientSucks = suck.accept();
+        BufferedReader receiver = new BufferedReader(new InputStreamReader(clientSucks.getInputStream()));
+        PrintWriter sender = new PrintWriter(clientSucks.getOutputStream(), true);
+    ) {
+      String message = null;
+      while (clientSucks.isConnected()) {
+        message = receiver.readLine();
+        System.out.println(message);
+        sender.println(message);
       }
-    };
-    new Thread(serverTask).start();
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
   private static byte[] parseIP(String ip) throws InputMismatchException {
-    String[] bytes = ip.split(".");
+    String[] bytes = ip.split("\\.");
     if (bytes == null || bytes.length != 4) throw new InputMismatchException("Неправильный формат IPv4");
     else {
       byte[] result = new byte[4];
