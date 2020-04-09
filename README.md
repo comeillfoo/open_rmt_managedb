@@ -12,7 +12,7 @@
   * Objects in collection sent to the client should be sorted by name.
   * Remove `save` command from client app.
   
-  ### Attention!
+  ## !Attention!
   `Commands and their arguments must be class objects. The exchange of "simple" lines is not allowed. So, for the add command or its analogue, it is necessary to form an object containing the type of command and the object that should be stored in your collection.`
 
   ### Server modules.
@@ -37,7 +37,6 @@
    * `exit` command should complete working of app.
    
    ### Extra task:
-   
 `Implement logging of various stages of the server (start of work, receiving a new connection, receiving a new request, sending a response, etc.) using`**`Logback`**`.`
    
     
@@ -51,7 +50,7 @@
   * Объекты между клиентом и сервером должны передаваться в сериализованном виде.
   * Объекты в коллекции, передаваемой клиенту, должны быть отсортированы по названию.
   * Команду `save` из клиентского приложения необходимо убрать.
-  ### Важно! 
+  ## !Внимание! 
   `Команды и их аргументы должны представлять из себя объекты классов. Недопустим обмен "простыми" строками. Так, для команды add или её аналога необходимо сформировать объект, содержащий тип команды и объект, который должен храниться в вашей коллекции.`
 
   ### Модули серверного приложения.
