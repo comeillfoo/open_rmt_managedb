@@ -1,14 +1,1 @@
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-public class Server {
-  private final byte[] ip;
-  private final int port;
-  public Server(byte[] ip, int port) {
-    this.ip = ip;
-    this.port = port;
-  }
-  public byte[] getIP() { return ip; }
-  public int getPort() { return port;}
-  public InetAddress getAddress() throws UnknownHostException { return InetAddress.getByAddress(getIP());}
-}
+import java.io.*;import java.net.ServerSocket;import java.net.Socket;public class Server {    private ServerSocket serverSocket;    private Socket clientSocet;    private OutputStream replayToClient; //По заданию должен быть обмен байтами, поэтому используются именно эти классы.    private InputStream clientRequest;  public Server(int port) throws IOException {    serverSocket = new ServerSocket(port);  }  public Server(Server serverToCopyFrom){      serverSocket = serverToCopyFrom.getServerSocket();  }  public void accept() throws IOException {      clientSocet = serverSocket.accept();      System.out.println("Connection has been set! \n Client ip:" + clientSocet.getInetAddress() + "\n Client port:" + clientSocet.getPort());  }    public ServerSocket getServerSocket() {        return this.serverSocket;    }    public void waitForRequest() throws IOException {      //достаем потоки по которым идет общение с клиентом.      replayToClient =clientSocet.getOutputStream();      clientRequest = clientSocet.getInputStream();      byte[] requestInBytes = new byte[32 * 1024];      clientRequest.read(requestInBytes);      System.out.println("message has recieved!:" + requestInBytes);//пока-что смотри,что наш сервак получает сообщения.      System.out.print(" " + new String(requestInBytes,"UTF-8")); //дешифруем по бырому.      replayToClient.write(requestInBytes);      replayToClient.flush();  }}
