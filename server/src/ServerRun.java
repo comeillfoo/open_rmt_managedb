@@ -2,28 +2,30 @@ import java.io.*;
 
 public class ServerRun {
 
-  public static void main(String[] args) throws IOException {
-    int port;
+    public static void main(String[] args) throws IOException {
 
-    try{
-      port = Integer.valueOf(args[0]);
-    }catch (NullPointerException |NumberFormatException |ArrayIndexOutOfBoundsException e){
-      port = 2222;
-      System.out.println("Server port has been set to default : 2222");
-    }
+        int port;
+        port = 2222;
+        System.out.println("Server port has been set to port : 2222");
 
-    Server server = new Server(port);
+        Server server = new Server(port);
+        //Стартуем
+        server.start();
 
-    //реализация многопользовательского подключения.
-    while (true){
-      //создание слепка сервера не меняя его порта для размещения его в отдельном потоке.
-      //пока не понимаю,как реализовать контроль отдельных соединений.вероятнее всего нужно хронить массив или лист потоков,к которым будут обращения.
-      Server mimickServer = new Server(server);
+        while (true){
+            server.echo();
+        }
+
+
+     /* Server mimickServer = new Server(server);
       mimickServer.accept();
+
       Thread clientThread = new Thread(() -> {
+
+
         try {
           while (true) {
-            mimickServer.waitForRequest();
+            server.waitForRequest();
           }
         } catch (IOException e) {
           System.err.println("Some err with IO");
@@ -31,6 +33,9 @@ public class ServerRun {
         }
       });
       clientThread.start();
+
+
+      */
     }
 
     /*
@@ -109,5 +114,5 @@ public class ServerRun {
       return result;
     }
      */
-  }
 }
+
