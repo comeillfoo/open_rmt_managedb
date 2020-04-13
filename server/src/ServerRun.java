@@ -15,29 +15,10 @@ public class ServerRun {
         while (true){
             server.echo();
         }
-
-
-     /* Server mimickServer = new Server(server);
-      mimickServer.accept();
-
-      Thread clientThread = new Thread(() -> {
-
-
-        try {
-          while (true) {
-            server.waitForRequest();
-          }
-        } catch (IOException e) {
-          System.err.println("Some err with IO");
-          e.printStackTrace();
-        }
-      });
-      clientThread.start();
-
-
-      */
     }
 
+    //Еще шлейф кода который стоит просмотреть,взять что нада и почистить.|
+    //Работенка не для брезгливы,но кто если не мы!!                      V
     /*
     byte[] ip = null; int port = -1;
     Scanner dialog = new Scanner(System.in);
