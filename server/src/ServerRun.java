@@ -3,7 +3,6 @@ import java.io.*;
 public class ServerRun {
 
     public static void main(String[] args) throws IOException {
-
         int port;
         port = 2222;
         System.out.println("Server port has been set to port : 2222");

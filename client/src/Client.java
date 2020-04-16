@@ -43,7 +43,7 @@ public class Client {
     }
 
     public void request(SelectionKey key) throws IOException { //возможно метод общения с сервером будет изменен.
-        byte[] bytes = new byte[32 *1024];                      //TODO:подумать над чтением команд и их серриализацией.
+        byte[] bytes = new byte[32 * 1024];                      //TODO:подумать над чтением команд и их серриализацией.
 
         ((SocketChannel) key.channel()).read(ByteBuffer.wrap(bytes));
 

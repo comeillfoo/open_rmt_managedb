@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/client/client.iml" filepath="$PROJECT_DIR$/client/client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/remoteManageDB.iml" filepath="$PROJECT_DIR$/remoteManageDB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/remoteManageDB.iml" filepath="$PROJECT_DIR$/.idea/remoteManageDB.iml" />
       <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
     </modules>
   </component>

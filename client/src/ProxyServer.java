@@ -9,20 +9,20 @@ import java.util.Set;
 public class ProxyServer {
     private Selector selector;
 
-    private final int proxyPort = 6969;  //
-    private ServerSocketChannel proxySC; //это пренадлежит прокси
+    private final int proxyPort = 6969;  // порт для прокси
+    private ServerSocketChannel proxySC; // это принадлежит прокси
 
 
     private Socket bs;               //
     private SocketChannel bsc;       //это все принажлежит клиенту
 
     private SocketChannel scToServer; //
-    private Socket sToServer;         //это пренажлежит главному серверу
+    private Socket sToServer;         //это принадлежит главному серверу
 
-    private ByteBuffer requestInBytes = ByteBuffer.allocate(32*1024); //это еще возможно понадобится
+    private ByteBuffer requestInBytes = ByteBuffer.allocate(32*1024); // это еще возможно понадобится
 
     public ProxyServer() throws IOException {
-        //TODO:прикрутить обработку неработы основного сервера и если клиент подключен к прокси-направить ему сообщение о недоступности сервера.
+        //TODO: прикрутить обработку неработы основного сервера и если клиент подключен к прокси-направить ему сообщение о недоступности сервера.
         //Инициализация запуска прокси сервера и регистрация канала его совета в селекторе
         selector = Selector.open();
         SocketAddress socketAddress = new InetSocketAddress(InetAddress.getByName("localhost"),proxyPort);
@@ -45,9 +45,7 @@ public class ProxyServer {
             Set<SelectionKey> selectedKeys = selector.selectedKeys();
             Iterator<SelectionKey> iter = selectedKeys.iterator();
             while (iter.hasNext()){
-
                 SelectionKey key = iter.next();
-
                 if(key.isAcceptable()){
                     register();
                 }
@@ -175,7 +173,6 @@ public class ProxyServer {
     public java.lang.String toString() {
         return "ProxyServer{ip:" + bs.getInetAddress().getHostAddress()+" port:" + proxyPort + "}";
     }
-
-     */
+    */
 
 }

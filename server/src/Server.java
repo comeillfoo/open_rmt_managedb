@@ -23,7 +23,6 @@ public class Server  {
         //достаем потоки по которым идет общение с клиентом.
         clientReply = clientSocket.getOutputStream();
         clientRequest = clientSocket.getInputStream();
-
     }
 
     public void echo(){ //да это же эхо (PS. сука спустя 2 дня...) (PPS. упс уже спустя 3 дня)
