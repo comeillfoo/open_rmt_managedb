@@ -13,6 +13,6 @@ public final class PartyMaker extends Resolver {
     // TODO: передать команду (Commander'у объекта TotalCommander'a) получить отчет (объект класса Report)
     // заглушка
     Report someReport = null; // полученный отчет
-    kapellmeister.notify(this, new Segment(parcel.getClient(), someReport)); // отправили господину распорядителю
+    mediator.notify(this, new Segment(parcel.getClient(), someReport)); // отправили господину распорядителю
   }
 }

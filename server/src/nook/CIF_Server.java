@@ -38,7 +38,13 @@ public final class CIF_Server extends Server {
     } catch (UnknownHostException e) {} catch (IOException e) {}
   }
   private void register(SelectableChannel readyServer, Selector alarm) throws IOException {
-    Receptionist.listen((ServerSocketChannel) readyServer).register(alarm, SelectionKey.OP_READ);
+    //добавил,чтобы опустить ошибку после разрыва подключения со стороны клиента
+    try {
+      Receptionist.listen((ServerSocketChannel) readyServer).register(alarm, SelectionKey.OP_READ);
+    }catch (NullPointerException e){
+
+    }
+
   }
   private void service(SelectableChannel channel) {
     controller.notify(this, new Segment((SocketChannel) channel, null));

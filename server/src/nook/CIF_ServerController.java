@@ -12,8 +12,8 @@ import perusal.QueryReader;
 
 import java.nio.channels.Selector;
 
+//использован патерн посредник
 public final class CIF_ServerController implements Mediator {
-  private final static int elementNumber = 4;
   // component list
   private final Server mainServer;
   private final QueryReader mainReader;

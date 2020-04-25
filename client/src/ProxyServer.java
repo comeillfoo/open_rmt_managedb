@@ -59,7 +59,7 @@ public class ProxyServer {
     private void register() throws IOException {
         bs = proxySC.socket().accept();
 
-        System.out.println("Proxy: connection with the client has been set! \n Client ip:" + bs.getInetAddress() + "\n Client port:" + bs.getPort());
+        System.out.println("Proxy: connection with the client has been set! \n Client.Client ip:" + bs.getInetAddress() + "\n Client.Client port:" + bs.getPort());
 
         bs.getChannel().configureBlocking(false);
         bs.getChannel().register(selector,SelectionKey.OP_READ);
@@ -76,7 +76,7 @@ public class ProxyServer {
                 ByteBuffer.wrap(bytes).clear();
                 return;
             }
-            System.out.println("Client request:" + new String(bytes,"UTF-8")); //просто промежуточный контроль того,что отправляется
+            System.out.println("Client.Client request:" + new String(bytes,"UTF-8")); //просто промежуточный контроль того,что отправляется
             scToServer.write(ByteBuffer.wrap(bytes));
             scToServer.configureBlocking(false);
             scToServer.register(selector,SelectionKey.OP_READ,key.channel());
@@ -136,7 +136,7 @@ public class ProxyServer {
 
         bs = serverSocketChannel.socket().accept();
 
-        System.out.println("Connection has been set! \n Client ip:" + bs.getInetAddress() + "\n Client port:" + bs.getPort());
+        System.out.println("Connection has been set! \n Client.Client ip:" + bs.getInetAddress() + "\n Client.Client port:" + bs.getPort());
 
         bsc = bs.getChannel();
         bsc.configureBlocking(false);

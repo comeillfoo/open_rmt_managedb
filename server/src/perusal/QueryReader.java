@@ -9,9 +9,9 @@ import communication.Mediator;
  * преобразующий полученные байты во внятный клиентский запрос.
  */
 public abstract class QueryReader implements Component {
-  protected final Mediator kapellmeister;
+  protected final Mediator mediator;
   public abstract void retrieve(Segment parcel);
   public QueryReader(Mediator m) {
-    kapellmeister = m;
+    mediator = m;
   }
 }

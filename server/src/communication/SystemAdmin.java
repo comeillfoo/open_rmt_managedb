@@ -37,12 +37,17 @@ public final class SystemAdmin {
    * </ol>
    */
   public void install(String hostname, int port) throws IOException {
-    ServerSocket connection = new ServerSocket();
-    connection.bind(new InetSocketAddress(InetAddress.getByName(hostname), port));
+    ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+    serverSocketChannel.bind(new InetSocketAddress(InetAddress.getByName(hostname),port));
+    //ServerSocket connection = new ServerSocket();
+    //connection.bind(new InetSocketAddress(InetAddress.getByName(hostname), port));
+
     Selector selector = Selector.open();
-    ServerSocketChannel serverSocketChannel = connection.getChannel();
+
+   // ServerSocketChannel serverSocketChannel = connection.getChannel();
     serverSocketChannel.configureBlocking(false);
     serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+
     Mediator controller = new CIF_ServerController(selector);
     myLittleBigRunt = controller.getMainServer();
   }

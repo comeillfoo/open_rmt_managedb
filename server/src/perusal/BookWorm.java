@@ -14,9 +14,10 @@ public final class BookWorm extends QueryReader {
   // methods
   @Override
   public void retrieve(Segment parcel) {
+    // TODO:IllegalBlockingModeException бросает после получения сообщения от клиента и после отключения клиента(второй случай выходит если Receptionist возвращает null)
     try(ObjectInputStream instream = new ObjectInputStream(parcel.getIntoClient())) {
       Command query = (Command) instream.readObject();
-      kapellmeister.notify(this, new Segment(parcel.getClient(), query));
+      mediator.notify(this, new Segment(parcel.getClient(), query));
     } catch (IOException e) {
       // TODO: логировать ошибку
       // TODO: отправить отчет посреднику, чтобы тот уведомил клиента (возможно, только для режима debug)

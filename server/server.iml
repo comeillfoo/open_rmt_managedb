@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library name="ch.qos.logback:logback-classic:1.2.3" type="repository">
         <properties maven-id="ch.qos.logback:logback-classic:1.2.3" />
         <CLASSES>

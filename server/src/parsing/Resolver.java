@@ -9,9 +9,9 @@ import communication.Mediator;
  * и делегирующий свою работу по обработке готовым классам.
  */
 public abstract class Resolver implements Component {
-  protected final Mediator kapellmeister;
+  protected final Mediator mediator;
   public abstract void parse(Segment parcel);
   public Resolver(Mediator m) {
-    kapellmeister = m;
+    mediator = m;
   }
 }
