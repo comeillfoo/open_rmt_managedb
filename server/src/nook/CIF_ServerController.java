@@ -5,7 +5,7 @@ import communication.Mediator;
 import communication.Segment;
 import dispatching.AliExpress;
 import dispatching.Dispatcher;
-import parsing.PartyMaker;
+import parsing.SubProcessController;
 import parsing.Resolver;
 import perusal.BookWorm;
 import perusal.QueryReader;
@@ -30,10 +30,9 @@ public final class CIF_ServerController implements Mediator {
   public CIF_ServerController(Selector selector) {
     mainServer = new CIF_Server(this, selector);
     mainReader = new BookWorm(this);
-    mainParser = new PartyMaker(this);
+    mainParser = new SubProcessController(this);
     mainDispatcher = new AliExpress(this);
   }
   // properties and methods
-  @Override
   public Server getMainServer() { return mainServer; }
 }

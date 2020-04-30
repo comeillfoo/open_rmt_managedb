@@ -14,6 +14,11 @@ import entities.Mappable;
  *   <li>Давать информацию об элементах, прошедших проверку</li>
  *   <li>Опустошать коллекцию</li>
  * </ol>
+ * Остальные развращающие методы типа replace легко реализуются посредством
+ * уже существующего функционала и создания лишь дополнительной обертки не требует.
+ * Хотя ясно, что производительность от этого пострадает, однако автор данной архитектуры
+ * очень ценит такие моменты, когда из говна и палок можно собрать тоже говно,
+ * но уже с расширенным функционалом.
  * @author Leargy aka Anton Sushkevich
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @param <K> тип используемого в коллекции ключа
@@ -29,28 +34,28 @@ public interface Receiver<K, V extends Mappable<K>> {
   String review();
 
   /**
-   *
-   * @param key
-   * @param element
-   * @param menace
+   * Обший метод для добавления элемента в коллекцию
+   * @param key ключ элемента, на который пишется элемент
+   * @param value записываемый элемент
+   * @param menace признак, по которому данный элемент должен добавится
    */
-  void add(K key, V element, Indicator menace);
+  void add(K key, V value, Indicator menace);
 
   /**
-   *
-   * @param key
-   * @param element
-   * @param menace
+   * Общий метод удаления элемента из коллекции
+   * @param key ключ, по которому происходит удаление
+   * @param value удаляемый элемент
+   * @param menace признак того, нужно ли удалять данный элемент
    */
-  void remove(K key, V element, Indicator menace);
+  void remove(K key, V value, Indicator menace);
 
   /**
-   *
-   * @param key
-   * @param element
-   * @param menace
+   * Общий метод поиска элемента
+   * @param key ключ, по которому ищется элемент
+   * @param value элемент, который мы ищем
+   * @param menace признак того, нужен ли нам данный элемент
    */
-  void search(K key, V element, Indicator menace);
+  void search(K key, V value, Indicator menace);
 
   /**
    * Делаем обзор на коллекцию, фильтруя базар

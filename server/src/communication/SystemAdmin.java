@@ -6,7 +6,6 @@ import nook.Server;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -48,7 +47,7 @@ public final class SystemAdmin {
     serverSocketChannel.configureBlocking(false);
     serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
-    Mediator controller = new CIF_ServerController(selector);
+    CIF_ServerController controller = new CIF_ServerController(selector);
     myLittleBigRunt = controller.getMainServer();
   }
 

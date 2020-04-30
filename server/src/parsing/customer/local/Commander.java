@@ -1,11 +1,9 @@
-package parsing.customer;
+package parsing.customer.local;
 
 import entities.Mappable;
+import logging.customer.ReceiverLogger;
+import parsing.customer.Receiver;
 import parsing.customer.bootstrapper.LoaferLoader;
-import parsing.customer.bootstrapper.NakedCrateLoader;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +18,12 @@ import java.util.Map;
  * @see LoaferLoader
  */
 public abstract class Commander<K, V extends Mappable<K>> implements Receiver<K, V> {
-  protected final Map<K, V> elements = new HashMap<>(); // хранимое отображение
+  protected final Map<K, V> database = new HashMap<>(); // хранимое отображение
   protected String creationDate = ZonedDateTime.now().toString(); // дата создания
-  protected LoaferLoader<V> breadLoader; // буханка-загрузчик xml-коллекций
+  protected final LoaferLoader<V> breadLoader; // буханка-загрузчик xml-коллекций
+  protected final ReceiverLogger whistleblower; // ссылка на логгер
+  public Commander(LoaferLoader<V> loader, ReceiverLogger logger) {
+    breadLoader = loader;
+    whistleblower = logger;
+  }
 }
