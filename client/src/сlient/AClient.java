@@ -1,4 +1,4 @@
-package Client;
+package сlient;
 
 import communication.Mediating;
 

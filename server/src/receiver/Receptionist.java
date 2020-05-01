@@ -6,7 +6,7 @@ import java.nio.channels.SocketChannel;
 
 public final class Receptionist {
   public static SocketChannel listen(ServerSocketChannel listener) throws IOException {
-    SocketChannel connectedClient = listener.accept(); // TODO: после резкого отключения клиента connectedClient принимает значение null
+    SocketChannel connectedClient = listener.accept();
     //добавил чтобы избежать написание второго try
     if (connectedClient ==null) {
       System.err.println("Connection interrupted");

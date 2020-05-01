@@ -7,6 +7,8 @@ import java.nio.channels.SocketChannel;
 
 /**
  * Класс, объект которого используются для перемещения информации между модулями
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
  */
 //возможно логичнее было бы освободить этот класс от socketChannel и отправлять объекты этого класса,чтобы не плодить лишний класс.
 public class Segment {

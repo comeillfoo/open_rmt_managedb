@@ -254,7 +254,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
           } else {
             replacemant = "name=\"unknown" +j/2+"\"";
           }
-          System.out.printf("Replasing empty values: %s , to defolt: %s! ", dictinary[i],replacemant);
+          System.out.printf("Replacing empty values: %s , to defolt: %s! ", dictinary[i],replacemant);
           System.out.println();
           degradedXML[j] = replacemant;
         }

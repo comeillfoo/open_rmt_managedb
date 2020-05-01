@@ -1,12 +1,14 @@
 package dispatching.validate;
 
+import communication.Mediating;
 import communication.Segment;
 
 /**
  * Основной класс для создания новых обработчиков
  */
-public class DataHandler implements Handler{
-    private Handler nextHandler;
+public abstract class DataHandler implements Handler {
+    protected Handler nextHandler;
+    protected Mediating mediator;
 
     @Override
     public void setNext(Handler handler) {

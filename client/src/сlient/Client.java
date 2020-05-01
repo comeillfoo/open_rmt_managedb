@@ -1,23 +1,23 @@
-package Client;
+package сlient;
 
 import communication.Component;
 import communication.Mediating;
 import communication.Segment;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
+ */
 public class Client extends AClient implements Component, Runnable {
     private SocketChannel socketChannel;
     private Selector selector;
@@ -34,7 +34,7 @@ public class Client extends AClient implements Component, Runnable {
             while (!socketChannel.finishConnect()){
                 System.out.println("Waiting for connection...");
             }
-            System.out.println("Connection is set.");
+            System.out.println("───────Connection is set───────");
 
             socketChannel.register(selector,SelectionKey.OP_READ|SelectionKey.OP_WRITE);
             return true;
@@ -46,21 +46,26 @@ public class Client extends AClient implements Component, Runnable {
     }
 
     public void run() {
-        while (socketChannel.isConnected()){
+        while (socketChannel.isConnected()) {
             try {
+                Thread.sleep(500);
                 if (selector.selectNow() == 0) continue;
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
             Set<SelectionKey> selectedKeys = selector.selectedKeys();
             Iterator<SelectionKey> iter = selectedKeys.iterator();
-            while (iter.hasNext()){
+            while (iter.hasNext()) {
                 SelectionKey key = iter.next();
-                if(key.isReadable()){
+                if (key.isReadable()) {
 
                 }
-                if(key.isWritable()){
-                    mediator.notify(this,new Segment((SocketChannel) key.channel(),null));
+                if (key.isWritable()) {
+                    try {
+                        mediator.notify(this, new Segment((SocketChannel) key.channel(), null));
+                    }catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 iter.remove();
             }

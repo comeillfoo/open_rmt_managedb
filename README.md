@@ -3,11 +3,11 @@
   But now the collection is kept on the remote server, and client work with it by connection by `TCP` protocol.
 
 ## TT (En)
-  * Client.Client app should use ***SocketChannel*** as data exchange sistem.
+  * сlient.сlient app should use ***SocketChannel*** as data exchange sistem.
   * Server app should use ***IOStream*** as data exchange sistem.
   * Network channels should be used in ***non-blocking*** mode
   * Object processing operations should be done with ***Stream API*** with lambda expression.
-  * Client.Client must correctly handle the temporary unavailability of the server.
+  * сlient.сlient must correctly handle the temporary unavailability of the server.
   * Objects should be sent to server in serialized form.
   * Objects in collection sent to the client should be sorted by name.
   * Remove `save` command from client app.
@@ -28,7 +28,7 @@
    * Waiting for client connections and requests.
    * Handling clients requests.
    * Saving collections into file when app stopped or with the special command available only on server(client can't send this command).
-   ### Client.Client responsibilities:
+   ### сlient.сlient responsibilities:
    * Reading comands from console.
    * Data validation.
    * Command and arguments serrialisation.
