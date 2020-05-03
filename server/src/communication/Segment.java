@@ -1,5 +1,7 @@
 package communication;
 
+import parsing.instructions.Command;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -13,7 +15,7 @@ import java.nio.channels.SocketChannel;
  *   ATTENTION: в ходе работы сервера реальный тип данных может кардинально меняться:
  *   начиная от просто команды, заканчивая отчетами о выполненных работах.
  * </strong>
- * @see parsing.interaction.instructions.Command
+ * @see Command
  * @see Report
  */
 public class Segment {

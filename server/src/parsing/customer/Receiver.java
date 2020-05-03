@@ -2,6 +2,9 @@ package parsing.customer;
 
 import entities.Mappable;
 
+import java.util.Map;
+import java.util.function.Function;
+
 /**
  * Часть паттерна "Команда", классы которого реализуют
  * всю бизнес-логику обработки коллекции.
@@ -68,4 +71,9 @@ public interface Receiver<K, V extends Mappable<K>> {
    * Убирать за собой - тоже нужно уметь
    */
   void clear();
+
+  /**
+   *
+   */
+  <R> Map<K, R> getBy(Function<V, R> keyExtractor);
 }

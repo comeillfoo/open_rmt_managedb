@@ -7,7 +7,7 @@ import logging.customer.B_4D4_GE3;
 import logging.customer.HawkPDroid;
 import parsing.customer.bootstrapper.NakedCrateLoader;
 import parsing.customer.distro.ShedBlock;
-import parsing.interaction.instructions.Command;
+import parsing.instructions.Command;
 
 /**
  * Контроллер, исполнения запросов клиента.

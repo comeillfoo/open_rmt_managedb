@@ -1,9 +1,6 @@
-package parsing.interaction.instructions;
+package parsing.instructions;
 
 import communication.Report;
-
-import java.io.Serializable;
-
 /**
  * Интерфейс комманды для паттерна &lt;Command&gt;. Может содержать поля, как
  * собственные параметры. Является функциональным по случайности, однако, возможно, внесет некоторые удобства при расширении.
@@ -11,10 +8,9 @@ import java.io.Serializable;
  * @author Leargy aka Anton Sushkevich
  */
 @FunctionalInterface
-public interface Command extends Serializable {
+public interface Command {
   /**
    * Общий метод исполнения для всех исполняемых комманд
-   * @return отчет об успешности исполнении команды
    */
   Report execute();
 }

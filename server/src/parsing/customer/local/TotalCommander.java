@@ -6,7 +6,9 @@ import parsing.customer.Indicator;
 import parsing.customer.Receiver;
 import parsing.customer.bootstrapper.LoaferLoader;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Конкретный пацан в паттерне. Оперирует организациями, как

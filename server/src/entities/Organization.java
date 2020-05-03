@@ -1,13 +1,13 @@
 package entities;
 
-public class Organization implements Mappable<Integer> {
+public final class Organization implements Mappable<Integer> {
 
   /**
    *
    * @return
    */
   @Override
-  public Integer Key() {
+  public final Integer Key() {
     return null;
   }
   /**
@@ -15,7 +15,7 @@ public class Organization implements Mappable<Integer> {
    * @return
    */
   @Override
-  public String Name() {
+  public final String Name() {
     return null;
   }
 }

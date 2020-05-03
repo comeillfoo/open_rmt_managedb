@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @XmlRootElement(name = "organizations")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Organizations {
+public final class Organizations {
   @XmlElement(name = "organization")
   private List<Organization> companies;
 
@@ -51,5 +51,5 @@ public class Organizations {
    * написан лишь, чтобы корректно работала библиотека JAXB
    * @return List&lt;Organization&gt; ссылка на список организаций
    */
-  public List<Organization> getCompanies() { return companies; }
+  public final List<Organization> getCompanies() { return companies; }
 }

@@ -7,6 +7,7 @@ import parsing.customer.bootstrapper.LoaferLoader;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Управленец коллекцией только уже с данными
@@ -25,5 +26,30 @@ public abstract class Commander<K, V extends Mappable<K>> implements Receiver<K,
   public Commander(LoaferLoader<V> loader, ReceiverLogger logger) {
     breadLoader = loader;
     whistleblower = logger;
+  }
+
+  /**
+   * Метод для получения отображения из ключей
+   * исходной базы и значениями полей элементов данный базы.
+   * Заметно должно упрощать реализацию комманд по типу
+   * поиска максимального/минимального поля. Суммы по
+   * различным полям, и сравнения этих полей.
+   * @param keyExtractor передаваемый геттер
+   */
+  @Override
+  public <R> Map<K, R> getBy(Function<V, R> keyExtractor) {
+    // буферная коллекция - результат
+    Map<K, R> buffer = new HashMap<>();
+    // заполнение этой this very буферной коллекции
+    database
+        .entrySet() // формируем множество из пар ключ-значений
+        .stream() // создание стрима из этого
+        .forEach((Map.Entry<K, V> enter)->
+        {
+          // проходимся по каждому вхождению и кладем в коллекцию
+          buffer.put(enter.getKey(), keyExtractor.apply(enter.getValue()));
+        });
+    // вернуть эту коллекцию
+    return buffer;
   }
 }

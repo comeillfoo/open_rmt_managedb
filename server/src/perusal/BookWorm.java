@@ -1,18 +1,12 @@
 package perusal;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import communication.Segment;
 import communication.Mediator;
-import parsing.interaction.instructions.Command;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
-import java.util.stream.Stream;
 
 public final class BookWorm extends QueryReader {
   // fields

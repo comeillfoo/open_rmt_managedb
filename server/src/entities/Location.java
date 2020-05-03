@@ -1,4 +1,4 @@
 package entities;
 
-public class Location {
+public final class Location {
 }

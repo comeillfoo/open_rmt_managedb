@@ -1,4 +1,4 @@
 package entities;
 
-public class Coordinates {
+public final class Coordinates {
 }

@@ -1,4 +1,4 @@
 package entities;
 
-public class Address {
+public final class Address {
 }
