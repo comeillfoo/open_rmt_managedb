@@ -19,7 +19,7 @@ import java.util.function.Function;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public class MaxBy<K, V extends Mappable<K>, R extends Comparable<R>> extends ConDecree {
+public class MaxBy<K, V extends Mappable<K>, R extends Comparable<? super R>> extends ConDecree {
   protected final Function<? super V,? extends R> keySearcher;
   /**
    * Конструктор, устанавливающий ссылку на
@@ -27,7 +27,7 @@ public class MaxBy<K, V extends Mappable<K>, R extends Comparable<R>> extends Co
    * устанавливает геттер, которым мы берем поле
    * @param sieve текущий управленец коллекцией
    */
-  public MaxBy(Receiver sieve, Function field) {
+  public MaxBy(Receiver<K, V> sieve, Function<V, R> field) {
     super(sieve);
     keySearcher = field;
   }

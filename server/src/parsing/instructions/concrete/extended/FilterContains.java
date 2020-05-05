@@ -12,24 +12,34 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- *
+ * Обобщенная команда, отфильтровывающая информацию
+ * о каждом элементе коллекции по нужному полю,
+ * равному утсановленному пользователем
+ * @param <K> ключ элементов коллекции
+ * @param <V> тип элементов колллекции
+ * @param <R> тип поле, по которому происходит фильтрование
  */
 public class FilterContains<K, V extends Mappable<K>, R> extends ConDecree {
   protected final Function<? super V, ? extends R> fertilizer;
   protected final R filtered;
   /**
-   *
-   * @param sieve
-   * @param field
+   * Обычный конструктор, связывающий
+   * команду с исполнителем и геттером,
+   * которым достаем ЗНАЧЕНИЕ поля.
+   * @param sieve ссылка на ресивер
+   * @param filter поле, которое ищем
+   * @param field функция, достающая значение
    */
-  public FilterContains(Receiver sieve, R filter, Function field) {
+  public FilterContains(Receiver<K, V> sieve, R filter, Function<V, R> field) {
     super(sieve);
     fertilizer = field;
     filtered = filter;
   }
 
   /**
-   *
+   * Метод исполняющий команду, реализованный
+   * из общего интерфейса комманд
+   * @return результат исполнения команды
    */
   @Override
   public Report execute() {

@@ -11,7 +11,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
+ *
  * Команда, находящая сумму по указанному полю
+ * @param <K> ключи элементов коллекции
+ * @param <V> тип элементов коллекции
+ * @param <R> тип поля, по которому суммируем
  */
 public class SumOfAnnual<K, V extends Mappable<K>, R extends Number> extends ConDecree {
   protected final Function<? super V,? extends R> keySummator;
@@ -29,6 +33,7 @@ public class SumOfAnnual<K, V extends Mappable<K>, R extends Number> extends Con
   /**
    * Метод, что исполняет данную команду, т.е.
    * находит сумму полей элементов коллекции
+   * @return результат работы команды
    */
   @Override
   public Report execute() {

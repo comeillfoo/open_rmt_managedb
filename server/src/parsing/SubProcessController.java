@@ -8,6 +8,7 @@ import logging.customer.HawkPDroid;
 import parsing.customer.bootstrapper.NakedCrateLoader;
 import parsing.customer.distro.ShedBlock;
 import parsing.instructions.Command;
+import parsing.plants.OrganizationBuilder;
 
 /**
  * Контроллер, исполнения запросов клиента.
@@ -19,9 +20,14 @@ import parsing.instructions.Command;
 public final class SubProcessController extends Resolver {
   public SubProcessController(Mediator m) {
     super(m);
+    // определяем логгер
     radioman = new B_4D4_GE3(this);
     // TODO: получить название переменной окружения от системного администратора
+    // определяем управленца коллекцией
     fate = new ShedBlock(new NakedCrateLoader(null), radioman);
+    // определяем вызывателя комманд
+    kael = null;
+    plant = new OrganizationBuilder();
   }
   /**
    * Единственный метод, отправляющий команды на исполнение
