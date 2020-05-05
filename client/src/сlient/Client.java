@@ -5,14 +5,13 @@ import communication.Mediating;
 import communication.Segment;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Come_1LL_F00 aka Lenar Khannanov
@@ -37,8 +36,12 @@ public class Client extends AClient implements Component, Runnable {
             System.out.println("───────Connection is set───────");
 
             socketChannel.register(selector,SelectionKey.OP_READ|SelectionKey.OP_WRITE);
+
             return true;
         } catch (UnknownHostException e) {
+            return false;
+        } catch (SocketException e){
+            System.err.println("──w─> <Server connection is lost> <─w──");
             return false;
         } catch (IOException e) {
             return false;
@@ -48,24 +51,23 @@ public class Client extends AClient implements Component, Runnable {
     public void run() {
         while (socketChannel.isConnected()) {
             try {
-                Thread.sleep(500);
                 if (selector.selectNow() == 0) continue;
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             Set<SelectionKey> selectedKeys = selector.selectedKeys();
             Iterator<SelectionKey> iter = selectedKeys.iterator();
             while (iter.hasNext()) {
                 SelectionKey key = iter.next();
+                try {
                 if (key.isReadable()) {
-
+                    mediator.notify(this, new Segment((SocketChannel) key.channel(),new String[0]));
                 }
                 if (key.isWritable()) {
-                    try {
-                        mediator.notify(this, new Segment((SocketChannel) key.channel(), null));
-                    }catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    mediator.notify(this, new Segment((SocketChannel) key.channel(), null));
+                }
+                }catch (IOException e) {
+                    e.printStackTrace();
                 }
                 iter.remove();
             }

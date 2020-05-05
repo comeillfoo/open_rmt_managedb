@@ -4,6 +4,11 @@ import communication.Component;
 import communication.Segment;
 import communication.Mediator;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 /**
  * Шаблон модуля чтения запросов от клиента,
  * преобразующий полученные байты во внятный клиентский запрос.

@@ -1,5 +1,6 @@
 package dispatching;
 
+import com.sun.org.apache.xpath.internal.operations.String;
 import communication.Mediating;
 import communication.Segment;
 import dataSection.CommandList;
@@ -16,6 +17,7 @@ public class Dispatcher extends ADispatcher {
     private CommandList commandList = new CommandList();
     private ByteArrayOutputStream byteArrayOutputStream;
     private ObjectOutputStream objectOutputStream;
+
     public Dispatcher(Mediating mediator) {
         this.mediator = mediator;
         //Инициализируем цепочку проверок.
@@ -28,11 +30,10 @@ public class Dispatcher extends ADispatcher {
 
     public void giveOrder(Segment parcel) throws IOException {
         if (parcel.getStringData()[0].equals("exit")) {
-            parcel.getSocketChannel().socket().shutdownInput();
-            parcel.getSocketChannel().socket().shutdownOutput();
             parcel.getSocketChannel().socket().getChannel().finishConnect();
             System.exit(0);
         }
+
 
         if(dataHandler.handle(parcel)) {
             try {
@@ -42,11 +43,6 @@ public class Dispatcher extends ADispatcher {
                 System.err.println("Какая-то ошибка отправки");
             }
         }else {
-            try {
-                Thread.sleep(50);
-            }catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             System.out.println("Для большей информации про каманды используйте команду \"help\".");
         }
 
@@ -57,16 +53,14 @@ public class Dispatcher extends ADispatcher {
         byteArrayOutputStream = new ByteArrayOutputStream();
         objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         objectOutputStream.writeObject(parcel.getDataObject());
+        objectOutputStream.flush();
         System.out.println(byteArrayOutputStream.toByteArray().length);
         try {
             parcel.getSocketChannel().write(ByteBuffer.wrap(byteArrayOutputStream.toByteArray()));
         }catch (IOException e) {
-            System.err.println("───────Server connection is lost───────");
+            System.err.println("─────Server connection is interrupted─────");
             mediator.notify(this,null);
-        }finally {
-            objectOutputStream.flush();
         }
-
         // TODO: Обработка разрыва подключения
     }
 }

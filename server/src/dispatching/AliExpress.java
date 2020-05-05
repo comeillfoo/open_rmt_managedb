@@ -3,13 +3,19 @@ package dispatching;
 import communication.Segment;
 import communication.Mediator;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.nio.ByteBuffer;
 
 public final class AliExpress extends Dispatcher {
+  private  ByteArrayOutputStream byteArrayOutputStream;
+  private ObjectOutputStream sitcomInator;
   public void sendCorona(Segment postcard) {
-    try (ObjectOutputStream sitcomInator = new ObjectOutputStream(postcard.getOutClient())) {
+    byteArrayOutputStream = new ByteArrayOutputStream();
+    try {
+      sitcomInator = new ObjectOutputStream(byteArrayOutputStream);
       sitcomInator.writeObject(postcard.getData());
+      sitcomInator.flush();
+      postcard.getClient().write(ByteBuffer.wrap(byteArrayOutputStream.toByteArray()));
     } catch (IOException e) { System.err.println("Occurred some shit in your file system or io streams"); }
   }
 

@@ -23,8 +23,12 @@ public final class CIF_ServerController implements Mediator {
   @Override
   public void notify(Component sender, Segment parcel) {
     if (sender == mainServer) mainReader.retrieve(parcel);
-    if (sender == mainReader) mainParser.parse(parcel);
-    else if (sender == mainParser) mainDispatcher.sendCorona(parcel);
+    if (sender == mainReader && parcel.getData() != null) {
+      mainParser.parse(parcel);
+    }else {
+      mainServer.closeConnection(parcel);
+    }
+    if (sender == mainParser) mainDispatcher.sendCorona(parcel);
   }
   // builders
   public CIF_ServerController(Selector selector) {

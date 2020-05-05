@@ -29,7 +29,7 @@ public class Segment {
   }
   // properties and methods
   public Serializable getData() { return data; }
-  public InputStream getIntoClient() throws IOException { return client.socket().getInputStream(); }
-  public OutputStream getOutClient() throws IOException { return client.socket().getOutputStream(); }
+  //public InputStream getIntoClient() throws IOException { return client.socket().getInputStream(); }
+  //public OutputStream getOutClient() throws IOException { return client.socket().getOutputStream(); }
   public SocketChannel getClient() { return client; }
 }

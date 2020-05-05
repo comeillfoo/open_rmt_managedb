@@ -3,8 +3,11 @@ package nook;
 import communication.Mediator;
 import communication.Segment;
 import receiver.Receptionist;
+import sun.nio.ch.ChannelInputStream;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
@@ -12,6 +15,7 @@ import java.nio.channels.*;
 import java.security.Key;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.zip.InflaterInputStream;
 
 public final class CIF_Server extends Server {
   private boolean isServerRun;
@@ -27,15 +31,13 @@ public final class CIF_Server extends Server {
       isServerRun = true;
       while (isServerRun) {
 
-        Thread.sleep(500);//искуственно замедляем цикл
-        
         int readyChannels = selector.selectNow();
         if (readyChannels == 0) continue;
         Set<SelectionKey> keys = selector.selectedKeys();
         Iterator<SelectionKey> keyIterator = keys.iterator();
         while (keyIterator.hasNext()) {
           SelectionKey readyKey = keyIterator.next();
-          if(!readyKey.isValid()){
+          if (!readyKey.isValid()) {
             continue;
           }
           // если к серверу пытается кто-то подключиться, то подключаем
@@ -46,34 +48,27 @@ public final class CIF_Server extends Server {
           keyIterator.remove();
         }
       }
-    } catch (InterruptedException e) {e.printStackTrace();}
-    catch (UnknownHostException e) {e.printStackTrace();}
+    }catch (UnknownHostException e) {e.printStackTrace();}
     catch (IOException e) {e.printStackTrace();}
   }
   private void register(SelectionKey readyKey, Selector alarm) throws IOException {
-    //добавил,чтобы опустить ошибку после разрыва подключения со стороны клиента
+    //добавил,чтобы опустить ошибку после разрыва подключения со стороны клиента (А такая тут и не выпадет P.S Leargy)
     try {
-      Receptionist.listen((ServerSocketChannel) readyKey.channel()).register(alarm, SelectionKey.OP_READ|SelectionKey.OP_WRITE|SelectionKey.OP_CONNECT);
+      Receptionist.listen((ServerSocketChannel) readyKey.channel()).register(alarm, SelectionKey.OP_READ);
     }catch (NullPointerException e){
-
+      System.err.println("<connection interrupted>");
     }
 
   }
   private void service(SelectionKey readyKey) throws IOException {
-//   if (closeConnect(readyKey)){
-//     return;
-//   }
-    controller.notify(this, new Segment((SocketChannel) readyKey.channel(), null));
+    Segment segment = new Segment((SocketChannel) readyKey.channel(), null);
+    controller.notify(this, segment);
   }
 
-//  private boolean closeConnect(SelectionKey tempKey) throws IOException {
-//    ByteBuffer byteBuffer =ByteBuffer.allocate(1024);
-//    SocketChannel tempChannel = ((SocketChannel) tempKey.channel());
-//    if(tempChannel.read(byteBuffer) == -1) {
-//      tempChannel.finishConnect();
-//      tempChannel.socket().close();
-//      return true;
-//    }
-//    return false;
-//  }
+  @Override
+  public void closeConnection(Segment parcel){
+    try {
+      parcel.getClient().socket().close(); //close client's Socket to remove key from selector
+    }catch (IOException e) {}
+  }
 }

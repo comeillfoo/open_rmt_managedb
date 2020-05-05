@@ -1,6 +1,7 @@
 package communication;
 
 import dispatching.ADispatcher;
+import receiver.AReceiver;
 import сlient.Client;
 import сlient.Servant;
 import dispatching.Dispatcher;
@@ -16,13 +17,13 @@ import java.io.IOException;
  */
 public class Mediator implements Mediating {
     private Client client;
-    private Receiver receiver;
+    private AReceiver receiver;
     private ADispatcher dispatcher;
     private AServant servant;
 
-    public Mediator(){
+    public Mediator() {
         client = new Client(this);
-        receiver = new Receiver();
+        receiver = new Receiver(this);
         dispatcher = new Dispatcher(this);
         servant = new Servant(this);
     }
@@ -35,10 +36,16 @@ public class Mediator implements Mediating {
     public Client getClient() {
         return client;
     }
+
     @Override
     public void notify(Component component, Segment parcel) throws IOException {
         if(component == servant) dispatcher.giveOrder(parcel);
         if(component == dispatcher && parcel == null) servant.resetConnection();
-        if(component == client && parcel.getStringData() == null) servant.order(parcel);
+        if(component == client && parcel.getStringData() == null) {
+            servant.order(parcel);
+        }else {
+            receiver.receive(parcel);
+        }
+        if(component == receiver) servant.notification(parcel);
     }
 }

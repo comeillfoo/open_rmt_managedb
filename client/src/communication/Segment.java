@@ -1,7 +1,5 @@
 package communication;
 
-import dataSection.DataToServer;
-
 import java.io.Serializable;
 import java.nio.channels.SocketChannel;
 
@@ -28,7 +26,7 @@ public class Segment {
         this.stringData = stringData;
     }
 
-    public Serializable getDataObject() { return new DataToServer(stringData, dataObject); }
+    public Serializable getDataObject() { return new ClientPackage(stringData, dataObject); }
     public SocketChannel getSocketChannel() { return this.socketChannel; }
     public String[] getStringData() {
         return stringData;

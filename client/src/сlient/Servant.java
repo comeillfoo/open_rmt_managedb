@@ -1,5 +1,6 @@
 package сlient;
 
+import communication.ClientPackage;
 import communication.Mediating;
 import communication.Segment;
 
@@ -12,7 +13,6 @@ import java.io.IOException;
  *  @author Leargy aka Anton Sushkevich
  */
 public class Servant extends AServant {
-
     public Servant(Mediating mediator) {
         super(mediator);
     }
@@ -23,22 +23,6 @@ public class Servant extends AServant {
         if (resetConnection()) {
             new Thread(client).start();
             return true;
-            //making thread to fell asleep to reach correct sequences of System.out and System.err
-//            try {
-//                Thread.sleep(50);
-//                System.out.println("Retry connection [y/n]?");
-//                String answer = "";
-//                while (true){
-//                    answer = debrief();
-//                    if (answer.equals("y")) break;
-//                    else if(answer.equals("n")) System.exit(0);
-//                    else continue;
-//                }
-//                //resetting the connection
-//                setConnection();
-//            }catch (InterruptedException e) {
-//                System.err.println("Вот и прервались!");
-//            }
         }
         return false;
     }
@@ -47,8 +31,8 @@ public class Servant extends AServant {
     public boolean resetConnection() {
         while (true){
             if (client.connect("localhost", 0xdead))break;
-            System.err.println("Server is closed!");
-            System.out.println("Retry connection [y/n]?");
+            pipeOut.println("Server is closed!");
+            pipeOut.println("Retry connection [y/n]?");
                 String answer = "";
                 while (true){
                     answer = debrief();
@@ -77,17 +61,21 @@ public class Servant extends AServant {
     public String debrief() {
         String orderData = "";
         while (true) {
-            System.out.print(">");
-            try {
-                orderData = scanner.nextLine();
-            }catch (IndexOutOfBoundsException e) {
-                System.err.println("Сука, блять!");
+            pipeOut.print(">");
+            orderData = scanner.nextLine();
+            if (orderData.equals("")) {
+                continue;
+            }
+            else {
                 break;
             }
-            if (orderData.equals("")) {continue;}
-            else {break;}
         }
         return orderData;
     }
-
+    @Override
+    public void notification(Segment parcel) {
+        pipeOut.printf("Server: %f" +((ClientPackage)parcel.getDataObject()).getReport());
+        pipeOut.printf("Server Error report:%f" + ((ClientPackage)parcel.getDataObject()).getErroReport());
+        //TODO: make good notifications
+    }
 }
