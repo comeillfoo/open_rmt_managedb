@@ -1,5 +1,7 @@
 package parsing.supplying;
 
+import parsing.instructions.concrete.ConDecree;
+
 /**
  * Интерфейс Invoker — часть паттерна "Команда", который
  * отвечает за вызов всех доступных команд по имени;
@@ -8,5 +10,17 @@ package parsing.supplying;
  * @author Leargy aka Anton Sushkevich
  */
 public interface Invoker {
-  void signup(String commandName);
+  /**
+   * Метод записи комманды в
+   * список обслуживаемых комманд
+   * @param commandName название команды
+   */
+  void signup(ConDecree command);
+  // TODO: возможно придется добавить еще параметры
+  
+  /**
+   * Метод вызова команды
+   * @param command присланная команда
+   */
+  void invoke(ConDecree command);
 }

@@ -11,5 +11,6 @@ import parsing.Resolver;
  */
 public abstract class HawkPDroid implements ReceiverLogger, Component {
   protected final Resolver magiV; // ссылка на SSPC
-  protected HawkPDroid(Resolver m) { magiV = m; }
+  // SubSystem Process Controller
+  protected HawkPDroid(Resolver controller) { magiV = controller; }
 }

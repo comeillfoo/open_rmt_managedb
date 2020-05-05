@@ -9,9 +9,9 @@ package parsing.instructions;
  */
 public abstract class Decree implements Command {
   // every command must have information about itself [name, syntax, brief description, argument number, has arguments]
-  protected static final String NAME = "debug";
-  protected static final String BRIEF = "enables developer mode";
-  protected static final String SYNTAX = "debug";
-  protected static final int ARGNUM = 0;
+  public static final String NAME = "debug";
+  public static final String BRIEF = "enables developer mode";
+  public static final String SYNTAX = "debug";
+  public static final int ARGNUM = 0;
   public static boolean isArgumented() { return ARGNUM > 0; }
 }

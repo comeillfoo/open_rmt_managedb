@@ -6,7 +6,8 @@ import communication.Mediator;
 import logging.customer.HawkPDroid;
 import parsing.customer.distro.LimboKeeper;
 import parsing.plants.Factory;
-import parsing.supplying.Invoker;
+import parsing.plants.InstructionBuilder;
+import parsing.supplying.FondleEmulator;
 
 /**
  * Шаблон класса модуля, вытаскивающего пользовательский запрос
@@ -15,9 +16,10 @@ import parsing.supplying.Invoker;
 public abstract class Resolver implements Mediator, Component {
   protected final Mediator mediator; // контроллер модуля
   protected HawkPDroid radioman; // логгер
-  protected LimboKeeper fate; // сетевой ресивер
-  protected Invoker kael; // сутенер комманд
+  protected FondleEmulator kael; // сутенер комманд
+  protected LimboKeeper fate; // сутенер коллекции
+  protected InstructionBuilder wizard; // фабрика вызываемых комманд
   protected Factory plant; // фабрика элементов коллекции
   public abstract void parse(Segment parcel);
-  public Resolver(Mediator m) { mediator = m; }
+  public Resolver(Mediator controller) { mediator = controller; }
 }
