@@ -7,6 +7,9 @@ import parsing.customer.Receiver;
 import parsing.customer.bootstrapper.LoaferLoader;
 import parsing.customer.local.TotalCommander;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Прокаченный {@link TotalCommander}, предназначенный для работы по сети,
  * а именно с контроллером исполнения запросов.

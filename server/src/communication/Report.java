@@ -19,8 +19,19 @@ public final class Report implements Serializable {
   // builders
   public Report(int errorCode, String message) {
     this.errorCode = errorCode;
-    this.message = message;
+    this.message = (message == null)? "" : message;
   }
   // properties and methods
+  /**
+   * Свойство, определяющее успешность
+   * выполнения операции
+   * @return успешно/неуспешно
+   */
   public boolean isSuccessful() { return errorCode == 0; }
+
+  /**
+   * Метод взятия сообщения
+   * @return строка с сообщением
+   */
+  public String account() { return message; }
 }

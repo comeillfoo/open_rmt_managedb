@@ -13,7 +13,7 @@ import parsing.instructions.Decree;
  * @see Decree
  * @see Command
  */
-public abstract class ConDecree extends Decree {
+public abstract class ConDecree extends Decree implements Command {
   // ссылка на текущий контроллер коллекции
   protected final Receiver sieve;
 

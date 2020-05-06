@@ -34,6 +34,6 @@ public final class LilyInvoker extends FondleEmulator {
    */
   @Override
   public void invoke(ConDecree command) {
-
+    // TODO: написать реализацию
   }
 }

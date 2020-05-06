@@ -1,6 +1,6 @@
 package parsing.supplying;
 
-import parsing.instructions.Command;
+import parsing.instructions.concrete.ConDecree;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @see Invoker
  */
 public abstract class Prompter implements Invoker {
-  protected final Map<String, Command> availableCommands; // доступные к вызову команды
+  protected final Map<String, ConDecree> availableCommands; // доступные к вызову команды
 
   /**
    * Конструктор устанавливащий

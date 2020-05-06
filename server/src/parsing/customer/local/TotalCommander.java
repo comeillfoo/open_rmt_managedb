@@ -6,7 +6,9 @@ import parsing.customer.Indicator;
 import parsing.customer.Receiver;
 import parsing.customer.bootstrapper.LoaferLoader;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -159,6 +161,16 @@ public class TotalCommander extends Commander<Integer, Organization> {
         // возврат ключа наверх
         peacher().notify(null, null); // TODO: дать ответочку за ключик золотой
       } else peacher().notify(null, null); // TODO: пояснить за то, что данного элемента нет
+    } else if ((key == null) && (value == null)) {
+      // ищем ключ первого элемента, удовлетворяющего признаку
+      Integer buffer_key =
+          database
+          .entrySet()
+          .stream()
+          .filter((enter)->(menace.verify(enter.getValue())))
+          .findFirst().get().getKey();
+      // возвращаем ключ
+      key = buffer_key;
     } else peacher().logboard(null, null); // TODO: дергаем логгер и жалуемся, что нас неправильно вызвали
   }
 
@@ -201,5 +213,24 @@ public class TotalCommander extends Commander<Integer, Organization> {
    */
   protected ReceiverLogger peacher() {
     return whistleblower;
+  }
+
+  /**
+   * Метод сохранения текущего
+   * состояния коллекции
+   */
+  @Override
+  public final void save() {
+    List<Organization> result = new ArrayList<>();
+    database
+        .entrySet()
+        .stream()
+        .forEach(
+            (enter)->
+            {
+              result.add(enter.getValue());
+            });
+    breadLoader.unload(result);
+    peacher().notify(0, "Коллекция успешно сохранена");
   }
 }

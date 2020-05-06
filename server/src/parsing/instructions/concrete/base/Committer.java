@@ -6,6 +6,11 @@ import parsing.instructions.concrete.ConDecree;
 
 /**
  * Абстракция всех комманд, добавляющих что-то в коллекцию
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
+ * @see ConDecree
+ * @see parsing.instructions.Decree
+ * @see parsing.instructions.Command
  */
 public abstract class Committer extends ConDecree {
   protected final Organization embedded;
