@@ -1,5 +1,7 @@
 package communication;
 
+import dataSection.enumSection.Markers;
+import entities.Junker;
 import instructions.rotten.RawDecree;
 
 import java.nio.channels.SocketChannel;
@@ -13,26 +15,26 @@ import java.nio.channels.SocketChannel;
 public class Segment {
     private String[] stringData;
     private RawDecree commandData;
-    private communication.ClientPackage clientPackage;
-    private Junker organizationData;
+    private ClientPackage clientPackage;
     private SocketChannel socketChannel;
     private Markers marker;
 
-    public Segment(Markers marker){ this.marker = marker; }
-    public Segment(SocketChannel socketChannel, Markers marker){ this(marker); this.socketChannel = socketChannel;}
+    public Segment(Markers marker) { this.marker = marker; }
+    public Segment(SocketChannel socketChannel, Markers marker) {
+        this(marker);
+        this.socketChannel = socketChannel;
+    }
 
     public void setMarker(Markers marker) { this.marker = marker; }
-    public Markers getMarker() { return marker; }
-
-    public void setCommandData(RawDecree commandData) { this.commandData = commandData; }
     public void setStringData(final String[] stringData) { this.stringData = stringData; }
-
-    public void setClientPackage(communication.ClientPackage clientPackage) { this.clientPackage = clientPackage; }
+    public void setCommandData(RawDecree commandData) { this.commandData = commandData; }
+    public void setClientPackage(ClientPackage clientPackage) { this.clientPackage = clientPackage; }
 
     public SocketChannel getSocketChannel() { return this.socketChannel; }
+    public ClientPackage getClientPackage() { return clientPackage; }
+    public RawDecree getCommandData() { return commandData; }
     public String[] getStringData() { return stringData; }
-    public RawDecree getCommandData() { return commandData;}
-    public communication.ClientPackage getClientPackage() { return clientPackage;}
+    public Markers getMarker() { return marker; }
 
-    public communication.ClientPackage prepareDataObject() { return new ClientPackage(commandData,organizationData,stringData[0]);}
+    public communication.ClientPackage prepareDataObject() { return new ClientPackage(commandData); }
 }

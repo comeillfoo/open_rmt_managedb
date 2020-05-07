@@ -1,5 +1,6 @@
 package communication;
 
+import dataSection.enumSection.Markers;
 import dispatching.ADispatcher;
 import dispatching.validators.DataHandler;
 import receiver.AReceiver;

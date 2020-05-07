@@ -1,18 +1,22 @@
 package instructions.rotten.extended;
 
 import instructions.rotten.IClued;
-import instructions.rotten.RawDecree;
+import instructions.rotten.RawCommiter;
 
-public class RawRemoveKey extends RawDecree implements IClued<Integer> {
-  protected final Integer key;
+public class RawRemoveKey extends RawCommiter implements IClued<Integer> {
+    public static final String NAME = "remove_key";
+    public static final String BRIEF = "Удаляет элемент по [key].";
+    public static final String SYNTAX = NAME + " [key]";
+    public static final int ARGNUM = 1;
+    private Integer key;
 
-  public RawRemoveKey(Integer key) { this.key = key; }
+    @Override
+    public Integer Key() {
+        return key;
+    }
 
-  @Override
-  public Integer Key() { return key; }
-
-  public static final String NAME = "remove_key";
-  public static final String BRIEF = "Удаляет элемент по [key].";
-  public static final String SYNTAX = NAME + " [key]";
-  public static final int ARGNUM = 2;
+    public RawRemoveKey setKey(Integer key) {
+        this.key = key;
+        return this;
+    }
 }

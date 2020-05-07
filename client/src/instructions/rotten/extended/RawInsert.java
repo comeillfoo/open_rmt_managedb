@@ -1,8 +1,8 @@
 package instructions.rotten.extended;
 
-import communication.Junker;
+import entities.Junker;
+import entities.IJunked;
 import instructions.rotten.IClued;
-import instructions.rotten.IJunked;
 import instructions.rotten.RawCommiter;
 
 public class RawInsert extends RawCommiter implements IClued<Integer>, IJunked<Junker> {

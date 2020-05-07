@@ -15,7 +15,8 @@ public final class Receptionist {
     //просто оповещение о подключении
     System.out.println("Connection is set" +
             "\nclient ip:" + connectedClient.socket().getInetAddress().getHostAddress() +
-            "\nclient port:" + connectedClient.socket().getPort());
+            "\nclient port:" + connectedClient.socket().getPort() +
+            "\n____________________");
 
     connectedClient.configureBlocking(false);
     return connectedClient;

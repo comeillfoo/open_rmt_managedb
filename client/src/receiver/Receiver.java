@@ -1,7 +1,7 @@
 package receiver;
 
 import communication.ClientPackage;
-import communication.Markers;
+import dataSection.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
 

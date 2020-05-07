@@ -1,7 +1,6 @@
 package instructions.rotten.extended;
 
 import instructions.rotten.RawCommiter;
-import instructions.rotten.RawDecree;
 import instructions.rotten.IClued;
 
 public class RawRemoveKey extends RawCommiter implements IClued<Integer> {

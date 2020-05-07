@@ -1,4 +1,4 @@
-package communication;
+package entities;
 
 import java.io.Serializable;
 
@@ -28,7 +28,6 @@ public final class Junker implements Serializable {
         this.guts = guts;
     }
     // get-properties
-
     /**
      * Свойство получения массива под составных параметров
      * @return массив подпараметров

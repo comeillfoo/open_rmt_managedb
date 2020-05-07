@@ -3,7 +3,7 @@ package dispatching.validators;
 import communication.Mediating;
 import communication.Segment;
 import exceptions.CommandSyntaxException;
-import dataSection.Cook;
+import entities.Cook;
 import instructions.rotten.RawDecree;
 
 /**

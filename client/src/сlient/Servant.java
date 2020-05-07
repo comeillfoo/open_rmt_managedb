@@ -1,7 +1,7 @@
 package сlient;
 
 import communication.ClientPackage;
-import communication.Markers;
+import dataSection.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
 
@@ -35,6 +35,9 @@ public class Servant extends AServant {
     @Override
     public boolean resetConnection() throws IOException {
         while (true){
+            try{
+                client.killSocket();
+            }catch (NullPointerException e) {}
             if (client.connect("localhost", 0xdead)) break;
                 String answer = "";
                 while (true){

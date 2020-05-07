@@ -1,13 +1,12 @@
 package сlient;
 
 import communication.Component;
-import communication.Markers;
+import dataSection.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
 
 import java.io.IOException;
 import java.net.*;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -40,11 +39,13 @@ public class Client extends AClient implements Component, Runnable {
 
             return true;
         } catch (UnknownHostException e) {
+            e.printStackTrace();
             return false;
         } catch (SocketException e){
             System.err.println("──w─> <Connection is lost> <─w──");
             return false;
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
     }

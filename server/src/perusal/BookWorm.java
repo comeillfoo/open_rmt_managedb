@@ -31,6 +31,7 @@ public final class BookWorm extends QueryReader {
       ClientPackage query = (ClientPackage) objectInputStream.readObject();
       mediator.notify(this, new Segment(parcel.getClient(), (Serializable) query));
     }catch (IOException e) {
+
       mediator.notify(this, parcel); //This class got nothing, we lost.
       // TODO: логировать ошибку
       // TODO: отправить отчет посреднику, чтобы тот уведомил клиента (возможно, только для режима debug)

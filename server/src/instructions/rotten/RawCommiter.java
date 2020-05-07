@@ -3,7 +3,8 @@ package instructions.rotten;
 
 import entities.Junker;
 import instructions.Command;
-import instructions.Decree;
+
+import java.io.Serializable;
 
 /**
  * Сырая абстракция всех комманд, добавляющих что-то в коллекцию.
@@ -11,11 +12,11 @@ import instructions.Decree;
  * добавляемого объекта.
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
- * @see instructions.rotten.RawDecree
+ * @see RawDecree
  * @see Decree
  * @see Command
  */
-public abstract class RawCommiter extends RawDecree {
+public abstract class RawCommiter extends RawDecree implements Serializable {
     protected Junker junker;
     /**
      * Конструктор, устанавливающий параметры

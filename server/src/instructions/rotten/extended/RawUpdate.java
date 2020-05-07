@@ -2,20 +2,27 @@ package instructions.rotten.extended;
 
 import entities.Junker;
 import instructions.rotten.IClued;
+import entities.IJunked;
 import instructions.rotten.RawCommiter;
 
-public class RawUpdate extends RawCommiter implements IClued<Integer> {
-  protected final Integer id;
-  /**
-   * Конструктор, устанавливающий параметры
-   * добавляемого объекта
-   *
-   * @param parameters инкапсуляция параметров объекта
-   */
-  protected RawUpdate(Integer id, Junker parameters) {
-    this.id = id;
-  }
+public class RawUpdate extends RawCommiter implements IClued<Integer>, IJunked<Junker> {
+    public final static String NAME = "update";
+    public static final String BRIEF = "Заменяет объект коллекции,соответствующий id, на новый, составленный пользователем,";
+    public static final String SYNTAX = "update [id] {element}";
+    public static final int ARGNUM = 0;
+    private Integer id;
+    private Junker junker;
 
-  @Override
-  public Integer Key() { return id; }
+    public RawUpdate setKey(Integer key) {
+        this.id = id;
+        return this;
+    }
+    @Override
+    public Integer Key() { return id; }
+    @Override
+    public Junker getData() { return junker;}
+    public RawUpdate setData(Junker attachedData) {
+        junker = attachedData;
+        return this;
+    }
 }

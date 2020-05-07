@@ -1,6 +1,6 @@
 package dispatching;
 
-import communication.Markers;
+import dataSection.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
 import dataSection.CommandList;

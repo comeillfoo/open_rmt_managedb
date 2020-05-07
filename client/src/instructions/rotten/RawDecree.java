@@ -4,7 +4,6 @@ import instructions.Command;
 import instructions.Decree;
 
 import java.io.Serializable;
-
 /**
  * Класс так называемых "сырых" комманд. Приходят от клиента,
  * не содержат готовых объектов, а лищь набор параметров.

@@ -5,6 +5,7 @@ import communication.Segment;
 import receiver.Receptionist;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.channels.*;
 import java.util.Iterator;
@@ -23,7 +24,6 @@ public final class CIF_Server extends Server {
     try {
       isServerRun = true;
       while (isServerRun) {
-
         int readyChannels = selector.selectNow();
         if (readyChannels == 0) continue;
         Set<SelectionKey> keys = selector.selectedKeys();
@@ -61,7 +61,12 @@ public final class CIF_Server extends Server {
   @Override
   public void closeConnection(Segment parcel){
     try {
-      parcel.getClient().socket().close(); //close client's Socket to remove key from selector
+      Socket client = parcel.getClient().socket();
+      System.out.println("Client disconnect" +
+              "\nclient ip:" + client.getInetAddress().getHostAddress() +
+              "\nclient port:" + client.getPort() +
+              "\n____________________");
+      client.close(); //close client's Socket to remove key from selector
     }catch (IOException e) {}
   }
 }

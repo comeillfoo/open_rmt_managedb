@@ -1,8 +1,8 @@
 package instructions.rotten.extended;
 
 import entities.Junker;
-import entities.IJunked;
 import instructions.rotten.IClued;
+import entities.IJunked;
 import instructions.rotten.RawCommiter;
 
 public class RawReplaceIfLower extends RawCommiter implements IClued<Integer>, IJunked<Junker> {
