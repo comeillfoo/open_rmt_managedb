@@ -1,13 +1,14 @@
 package parsing;
 
+import communication.ClientPackage;
 import communication.Component;
 import communication.Mediator;
 import communication.Segment;
+import instructions.rotten.RawDecree;
 import logging.customer.B_4D4_GE3;
 import logging.customer.HawkPDroid;
 import parsing.customer.bootstrapper.NakedCrateLoader;
 import parsing.customer.distro.ShedBlock;
-import parsing.instructions.Command;
 import parsing.plants.InstructionBuilder;
 import parsing.plants.OrganizationBuilder;
 import parsing.supplying.LilyInvoker;
@@ -20,6 +21,7 @@ import parsing.supplying.LilyInvoker;
  * @author Come_1LL_F00 aka Lenar Khannanov
  */
 public final class SubProcessController extends Resolver {
+  private RawDecree command;
   public SubProcessController(Mediator m) {
     super(m);
     // определяем логгер
@@ -40,7 +42,8 @@ public final class SubProcessController extends Resolver {
    */
   @Override
   public void parse(Segment parcel) {
-    Command command = (Command) parcel.getData();
+    RawDecree command = (RawDecree)((ClientPackage) parcel.getData()).getCommand();
+    System.out.println(command);
     // TODO: передать команду (Commander'у объекта TotalCommander'a) получить отчет (объект класса Report)
     notify(this, null);
     // возможно придется добавить компонент, который в 5 лабе был для клиента

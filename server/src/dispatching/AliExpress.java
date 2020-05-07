@@ -1,7 +1,7 @@
 package dispatching;
 
-import communication.Segment;
 import communication.Mediator;
+import communication.Segment;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -9,6 +9,7 @@ import java.nio.ByteBuffer;
 public final class AliExpress extends Dispatcher {
   private  ByteArrayOutputStream byteArrayOutputStream;
   private ObjectOutputStream sitcomInator;
+  @Override
   public void sendCorona(Segment postcard) {
     byteArrayOutputStream = new ByteArrayOutputStream();
     try {
@@ -20,4 +21,5 @@ public final class AliExpress extends Dispatcher {
   }
 
   public AliExpress(Mediator m) { super(m); }
+
 }

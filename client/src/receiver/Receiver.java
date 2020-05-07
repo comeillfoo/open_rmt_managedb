@@ -1,6 +1,7 @@
 package receiver;
 
 import communication.ClientPackage;
+import communication.Markers;
 import communication.Mediating;
 import communication.Segment;
 
@@ -28,15 +29,22 @@ public class Receiver extends AReceiver{
      * @param parcel
      */
     @Override
-    public void receive(Segment parcel) {
+    public void receive(Segment parcel) throws IOException {
+        byteBuffer.clear();
         try {
+            if(parcel.getSocketChannel().read(byteBuffer) == -1) {
+                throw new IOException();
+            }
+            byteBuffer.flip();
             byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
             objectInputStream = new ObjectInputStream(byteArrayInputStream);
             ClientPackage query = (ClientPackage) objectInputStream.readObject();
-            parcel.setDataObject(query);
+            parcel.setClientPackage(query);
             mediator.notify(this,parcel);
         }catch (IOException e) {
-            e.printStackTrace();
+            parcel.setMarker(Markers.INTERRUPTED);
+            System.err.println("─────Connection interrupted─────");
+            mediator.notify(this,parcel);
             //TODO:write an handling to this type of error
         }catch (ClassNotFoundException e) {
             e.printStackTrace();

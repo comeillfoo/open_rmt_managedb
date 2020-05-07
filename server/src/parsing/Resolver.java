@@ -1,8 +1,9 @@
 package parsing;
 
+
 import communication.Component;
-import communication.Segment;
 import communication.Mediator;
+import communication.Segment;
 import logging.customer.HawkPDroid;
 import parsing.customer.distro.LimboKeeper;
 import parsing.plants.Factory;

@@ -1,17 +1,13 @@
 package perusal;
 
-import communication.ClientPackage;
-import communication.Segment;
-import communication.Mediator;
 
-import java.io.IOException;
+import communication.ClientPackage;
+import communication.Mediator;
+import communication.Segment;
+
 import java.io.*;
-import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.nio.channels.Channel;
-import java.nio.channels.IllegalBlockingModeException;
 import java.nio.channels.SocketChannel;
-import java.util.Arrays;
 
 public final class BookWorm extends QueryReader {
   // fields
@@ -26,19 +22,32 @@ public final class BookWorm extends QueryReader {
     byteBuffer.clear();
     SocketChannel tempChannel = parcel.getClient();
     try {
-      tempChannel.read(byteBuffer);
+      if (tempChannel.read(byteBuffer) == -1) {
+        throw new IOException();
+      }
       byteBuffer.flip();
       byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
       objectInputStream = new ObjectInputStream(byteArrayInputStream);
       ClientPackage query = (ClientPackage) objectInputStream.readObject();
       mediator.notify(this, new Segment(parcel.getClient(), (Serializable) query));
-    } catch ( IOException e) {
-      mediator.notify(this,parcel); //This class got nothing, we lost.
+    }catch (IOException e) {
+      mediator.notify(this, parcel); //This class got nothing, we lost.
       // TODO: логировать ошибку
       // TODO: отправить отчет посреднику, чтобы тот уведомил клиента (возможно, только для режима debug)
     } catch (ClassNotFoundException e) {
+      new ClassNotFoundException("Wrong server casting received package.", e).getMessage();
       // TODO: логировать ошибку
       // TODO: отправить отчет посреднику, чтобы тот уведомил клиента (возможно, только для режима debug)
+//    }catch (InvalidClassException e) {
+//      new InvalidClassException("Server don't have an example of command in received package.",e.getMessage()).getMessage();
+//    }
+    }finally {
+      try {
+        byteArrayInputStream.close();
+        objectInputStream.close();
+      }catch (IOException |NullPointerException e) {
+        System.err.println("Ты как сюда добрался? O.O");
+      }
     }
   }
 }

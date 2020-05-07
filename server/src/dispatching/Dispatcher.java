@@ -1,8 +1,9 @@
 package dispatching;
 
+
 import communication.Component;
-import communication.Segment;
 import communication.Mediator;
+import communication.Segment;
 
 /**
  * Шаблон модуля отправки результатов клиенту

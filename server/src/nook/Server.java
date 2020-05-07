@@ -4,8 +4,6 @@ import communication.Component;
 import communication.Mediator;
 import communication.Segment;
 
-import java.io.IOException;
-
 /**
  * Шаблон очень-очень абстрактного сервера, связанного с контроллером
  */

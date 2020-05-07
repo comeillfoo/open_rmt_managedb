@@ -1,7 +1,7 @@
 package nook;
 
-import communication.Component;
 import communication.Mediator;
+import communication.Component;
 import communication.Segment;
 import dispatching.AliExpress;
 import dispatching.Dispatcher;
@@ -23,11 +23,8 @@ public final class CIF_ServerController implements Mediator {
   @Override
   public void notify(Component sender, Segment parcel) {
     if (sender == mainServer) mainReader.retrieve(parcel);
-    if (sender == mainReader && parcel.getData() != null) {
-      mainParser.parse(parcel);
-    }else {
-      mainServer.closeConnection(parcel);
-    }
+    if (sender == mainReader && parcel.getData() != null) mainParser.parse(parcel);
+    if (sender == mainReader && parcel.getData() == null) mainServer.closeConnection(parcel);
     if (sender == mainParser) mainDispatcher.sendCorona(parcel);
   }
   // builders
@@ -39,4 +36,5 @@ public final class CIF_ServerController implements Mediator {
   }
   // properties and methods
   public Server getMainServer() { return mainServer; }
+
 }

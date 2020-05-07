@@ -1,6 +1,7 @@
 package communication;
 
-import java.io.Serializable;
+import instructions.rotten.RawDecree;
+
 import java.nio.channels.SocketChannel;
 
 /**
@@ -11,24 +12,27 @@ import java.nio.channels.SocketChannel;
 //возможно логичнее было бы освободить этот класс от socketChannel и отправлять объекты этого класса,чтобы не плодить лишний класс.
 public class Segment {
     private String[] stringData;
-    private Serializable dataObject;
+    private RawDecree commandData;
+    private communication.ClientPackage clientPackage;
+    private Junker organizationData;
     private SocketChannel socketChannel;
+    private Markers marker;
 
-    public Segment(String[] stringData){
-        this.stringData = stringData;
-    }
-    public Segment(SocketChannel socketChannel,String[] stringData){ this(stringData); this.socketChannel = socketChannel;}
+    public Segment(Markers marker){ this.marker = marker; }
+    public Segment(SocketChannel socketChannel, Markers marker){ this(marker); this.socketChannel = socketChannel;}
 
-    public void setDataObject(final Serializable dataObject) {
-        this.dataObject = dataObject;
-    }
-    public void setStringData(final String[] stringData) {
-        this.stringData = stringData;
-    }
+    public void setMarker(Markers marker) { this.marker = marker; }
+    public Markers getMarker() { return marker; }
 
-    public Serializable getDataObject() { return new ClientPackage(stringData, dataObject); }
+    public void setCommandData(RawDecree commandData) { this.commandData = commandData; }
+    public void setStringData(final String[] stringData) { this.stringData = stringData; }
+
+    public void setClientPackage(communication.ClientPackage clientPackage) { this.clientPackage = clientPackage; }
+
     public SocketChannel getSocketChannel() { return this.socketChannel; }
-    public String[] getStringData() {
-        return stringData;
-    }
+    public String[] getStringData() { return stringData; }
+    public RawDecree getCommandData() { return commandData;}
+    public communication.ClientPackage getClientPackage() { return clientPackage;}
+
+    public communication.ClientPackage prepareDataObject() { return new ClientPackage(commandData,organizationData,stringData[0]);}
 }

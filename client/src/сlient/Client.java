@@ -1,17 +1,18 @@
 package сlient;
 
 import communication.Component;
+import communication.Markers;
 import communication.Mediating;
 import communication.Segment;
 
 import java.io.IOException;
 import java.net.*;
+import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Come_1LL_F00 aka Lenar Khannanov
@@ -41,10 +42,17 @@ public class Client extends AClient implements Component, Runnable {
         } catch (UnknownHostException e) {
             return false;
         } catch (SocketException e){
-            System.err.println("──w─> <Server connection is lost> <─w──");
+            System.err.println("──w─> <Connection is lost> <─w──");
             return false;
         } catch (IOException e) {
             return false;
+        }
+    }
+    public void killSocket() {
+        try {
+            socketChannel.close();
+        }catch (IOException e) {
+            new IOException("Something went wrong during closing \"socket channel\"",e);
         }
     }
 
@@ -61,10 +69,10 @@ public class Client extends AClient implements Component, Runnable {
                 SelectionKey key = iter.next();
                 try {
                 if (key.isReadable()) {
-                    mediator.notify(this, new Segment((SocketChannel) key.channel(),new String[0]));
+                    mediator.notify(this, new Segment((SocketChannel) key.channel(),Markers.READ));
                 }
                 if (key.isWritable()) {
-                    mediator.notify(this, new Segment((SocketChannel) key.channel(), null));
+                    mediator.notify(this, new Segment((SocketChannel) key.channel(), Markers.WRITE));
                 }
                 }catch (IOException e) {
                     e.printStackTrace();
@@ -74,63 +82,10 @@ public class Client extends AClient implements Component, Runnable {
         }
     }
 
-
-
-
-
-    /*
-    public Client.Client(SocketChannel clientSocket, Scanner dialog) throws IOException {
-        this.dialog = dialog;
-        selector = Selector.open();
-        this.clientSocket = clientSocket;
-
-        clientSocket.configureBlocking(false);
-        clientSocket.register(selector,SelectionKey.OP_READ);
-        //переведение сокет-канала в неблокируемый режим исправило ошибку с получением нулевых байтов от сервера
-        //однако на прокси и на сервер сообщения доходили в нормальном виде.
+    public void stopAndClose() throws IOException {
+        socketChannel.shutdownInput();
+        socketChannel.shutdownOutput();
+        socketChannel.close();
+        System.exit(0);
     }
-    public void startClient() throws IOException {
-        while (true){
-            System.out.print("> ");
-            reply();
-
-            selector.select();
-            Set<SelectionKey> selectionKeys = selector.selectedKeys();
-            Iterator<SelectionKey> iter = selectionKeys.iterator();
-            while (iter.hasNext()) {
-                SelectionKey key = iter.next();
-                if (key.isReadable()){
-                    request(key);
-                }
-                iter.remove();
-            }
-        }
-
-    }
-
-    public void request(SelectionKey key) throws IOException { //возможно метод общения с сервером будет изменен.
-        byte[] bytes = new byte[32 * 1024];
-
-        ((SocketChannel) key.channel()).read(ByteBuffer.wrap(bytes));
-
-        System.out.println("Server:" + new String(bytes,"UTF-8"));
-
-        ByteBuffer.wrap(bytes).clear();
-
-    }
-    public void reply() throws IOException{
-        byte[] bytes = dialog.nextLine().getBytes();
-        clientSocket.write(ByteBuffer.wrap(bytes));
-
-        ByteBuffer.wrap(bytes).clear();
-    }
-
-    public void stopConnection() throws IOException { //задаток под exit мб...
-        clientSocket.shutdownInput();
-        clientSocket.shutdownOutput();
-        clientSocket.close();
-    }
-
-     */
-
 }

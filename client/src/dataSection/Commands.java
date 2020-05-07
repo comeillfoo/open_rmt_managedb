@@ -1,9 +1,8 @@
 package dataSection;
 
-import communication.Segment;
+import instructions.rotten.RawDecree;
+import java.util.HashMap;
 
 public interface Commands {
-    String[] getArgumenterCommandList();
-    String[] getNotArgumentedCommandList();
-    void setList(Segment parcel);
+    public HashMap<String,RawDecree> getCommandMap();
 }

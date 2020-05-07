@@ -1,6 +1,6 @@
 package parsing.supplying;
 
-import parsing.instructions.concrete.ConDecree;
+import instructions.concrete.ConDecree;
 
 /**
  * Интерфейс Invoker — часть паттерна "Команда", который

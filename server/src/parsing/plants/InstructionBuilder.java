@@ -1,10 +1,10 @@
 package parsing.plants;
 
 import communication.Component;
+import instructions.rotten.RawDecree;
 import parsing.Resolver;
 import parsing.customer.distro.LimboKeeper;
-import parsing.instructions.concrete.ConDecree;
-import parsing.instructions.rotten.RawDecree;
+import instructions.concrete.ConDecree;
 
 /**
  * Псевдо-фабрика сборки из абстрактных комманд

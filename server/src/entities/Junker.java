@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import entities.Junker;
 
 /**
  * Юнкер? Нет, бл*ть Мусорщик. Хранит параметры

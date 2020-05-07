@@ -1,7 +1,7 @@
 package parsing.supplying;
 
 import parsing.Resolver;
-import parsing.instructions.concrete.ConDecree;
+import instructions.concrete.ConDecree;
 
 /**
  * Эмулятор клиента, что вызывает приходящие

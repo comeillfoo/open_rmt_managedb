@@ -1,13 +1,11 @@
 package parsing.supplying;
 
 import communication.Component;
-import communication.Mediator;
+import instructions.concrete.ConDecree;
+import instructions.concrete.base.Exit;
+import instructions.concrete.base.Save;
 import parsing.Resolver;
-import parsing.instructions.Command;
-import parsing.instructions.concrete.ConDecree;
-import parsing.instructions.concrete.base.Exit;
-import parsing.instructions.concrete.base.Save;
-import parsing.plants.InstructionBuilder;
+
 
 import java.util.ArrayList;
 import java.util.List;

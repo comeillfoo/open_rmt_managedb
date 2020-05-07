@@ -1,5 +1,8 @@
 package communication;
 
+import entities.Junker;
+import instructions.rotten.RawDecree;
+
 import java.io.Serializable;
 
 /**
@@ -7,24 +10,37 @@ import java.io.Serializable;
  */
 public class ClientPackage implements Serializable {
     private static final long serialVersionUID = 1L; //индификатор сериализации
-    private String[] commandWithArguments;
-    private Serializable organization;
+    private Junker organizationData;
+    private RawDecree command;
+
     private String commandReport;
     private String errorReport;
 
-    public ClientPackage(String[] commandWithArguments) { this.commandWithArguments = commandWithArguments; }
-    public ClientPackage(String[] commandWithArguments, Serializable organization) { this(commandWithArguments); this.organization = organization; }
-
-    public void setErrorReport(final String erroReport) {
-        this.errorReport = erroReport;
+    public ClientPackage(RawDecree command) {
+        this.command = command;
+    }
+    public ClientPackage(RawDecree command, Junker organizationData) {
+        this(command);
+        this.organizationData = organizationData;
     }
 
-    public String[] getCommand() {
-        return this.commandWithArguments;
+    public ClientPackage(RawDecree commandData, Junker organizationData, String stringDatum) {
+        this(commandData,organizationData);
+        this.commandReport = stringDatum;
     }
-    public Serializable getOrganization() {
-        return this.organization;
+
+
+    public void setErrorReport(String errorReport) {
+        this.errorReport = errorReport;
+    }
+    public void setCommandReport(String commandReport) { this.commandReport = commandReport;}
+
+    public RawDecree getCommand() {
+        return command;
+    }
+    public Junker getOrganization() {
+        return organizationData;
     }
     public String getReport() {return commandReport;}
-    public String getErroReport() { return errorReport; }
+    public String getErrorReport() { return errorReport; }
 }

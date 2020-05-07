@@ -1,6 +1,7 @@
 package сlient;
 
 import communication.ClientPackage;
+import communication.Markers;
 import communication.Mediating;
 import communication.Segment;
 
@@ -20,24 +21,29 @@ public class Servant extends AServant {
     @Override
     public boolean setConnection() {
         client = mediator.getClient();
-        if (resetConnection()) {
-            new Thread(client).start();
-            return true;
+        try {
+            if (resetConnection()) {
+                new Thread(client).start();
+                return true;
+            }
+        }catch (IOException e) {
+            new IOException("Problems with resetting connection...",e).getMessage();
         }
         return false;
     }
 
     @Override
-    public boolean resetConnection() {
+    public boolean resetConnection() throws IOException {
         while (true){
-            if (client.connect("localhost", 0xdead))break;
-            pipeOut.println("Server is closed!");
-            pipeOut.println("Retry connection [y/n]?");
+            if (client.connect("localhost", 0xdead)) break;
                 String answer = "";
                 while (true){
+                    pipeOut.println("Retry connection [y/n]?");
                     answer = debrief();
                     if (answer.equals("y")) break;
-                    else if(answer.equals("n")) System.exit(0);
+                    else if(answer.equals("n")) {
+                        mediator.notify(this,new Segment(Markers.STOP));
+                    }
                     else continue;
                 }
         }
@@ -47,7 +53,6 @@ public class Servant extends AServant {
     @Override
     public void order(Segment parcel) {
         String orderData = debrief();
-        System.out.println(orderData);
         parcel.setStringData(orderData.split(" "));
         //после получения пользовательской строки происходит обращение к модулю валидации введенных данных
         try {
@@ -59,23 +64,23 @@ public class Servant extends AServant {
 
     @Override
     public String debrief() {
-        String orderData = "";
+        String stringData = "";
         while (true) {
             pipeOut.print(">");
-            orderData = scanner.nextLine();
-            if (orderData.equals("")) {
+            stringData = scanner.nextLine();
+            if (stringData.equals("")) {
                 continue;
             }
             else {
                 break;
             }
         }
-        return orderData;
+        return stringData;
     }
     @Override
     public void notification(Segment parcel) {
-        pipeOut.printf("Server: %f" +((ClientPackage)parcel.getDataObject()).getReport());
-        pipeOut.printf("Server Error report:%f" + ((ClientPackage)parcel.getDataObject()).getErroReport());
+        pipeOut.printf("Server: %f" +((ClientPackage)parcel.getClientPackage()).getReport());
+        pipeOut.printf("Server Error report:%f" + ((ClientPackage)parcel.getClientPackage()).getErrorReport());
         //TODO: make good notifications
     }
 }

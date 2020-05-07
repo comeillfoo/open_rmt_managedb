@@ -3,19 +3,12 @@ package nook;
 import communication.Mediator;
 import communication.Segment;
 import receiver.Receptionist;
-import sun.nio.ch.ChannelInputStream;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 import java.nio.channels.*;
-import java.security.Key;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.zip.InflaterInputStream;
 
 public final class CIF_Server extends Server {
   private boolean isServerRun;

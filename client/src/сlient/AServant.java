@@ -4,9 +4,8 @@ import communication.Component;
 import communication.Mediating;
 import communication.Segment;
 
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -26,7 +25,7 @@ public abstract class AServant implements Component {
 
     public void order(Segment parcel) { }
     public boolean setConnection() { return false;}
-    public boolean resetConnection() { return false;}
+    public boolean resetConnection() throws IOException { return false;}
     public String debrief() { return "";}
     public void notification(Segment parcel) { }
 }
