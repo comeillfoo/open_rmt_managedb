@@ -15,7 +15,7 @@ import java.nio.channels.SocketChannel;
  * @see Command
  * @see Report
  */
-public class Segment {
+public class Segment implements Valuable {
   // fields
   protected final Serializable data;
   protected final SocketChannel client;
@@ -25,6 +25,7 @@ public class Segment {
     this.data = data;
   }
   // properties and methods
+  @Override
   public Serializable getData() { return data; }
   //public InputStream getIntoClient() throws IOException { return client.socket().getInputStream(); }
   //public OutputStream getOutClient() throws IOException { return client.socket().getOutputStream(); }

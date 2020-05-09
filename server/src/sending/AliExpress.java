@@ -1,4 +1,4 @@
-package dispatching;
+package sending;
 
 import communication.Mediator;
 import communication.Segment;
