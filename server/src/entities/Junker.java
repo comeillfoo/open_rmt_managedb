@@ -28,28 +28,27 @@ public final class Junker implements Serializable {
     this.guts = guts;
   }
   // get-properties
-
   /**
    * Свойство получения массива под составных параметров
    * @return массив подпараметров
    */
-  public Junker[] Guts() { return (guts == null)? null : guts.clone(); }
+  public Junker[] Guts() { return guts; }
 
   /**
    * Свойство получения целочисленных параметров
    * @return массив целочисленных параметров
    */
-  public long[] Digits() { return (digits == null)? null : digits.clone(); }
+  public long[] Digits() { return digits; }
 
   /**
    * Свойство получения действительных параметров
    * @return массив действительных параметров
    */
-  public double[] Cogits() { return (cogits == null)? null : cogits.clone(); }
+  public double[] Cogits() { return cogits; }
 
   /**
    * Свойство получения строчных параметров
    * @return массив текстовых параметров
    */
-  public String[] Lines() { return (lines == null)? null : lines.clone(); }
+  public String[] Lines() { return lines; }
 }

@@ -11,6 +11,9 @@ import java.io.Serializable;
  *   <li>Хранения результатов чтения запросов</li>
  *   <li>Хранения результатов попытки отправки результатов обработки запросов</li>
  * </ul>
+ * @author Leargy aka Anton Sushkevich
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @see Serializable
  */
 public final class Report implements Serializable {
     // fields

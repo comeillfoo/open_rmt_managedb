@@ -12,12 +12,22 @@ import java.io.IOException;
  * Также этот класс принимает ввод от юзера.
  *  @author Come_1LL_F00 aka Lenar Khannanov
  *  @author Leargy aka Anton Sushkevich
+ * @see AServant
  */
 public class Servant extends AServant {
+    /**
+     * Конструктор принимающий ссылку на посредника.
+     * @param mediator
+     */
     public Servant(Mediating mediator) {
         super(mediator);
     }
     //если очень захочется,можно будет задавать подключение через аргументы командной строки.
+
+    /**
+     * метод установки соединения
+     * @return boolean
+     */
     @Override
     public boolean setConnection() {
         client = mediator.getClient();
@@ -32,6 +42,11 @@ public class Servant extends AServant {
         return false;
     }
 
+    /**
+     * Метод, реализующий переустановку подключения к серверу.
+     * @return boolean
+     * @throws IOException
+     */
     @Override
     public boolean resetConnection() throws IOException {
         while (true){
@@ -53,6 +68,10 @@ public class Servant extends AServant {
         return true;
     }
 
+    /**
+     * Метод, принимающий сообщение от клиента и уведомление посредника для выполнения следующего действия.
+     * @param parcel
+     */
     @Override
     public void order(Segment parcel) {
         String orderData = debrief();
@@ -65,6 +84,10 @@ public class Servant extends AServant {
         }
     }
 
+    /**
+     * Метод для общения с клиентом.
+     * @return String
+     */
     @Override
     public String debrief() {
         String stringData = "";
@@ -80,10 +103,10 @@ public class Servant extends AServant {
         }
         return stringData;
     }
-    @Override
-    public void notification(Segment parcel) {
-        pipeOut.printf("Server: %f" +((ClientPackage)parcel.getClientPackage()).getReport());
-        pipeOut.printf("Server Error report:%f" + ((ClientPackage)parcel.getClientPackage()).getErrorReport());
-        //TODO: make good notifications
-    }
+//    @Override
+//    public void notification(Segment parcel) {
+//        pipeOut.printf("Server: %f" +((ClientPackage)parcel.getClientPackage()).getReport());
+//        pipeOut.printf("Server Error report:%f" + ((ClientPackage)parcel.getClientPackage()).getReport());
+//        //TODO: make good notifications
+//    }
 }

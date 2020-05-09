@@ -7,6 +7,7 @@ import java.io.Serializable;
  * передаваемых объектов.
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
+ * @see Serializable
  */
 public final class Junker implements Serializable {
     // ссылка на внутренние параметры
@@ -32,23 +33,23 @@ public final class Junker implements Serializable {
      * Свойство получения массива под составных параметров
      * @return массив подпараметров
      */
-    public Junker[] Guts() { return guts.clone(); }
+    public Junker[] Guts() { return guts; }
 
     /**
      * Свойство получения целочисленных параметров
      * @return массив целочисленных параметров
      */
-    public long[] Digits() { return digits.clone(); }
+    public long[] Digits() { return digits; }
 
     /**
      * Свойство получения действительных параметров
      * @return массив действительных параметров
      */
-    public double[] Cogits() { return cogits.clone(); }
+    public double[] Cogits() { return cogits; }
 
     /**
      * Свойство получения строчных параметров
      * @return массив текстовых параметров
      */
-    public String[] Lines() { return lines.clone(); }
+    public String[] Lines() { return lines; }
 }

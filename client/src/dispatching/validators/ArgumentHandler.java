@@ -18,14 +18,27 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Звено проверки аргументов команд
+ * Звено проверки аргументов команд.Реализация паттерна "Цепочка обязанностей" (Chain of Responsibility)
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
  */
 public class ArgumentHandler extends DataHandler{
     private HashMap<String,RawDecree> commandMap;
+
+    /**
+     * Конструктор принимающий список команд относительно которых будет производиться проверка.
+     * @param commandList
+     */
     public ArgumentHandler(Commands commandList){
         commandMap = commandList.getCommandMap();
     }
 
+    /**
+     * Метод седержащий логику проверки аргумента.
+     * @param parcel
+     * @return RawDecree
+     * @throws CommandSyntaxException
+     */
     @Override
     public RawDecree handle(Segment parcel) throws CommandSyntaxException {
         String tempCommand = parcel.getStringData()[0];

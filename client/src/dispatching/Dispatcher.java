@@ -15,6 +15,12 @@ import instructions.rotten.base.RawExit;
 import java.io.*;
 import java.nio.ByteBuffer;
 
+/**
+ * Модуль отправки пакета данных на сервер.
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
+ * @see ADispatcher
+ */
 public class Dispatcher extends ADispatcher {
     private final Handler dataHandler;
     private Mediating mediator;
@@ -22,6 +28,10 @@ public class Dispatcher extends ADispatcher {
     private ByteArrayOutputStream byteArrayOutputStream ;
     private ObjectOutputStream objectOutputStream;
 
+    /**
+     * конструктор, пренимающий ссылку на посредника.
+     * @param mediator посредник
+     */
     public Dispatcher(Mediating mediator){
         this.mediator = mediator;
         //Инициализируем цепочку проверок.
@@ -35,6 +45,13 @@ public class Dispatcher extends ADispatcher {
         dataHandler = commandHandler;
     }
 
+    /**
+     * метод в котором полученное сообщение от клиента отправляется на проверку
+     * в случии валидности возвращается объект сырой команды,
+     * заполненный необходимый для ее иполнения информацией.
+     * @param parcel объект необходимый для пересылки информации между модулями.
+     * @throws IOException
+     */
     public void giveOrder(Segment parcel) throws IOException {
         RawDecree tempCommand = null;
         try {
@@ -59,6 +76,12 @@ public class Dispatcher extends ADispatcher {
         }
     }
     //сериализуем и отправляем
+
+    /**
+     * Метод производящий сериализацию объекта и последующую его отправку.
+     * @param parcel
+     * @throws IOException
+     */
     public void send(Segment parcel) throws IOException {
         byteArrayOutputStream = new ByteArrayOutputStream();
         objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);

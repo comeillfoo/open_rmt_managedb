@@ -16,6 +16,7 @@ import java.io.IOException;
  * Класс организации обращений разных частей программы друг к другу.(паттерн "Посредник")
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
+ * @see Mediating
  */
 public class Mediator implements Mediating {
     private DataHandler dataHandler;
@@ -31,15 +32,29 @@ public class Mediator implements Mediating {
         servant = new Servant(this);
     }
 
+    /**
+     * Возвращает модуль ответственный за получение сообщений от клиента, установление объявления подключения к серверу.
+     * @return AServant
+     */
     public AServant getServant() {
         return servant;
     }
 
+    /**
+     * Возвращает модуль ответственный за установление/завершение подключения с сервером, и организаци принятия/отправления сообщения.
+     * @return Client
+     */
     @Override
     public Client getClient() {
         return client;
     }
 
+    /**
+     * Метод определющий свзязи между молдулями.Выясняет какому модулю направить обращение.
+     * @param component
+     * @param parcel
+     * @throws IOException
+     */
     @Override
     public void notify(Component component, Segment parcel) throws IOException {
         if (component == servant) dispatcher.giveOrder(parcel);

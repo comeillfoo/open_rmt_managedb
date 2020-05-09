@@ -14,17 +14,29 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
+ * Класс модуля установления/завершение подключений, определения вектора действий.
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
+ * @see AClient,Component,Runnable
  */
 public class Client extends AClient implements Component, Runnable {
     private SocketChannel socketChannel;
     private Selector selector;
 
+    /**
+     * Конструктор принимающий ссылку на посредника.
+     * @param mediator
+     */
     public Client(Mediating mediator) {
         super(mediator);
     }
 
+    /**
+     * Метод установки поключения.
+     * @param hostName
+     * @param serverPort
+     * @return boolean
+     */
     public boolean connect(String hostName,int serverPort){
         try {
             selector = Selector.open();
@@ -49,6 +61,10 @@ public class Client extends AClient implements Component, Runnable {
             return false;
         }
     }
+
+    /**
+     * Метод, закрывающий сокет(поток сокета) клиента.
+     */
     public void killSocket() {
         try {
             socketChannel.close();
@@ -58,6 +74,9 @@ public class Client extends AClient implements Component, Runnable {
         //TODO:подумать над правильной обработкой остановки сервера.(TIME_OUT)
     }
 
+    /**
+     * Метод, использующий selector для определения дальнейшего вектора действий.
+     */
     public void run() {
         while (socketChannel.isConnected()) {
             try {
@@ -84,6 +103,10 @@ public class Client extends AClient implements Component, Runnable {
         }
     }
 
+    /**
+     * Метод закрывающий сокет(поток сокета) и завершение работы приложения.
+     * @throws IOException
+     */
     public void stopAndClose() throws IOException {
         socketChannel.shutdownInput();
         socketChannel.shutdownOutput();

@@ -7,12 +7,26 @@ import dispatching.validators.Filters;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Класс, организующий получение информации
+ * и послеющего формирования массива данных для дополнительного параметра комманд.
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
+ */
 public class Cook {
     private Scanner scanner;
+
+    /**
+     * Конструктор, инициализирующий Scanner
+     */
     public Cook() {
         scanner = new Scanner(System.in);
     }
 
+    /**
+     * Основной метод, задающий последовательность опроса клиента и последующиее формирования массивов данных доп параметра.
+     * @return Junker класс содержащий доп информацию для доп. параметра.
+     */
     public Junker cookMe() {
         Junker coordinates = null;
         Junker officialAddress = null;
@@ -35,6 +49,10 @@ public class Cook {
                 new Junker[]{coordinates,officialAddress});
     }
 
+    /**
+     * Метод, организующий формирование массива данных о кординатах организации.
+     * @return Junker класс содержащий доп информацию для доп. параметра.
+     */
     protected Junker getCoordinates() {
         Long x = null;
         Double y = null;
@@ -42,11 +60,21 @@ public class Cook {
         y = Filters.scanDouble((number) -> (number > -538),"Enter a float Coordinates.y:",scanner);
         return new Junker(new long[]{x}, new double[]{y},null, null);
     }
+
+    /**
+     * Метод, организующий формирование массива данных об адрессе организации.
+     * @return Junker класс содержащий доп информацию для доп. параметра.
+     */
     protected Junker getAddres() {
         String zipCode = (Filters.scanLine((cod) -> (true), "Enter a string Address.zipCode: ",scanner)).toString();
         Junker town = getLocation();
         return new Junker(null,null,new String[]{zipCode},new Junker[]{town});
     }
+
+    /**
+     * Метод, организующий формирование массива данных о месте расположения организации.
+     * @return Junker класс содержащий доп информацию для доп. параметра.
+     */
     protected Junker getLocation() {
         Double x = null;
         int y = 0;
@@ -57,6 +85,10 @@ public class Cook {
         return new Junker(new long[]{y}, new double[]{x,z},null,null);
     }
 
+    /**
+     * Метод, организующий формирование массива данных о типе организации.
+     * @return Junker класс содержащий доп информацию для доп. параметра.
+     */
     protected OrganizationType getOrganizationType() {
         OrganizationType organizationType = null;
         String clientSuggestion = "";
