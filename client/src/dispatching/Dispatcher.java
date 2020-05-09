@@ -1,5 +1,6 @@
 package dispatching;
 
+import dataSection.Commands;
 import dataSection.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
@@ -17,7 +18,7 @@ import java.nio.ByteBuffer;
 public class Dispatcher extends ADispatcher {
     private final Handler dataHandler;
     private Mediating mediator;
-    private CommandList commandList = new CommandList();
+    private Commands commandList = new CommandList();
     private ByteArrayOutputStream byteArrayOutputStream ;
     private ObjectOutputStream objectOutputStream;
 

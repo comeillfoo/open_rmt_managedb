@@ -55,6 +55,7 @@ public class Client extends AClient implements Component, Runnable {
         }catch (IOException e) {
             new IOException("Something went wrong during closing \"socket channel\"",e);
         }
+        //TODO:подумать над правильной обработкой остановки сервера.(TIME_OUT)
     }
 
     public void run() {

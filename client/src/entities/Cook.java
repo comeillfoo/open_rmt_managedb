@@ -12,6 +12,7 @@ public class Cook {
     public Cook() {
         scanner = new Scanner(System.in);
     }
+
     public Junker cookMe() {
         Junker coordinates = null;
         Junker officialAddress = null;
