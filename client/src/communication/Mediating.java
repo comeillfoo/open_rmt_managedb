@@ -10,6 +10,6 @@ import java.io.IOException;
  * @author Leargy aka Anton Sushkevich
  */
 public interface Mediating {
-    void notify(Component component, Segment parcel) throws IOException;
+    void notify(Component component, Segment parcel);
     Client getClient();
 }

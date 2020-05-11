@@ -20,5 +20,5 @@ public abstract class ADispatcher implements Component {
      * @param parcel объект необходимый для пересылки информации между модулями.
      * @throws IOException
      */
-    public void giveOrder(Segment parcel) throws IOException {}
+    public void giveOrder(Segment parcel) {}
 }

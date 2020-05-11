@@ -31,13 +31,9 @@ public class Servant extends AServant {
     @Override
     public boolean setConnection() {
         client = mediator.getClient();
-        try {
-            if (resetConnection()) {
-                new Thread(client).start();
-                return true;
-            }
-        }catch (IOException e) {
-            new IOException("Problems with resetting connection...",e).getMessage();
+        if (resetConnection()) {
+            new Thread(client).start();
+            return true;
         }
         return false;
     }
@@ -48,7 +44,7 @@ public class Servant extends AServant {
      * @throws IOException
      */
     @Override
-    public boolean resetConnection() throws IOException {
+    public boolean resetConnection() {
         while (true){
             try{
                 client.killSocket();
@@ -77,11 +73,7 @@ public class Servant extends AServant {
         String orderData = debrief();
         parcel.setStringData(orderData.split(" "));
         //после получения пользовательской строки происходит обращение к модулю валидации введенных данных
-        try {
-            mediator.notify(this, parcel);
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        mediator.notify(this, parcel);
     }
 
     /**

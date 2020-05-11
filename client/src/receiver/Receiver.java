@@ -30,7 +30,7 @@ public class Receiver extends AReceiver{
      * @param parcel
      */
     @Override
-    public void receive(Segment parcel) throws IOException {
+    public void receive(Segment parcel) {
         byteBuffer.clear();
         try {
             if(parcel.getSocketChannel().read(byteBuffer) == -1) {

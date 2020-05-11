@@ -51,8 +51,8 @@ public final class CIF_Server extends Server {
     }catch (NullPointerException e){
       System.err.println("<connection interrupted>");
     }
-
   }
+
   private void service(SelectionKey readyKey) throws IOException {
     Segment segment = new Segment((SocketChannel) readyKey.channel(), null);
     controller.notify(this, segment);

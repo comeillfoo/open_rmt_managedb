@@ -3,7 +3,7 @@ package dispatching.validators;
 import communication.Mediating;
 import communication.Segment;
 import exceptions.CommandSyntaxException;
-import entities.Cook;
+import entities.JunkerCreator;
 import instructions.rotten.RawDecree;
 
 /**
@@ -14,16 +14,7 @@ import instructions.rotten.RawDecree;
 public abstract class DataHandler implements Handler  {
     protected Handler nextHandler;
     protected Mediating mediator;
-    protected Cook cook;
-
-    /**
-     * конструктор, инициилизующий модуль создания спец. объекта и пренимающий ссылку на посредника.
-     * @param mediator посредник
-     */
-    public void setMediator(Mediating mediator){
-        this.mediator = mediator;
-        cook = new Cook();
-    }
+    protected JunkerCreator junkerCreator;
 
     /**
      * Сеттер для задание следующего звена последовательности проверок.

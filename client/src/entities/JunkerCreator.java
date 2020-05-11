@@ -13,21 +13,19 @@ import java.util.Scanner;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public class Cook {
+public class JunkerCreator {
     private Scanner scanner;
-
     /**
      * Конструктор, инициализирующий Scanner
      */
-    public Cook() {
+    public JunkerCreator() {
         scanner = new Scanner(System.in);
     }
-
     /**
      * Основной метод, задающий последовательность опроса клиента и последующиее формирования массивов данных доп параметра.
      * @return Junker класс содержащий доп информацию для доп. параметра.
      */
-    public Junker cookMe() {
+    public Junker prepareJunker() {
         Junker coordinates = null;
         Junker officialAddress = null;
         OrganizationType organizationType =null;
