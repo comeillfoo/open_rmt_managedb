@@ -4,7 +4,7 @@
 
 ## TT (En)
   * сlient.сlient app should use ***SocketChannel*** as data exchange sistem.
-  * Server app should use ***IOStream*** as data exchange sistem.
+  * systemcore.Server app should use ***IOStream*** as data exchange sistem.
   * Network channels should be used in ***non-blocking*** mode
   * Object processing operations should be done with ***Stream API*** with lambda expression.
   * сlient.сlient must correctly handle the temporary unavailability of the server.
@@ -15,13 +15,13 @@
   ## !Attention!
   `Commands and their arguments must be class objects. The exchange of "simple" lines is not allowed. So, for the add command or its analogue, it is necessary to form an object containing the type of command and the object that should be stored in your collection.`
 
-  ### Server modules.
+  ### systemcore.Server modules.
    * Connection-accepter modul
    * Request modul
    * Command-handler modul
    * Reply modul
 
-  ### Server responsibilities:
+  ### systemcore.Server responsibilities:
    * Working with the file storing collections.
    * Object collection managment.
    * Fields auto-generating managment.
@@ -33,7 +33,7 @@
    * Data validation.
    * Command and arguments serrialisation.
    * Sending command with arguments to the server.
-   * Server's reply handling (sending result to console).
+   * systemcore.Server's reply handling (sending result to console).
    * `exit` command should complete working of app.
    
    ### Extra task:
