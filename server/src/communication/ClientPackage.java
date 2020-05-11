@@ -5,31 +5,47 @@ import instructions.rotten.RawDecree;
 import java.io.Serializable;
 
 /**
- * Класс, объектами которого возможно будет осуществляться обмен с сервером
+ * Класс, объектами которого возможно будет осуществляться обмен с сервером.
+ * @author Leargy aka Anton Sushkevich
+ * @author Come_1LL_F00 aka Lenar Khannanov
  */
 public class ClientPackage implements Serializable {
     private static final long serialVersionUID = 1L; //индификатор сериализации
     private RawDecree command;
-    private String commandReport;
-    private String errorReport;
+    private Report report;
 
+    /**
+     * @param command
+     */
     public ClientPackage(RawDecree command) {
         this.command = command;
     }
 
-    public ClientPackage(RawDecree commandData, String stringData) {
+    /**
+     * @param commandData
+     * @param stringData
+     */
+    public ClientPackage(RawDecree commandData, Report stringData) {
         this(commandData);
-        this.commandReport = stringData;
+        this.report = stringData;
     }
 
-    public void setErrorReport(String errorReport) {
-        this.errorReport = errorReport;
+    /**
+     * @param report
+     */
+    public void setReport(Report report) {
+        this.report = report;
     }
-    public void setCommandReport(String commandReport) { this.commandReport = commandReport;}
 
+    /**
+     * @return RawDecree
+     */
     public RawDecree getCommand() {
         return command;
     }
-    public String getReport() {return commandReport;}
-    public String getErrorReport() { return errorReport; }
+
+    /**
+     * @return Report
+     */
+    public Report getReport() {return report;}
 }

@@ -1,5 +1,10 @@
 package dataSection.enumSection;
 
+/**
+ * Класс enum хронящий типы организаций.
+ * @author Leargy aka Anton Sushkevich
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ */
 public enum OrganizationType {
         PUBLIC,
         TRUST,

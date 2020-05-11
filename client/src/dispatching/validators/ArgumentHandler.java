@@ -1,7 +1,7 @@
 package dispatching.validators;
 
 import communication.Segment;
-import dataSection.CommandList;
+import dataSection.Commands;
 import exceptions.CommandSyntaxException;
 import instructions.rotten.RawDecree;
 import instructions.rotten.extended.RawInsert;
@@ -18,14 +18,27 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Звено проверки аргументов команд
+ * Звено проверки аргументов команд.Реализация паттерна "Цепочка обязанностей" (Chain of Responsibility)
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
  */
 public class ArgumentHandler extends DataHandler{
     private HashMap<String,RawDecree> commandMap;
-    public ArgumentHandler(CommandList commandList){
+
+    /**
+     * Конструктор принимающий список команд относительно которых будет производиться проверка.
+     * @param commandList
+     */
+    public ArgumentHandler(Commands commandList){
         commandMap = commandList.getCommandMap();
     }
 
+    /**
+     * Метод седержащий логику проверки аргумента.
+     * @param parcel
+     * @return RawDecree
+     * @throws CommandSyntaxException
+     */
     @Override
     public RawDecree handle(Segment parcel) throws CommandSyntaxException {
         String tempCommand = parcel.getStringData()[0];
@@ -37,7 +50,6 @@ public class ArgumentHandler extends DataHandler{
                 throw new CommandSyntaxException("Неверно введена аргументная часть команды!");
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-
             throw new CommandSyntaxException("Команда должна содержать аргумент!");
         }
 
@@ -48,7 +60,7 @@ public class ArgumentHandler extends DataHandler{
         } catch (NumberFormatException e) {
             throw new CommandSyntaxException("Аргумент должен быть целым неотрицательным числом!");
         }
-        //паттерн для определниея,что для комманды необходимо получить дополнительне параметры
+        //паттерн регулярного выражения для определния,что для комманды необходимо получить дополнительне параметры
         Pattern argumentCommandPat = Pattern.compile(".*\\{.+}");
         Matcher matcher = null;
         String key = "";
@@ -57,7 +69,7 @@ public class ArgumentHandler extends DataHandler{
             matcher = argumentCommandPat.matcher(entry.getKey());
             if (key.equals(tempCommand)) {
                 if (matcher.find()) {
-                    //взываем к конструктору junker а
+                    //взываем к конструктору junker'а
                     switch (key) {
                         case RawInsert.NAME:
                             return new RawInsert().setKey(intArgument).setData(cook.cookMe());

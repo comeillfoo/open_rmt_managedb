@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
  * Класс получатель, в метод принимает посылку от сервера и десериализует в пригодный для обработки вид.
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
+ * @see AReceiver
  */
 public class Receiver extends AReceiver{
     private ByteArrayInputStream byteArrayInputStream;
