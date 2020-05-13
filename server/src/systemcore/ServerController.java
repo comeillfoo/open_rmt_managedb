@@ -82,7 +82,7 @@ public final class ServerController implements Mediator {
       // достаем клиентский anal
       SocketChannel current = (SocketChannel) parcel.Channel();
       // достать с ресепшена данные о клиенте
-      ServerCustomer record = SECRETARY.getCustomer(current);
+      ServerCustomer record = SECRETARY.search(current);
       // преобразовать в новый перекидаемый пакет
       // с данными о клиенте и канале клиенте
       DossierBag dossier = new DossierBag(current, record);
