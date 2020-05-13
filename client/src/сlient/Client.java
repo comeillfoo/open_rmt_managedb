@@ -88,15 +88,11 @@ public class Client extends AClient implements Component, Runnable {
             Iterator<SelectionKey> iter = selectedKeys.iterator();
             while (iter.hasNext()) {
                 SelectionKey key = iter.next();
-                try {
                 if (key.isReadable()) {
                     mediator.notify(this, new Segment((SocketChannel) key.channel(),Markers.READ));
                 }
                 if (key.isWritable()) {
                     mediator.notify(this, new Segment((SocketChannel) key.channel(), Markers.WRITE));
-                }
-                }catch (IOException e) {
-                    e.printStackTrace();
                 }
                 iter.remove();
             }
@@ -107,10 +103,15 @@ public class Client extends AClient implements Component, Runnable {
      * Метод закрывающий сокет(поток сокета) и завершение работы приложения.
      * @throws IOException
      */
-    public void stopAndClose() throws IOException {
-        socketChannel.shutdownInput();
-        socketChannel.shutdownOutput();
-        socketChannel.close();
-        System.exit(0);
+    public void stopAndClose() {
+        try {
+            socketChannel.shutdownInput();
+            socketChannel.shutdownOutput();
+            socketChannel.close();
+        }catch (IOException e) {
+            new IOException("Dropped an exception during closing socket.",e);
+        }finally {
+            System.exit(0);
+        }
     }
 }

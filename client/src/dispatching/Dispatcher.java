@@ -34,13 +34,10 @@ public class Dispatcher extends ADispatcher {
      */
     public Dispatcher(Mediating mediator){
         this.mediator = mediator;
-        //Инициализируем цепочку проверок.
+        //Initialising the handling chain.
         CommandHandler commandHandler = new CommandHandler(commandList);
         ArgumentHandler argumentHandler = new ArgumentHandler(commandList);
         commandHandler.setNext(argumentHandler);
-
-        commandHandler.setMediator(mediator);
-        argumentHandler.setMediator(mediator);
 
         dataHandler = commandHandler;
     }
@@ -52,41 +49,42 @@ public class Dispatcher extends ADispatcher {
      * @param parcel объект необходимый для пересылки информации между модулями.
      * @throws IOException
      */
-    public void giveOrder(Segment parcel) throws IOException {
+    public void giveOrder(Segment parcel) {
         RawDecree tempCommand = null;
         try {
             tempCommand = dataHandler.handle(parcel);
-        }catch (CommandSyntaxException e) {
+        }catch(CommandSyntaxException e) {
+            //exception will be thrown if entered command doesn't pass the verification.
             e.getMessage();
+            System.out.println("For more information use \"help\" command.");
+            return;
         }
-        if (tempCommand != null) {
-            if (tempCommand.getClass().isInstance(new RawExit())) {
-                parcel.setMarker(Markers.STOP);
-                mediator.notify(this,parcel);
-                return;
-            }
+        if(tempCommand.getClass().isInstance(new RawExit())) {
             try {
-                parcel.setCommandData(tempCommand);
-                send(parcel);
+                byteArrayOutputStream.close();
+                objectOutputStream.close();
             }catch (IOException e) {
-                new IOException("Ошибка отправки.",e).getMessage();
+                new IOException("Dropped an exception during closing streams.",e);
             }
-        }else {
-            System.out.println("Для большей информации про каманды используйте команду \"help\".");
+            parcel.setMarker(Markers.STOP);
+            mediator.notify(this,parcel);
+            return;
         }
+        parcel.setCommandData(tempCommand);
+        send(parcel);
     }
-    //сериализуем и отправляем
 
     /**
      * Метод производящий сериализацию объекта и последующую его отправку.
      * @param parcel
      * @throws IOException
      */
-    public void send(Segment parcel) throws IOException {
+    public void send(Segment parcel) {
         byteArrayOutputStream = new ByteArrayOutputStream();
-        objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        objectOutputStream.writeObject(parcel.prepareDataObject());
-        objectOutputStream.flush();
+        try {
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(parcel.prepareDataObject());
+        }catch (IOException e) {/*NOP*/}
         try {
             parcel.getSocketChannel().write(ByteBuffer.wrap(byteArrayOutputStream.toByteArray()));
         }catch (IOException e) {
@@ -94,8 +92,10 @@ public class Dispatcher extends ADispatcher {
             parcel.setMarker(Markers.INTERRUPTED);
             mediator.notify(this,parcel);
         }finally {
-            byteArrayOutputStream.close();
-            objectOutputStream.close();
+            try {
+                byteArrayOutputStream.close();
+                objectOutputStream.close();
+            }catch (IOException e) { /*NOP*/};
         }
         // TODO: Обработка разрыва подключения
     }

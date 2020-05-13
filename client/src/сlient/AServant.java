@@ -48,7 +48,7 @@ public abstract class AServant implements Component {
      * @return boolean
      * @throws IOException
      */
-    public boolean resetConnection() throws IOException { return false;}
+    public boolean resetConnection() { return false;}
     /**
      * Метод для общения с клиентом.
      * @return String

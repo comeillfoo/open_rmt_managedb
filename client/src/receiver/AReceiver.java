@@ -27,5 +27,5 @@ public abstract class AReceiver implements Component {
      * @param parcel
      * @throws IOException
      */
-    public void receive(Segment parcel) throws IOException { }
+    public void receive(Segment parcel) { }
 }
