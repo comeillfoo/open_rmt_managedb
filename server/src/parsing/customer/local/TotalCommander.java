@@ -1,16 +1,14 @@
 package parsing.customer.local;
 
 import entities.Organization;
-import logging.customer.ReceiverLogger;
+import czerkaloggers.RadioLogger;
 import parsing.customer.Indicator;
 import parsing.customer.Receiver;
 import parsing.customer.bootstrapper.LoaferLoader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * Конкретный пацан в паттерне. Оперирует организациями, как
@@ -23,7 +21,7 @@ import java.util.function.Function;
  */
 public class TotalCommander extends Commander<Integer, Organization> {
   // builders
-  public TotalCommander(LoaferLoader<Organization> loader, ReceiverLogger logger) { super(loader, logger); }
+  public TotalCommander(LoaferLoader<Organization> loader, RadioLogger logger) { super(loader, logger); }
   /**
    * Пояснит за коллекцию и ее элементы. Помнит даже
    * дату рождения своей подопечной и ее корни
@@ -211,7 +209,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
    * более прокачанный логгер.
    * @return ссылка на текущий логгер
    */
-  protected ReceiverLogger peacher() {
+  protected RadioLogger peacher() {
     return whistleblower;
   }
 
@@ -219,7 +217,6 @@ public class TotalCommander extends Commander<Integer, Organization> {
    * Метод сохранения текущего
    * состояния коллекции
    */
-  @Override
   public final void save() {
     List<Organization> result = new ArrayList<>();
     database

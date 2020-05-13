@@ -5,5 +5,5 @@ package communication;
  * или модулей и их компонентов.
  */
 public interface Mediator {
-  void notify(Component sender, Segment data);
+  void notify(Component sender, Valuable data);
 }

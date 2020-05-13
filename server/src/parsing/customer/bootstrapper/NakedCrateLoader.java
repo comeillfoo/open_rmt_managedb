@@ -32,15 +32,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
   private static final String calFolder = "storage"; // директория, хранящая все коллекции
   private String birthDay = ZonedDateTime.now().toString(); // дата создания загрузчика коллекции или файла с коллекцией
   private String environment; // название переменной окружения
-  /**
-   * Стандарный конструктор, для загрузчика,
-   * работающего с переменной окружения
-   * @param environment название переменной окружения
-   */
-  public NakedCrateLoader(String environment) {
-    // проверили; и установили, что хотели
-    this.environment = CheckEnvironment(environment);
-  }
+  private boolean loaded = false; // признак того, что коллекция уже загружена
   /**
    * Метод подгрузки коллекции из локального хранилища,
    * так, чтобы не бомбило сидалище.
@@ -276,6 +268,28 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     fileWriter.close();
     return true;
   }
+
+  /**
+   * Свойство записи названия
+   * переменной окружения в поле
+   * загрузчика. Также проводим
+   * при записи проверку, чтобы при ЧС
+   * могли что-то хорошее загрузить
+   * @param varName название переменной окружения
+   */
+  @Override
+  public void Environment(String varName) {
+    environment = CheckEnvironment(varName);
+  }
+
+  /**
+   * Свойство получения,
+   * признака того, что коллекция
+   * уже подгружена
+   * @return признак загрузки коллекции
+   */
+  @Override
+  public boolean Loaded() { return loaded; }
 
   /**
    * Свойство, дающие заглянуть

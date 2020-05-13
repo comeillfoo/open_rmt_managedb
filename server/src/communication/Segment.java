@@ -15,19 +15,18 @@ import java.nio.channels.SocketChannel;
  * @see Command
  * @see Report
  */
-public class Segment implements Valuable {
+public class Segment implements Valuable, Serializable {
   // fields
-  protected final Serializable data;
-  protected final SocketChannel client;
+  protected final Serializable DATA;
+  protected final SocketChannel CLIENT;
   // builders
   public Segment(SocketChannel client, Serializable data) {
-    this.client = client;
-    this.data = data;
+    this.CLIENT = client;
+    this.DATA = data;
   }
   // properties and methods
-  @Override
-  public Serializable getData() { return data; }
+  public Serializable getData() { return DATA; }
   //public InputStream getIntoClient() throws IOException { return client.socket().getInputStream(); }
   //public OutputStream getOutClient() throws IOException { return client.socket().getOutputStream(); }
-  public SocketChannel getClient() { return client; }
+  public SocketChannel getClient() { return CLIENT; }
 }

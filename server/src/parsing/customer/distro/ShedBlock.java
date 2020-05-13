@@ -1,7 +1,7 @@
 package parsing.customer.distro;
 
 import entities.Organization;
-import logging.customer.HawkPDroid;
+import czerkaloggers.HawkPDroid;
 import parsing.customer.bootstrapper.LoaferLoader;
 
 /**

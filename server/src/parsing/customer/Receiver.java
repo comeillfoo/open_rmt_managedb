@@ -78,10 +78,4 @@ public interface Receiver<K, V extends Mappable<K>> {
    * элемента и ключей, с ним связанных
    */
   <R> Map<K, R> getBy(Function<V, R> keyExtractor);
-
-  /**
-   * К сожалению, пришлось добавить,
-   * потому что так логично
-   */
-  void save();
 }

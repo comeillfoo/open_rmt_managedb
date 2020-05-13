@@ -2,25 +2,34 @@ package perusal;
 
 
 import communication.ClientPackage;
-import communication.Mediator;
+import communication.Component;
 import communication.Segment;
+import communication.Valuable;
+import communication.wrappers.DossierBag;
+import systemcore.ServerController;
 
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
+/**
+ * Модуль чтения запроса от клиента
+ * @author Leargy aka Anton Sushkevich
+ * @author Come_1LL_F00 aka  Lenar Khannanov
+ * @see QueryReader
+ */
 public final class BookWorm extends QueryReader {
   // fields
   private ByteArrayInputStream byteArrayInputStream;
   private ObjectInputStream objectInputStream;
   private ByteBuffer byteBuffer = ByteBuffer.allocate(2*1024);
   // builders
-  public BookWorm(Mediator m) { super(m); }
+  public BookWorm(ServerController kapellmeister) { super(kapellmeister); }
   // methods
   @Override
-  public void retrieve(Segment parcel) {
+  public void retrieve(DossierBag parcel) {
     byteBuffer.clear();
-    SocketChannel tempChannel = parcel.getClient();
+    SocketChannel tempChannel = (SocketChannel) parcel.Channel();
     try {
       if (tempChannel.read(byteBuffer) == -1) {
         throw new IOException();
@@ -29,19 +38,13 @@ public final class BookWorm extends QueryReader {
       byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
       objectInputStream = new ObjectInputStream(byteArrayInputStream);
       ClientPackage query = (ClientPackage) objectInputStream.readObject();
-      mediator.notify(this, new Segment(parcel.getClient(), (Serializable) query));
+      KAPELLMEISTER.notify(this, new Segment(tempChannel, (Serializable) query));
     }catch (IOException e) {
-
-      mediator.notify(this, parcel); //This class got nothing, we lost.
       // TODO: логировать ошибку
       // TODO: отправить отчет посреднику, чтобы тот уведомил клиента (возможно, только для режима debug)
     } catch (ClassNotFoundException e) {
-      new ClassNotFoundException("Wrong server casting received package.", e).getMessage();
       // TODO: логировать ошибку
       // TODO: отправить отчет посреднику, чтобы тот уведомил клиента (возможно, только для режима debug)
-//    }catch (InvalidClassException e) {
-//      new InvalidClassException("Server don't have an example of command in received package.",e.getMessage()).getMessage();
-//    }
     }finally {
       try {
         byteArrayInputStream.close();
@@ -50,5 +53,10 @@ public final class BookWorm extends QueryReader {
         System.err.println("Ты как сюда добрался? O.O");
       }
     }
+  }
+
+  @Override
+  public void notify(Component sender, Valuable data) {
+    
   }
 }

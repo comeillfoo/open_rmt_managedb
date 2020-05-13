@@ -2,7 +2,10 @@ package nook;
 
 import communication.Mediator;
 import communication.Segment;
+import communication.wrappers.NetBag;
+import receiver.Hostess;
 import receiver.Receptionist;
+import systemcore.ServerController;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -47,19 +50,19 @@ public final class CIF_Server extends Server {
   private void register(SelectionKey readyKey, Selector alarm) throws IOException {
     //добавил,чтобы опустить ошибку после разрыва подключения со стороны клиента (А такая тут и не выпадет P.S Leargy)
     try {
-      Receptionist.listen((ServerSocketChannel) readyKey.channel()).register(alarm, SelectionKey.OP_READ);
+      new Hostess((ServerController) controller).listen(new NetBag((ServerSocketChannel) readyKey.channel(), selector));
     }catch (NullPointerException e){
       System.err.println("<connection interrupted>");
     }
-
   }
+
   private void service(SelectionKey readyKey) throws IOException {
     Segment segment = new Segment((SocketChannel) readyKey.channel(), null);
     controller.notify(this, segment);
   }
 
   @Override
-  public void closeConnection(Segment parcel){
+  public void closeConnection(Segment parcel) {
     try {
       Socket client = parcel.getClient().socket();
       System.out.println("Client disconnect" +

@@ -1,4 +1,7 @@
 package instructions;
+
+import communication.Valuable;
+
 /**
  * Абстрактный класс комманд, расширяющий интерфейс
  * комманд основными полями и данными о команде.
@@ -6,7 +9,7 @@ package instructions;
  * @author Leargy aka Anton Sushkevich
  * @see Command
  */
-public abstract class Decree {
+public abstract class Decree implements Valuable {
   // every command must have information about itself [name, syntax, brief description, argument number, has arguments]
   public static final String NAME = "debug";
   public static final String BRIEF = "enables developer mode";

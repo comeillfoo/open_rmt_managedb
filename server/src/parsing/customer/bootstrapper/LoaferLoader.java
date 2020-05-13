@@ -23,6 +23,21 @@ public interface LoaferLoader<V extends Mappable> {
   boolean checkFile(File foil) throws IOException;
 
   /**
+   * Свойство записи названия
+   * переменной окружения в поле
+   * @param varName название переменной окружения
+   */
+  void Environment(String varName);
+
+  /**
+   * Свойство получения,
+   * признака того, что коллекция
+   * уже подгружена
+   * @return признак загрузки коллекции
+   */
+  boolean Loaded();
+
+  /**
    * Свойство для получения даты создания файла
    * @return строковое представление даты создания файла или загрузчика
    */

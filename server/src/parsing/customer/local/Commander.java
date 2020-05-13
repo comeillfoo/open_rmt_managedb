@@ -1,7 +1,7 @@
 package parsing.customer.local;
 
 import entities.Mappable;
-import logging.customer.ReceiverLogger;
+import czerkaloggers.RadioLogger;
 import parsing.customer.Receiver;
 import parsing.customer.bootstrapper.LoaferLoader;
 import java.time.ZonedDateTime;
@@ -22,8 +22,16 @@ public abstract class Commander<K, V extends Mappable<K>> implements Receiver<K,
   protected final Map<K, V> database = new HashMap<>(); // хранимое отображение
   protected String creationDate = ZonedDateTime.now().toString(); // дата создания
   protected final LoaferLoader<V> breadLoader; // буханка-загрузчик xml-коллекций
-  protected final ReceiverLogger whistleblower; // ссылка на логгер
-  public Commander(LoaferLoader<V> loader, ReceiverLogger logger) {
+  protected final RadioLogger whistleblower; // ссылка на логгер
+
+  /**
+   * Конструктор, принимающий
+   * загрузчик коллекции и элемент,
+   * ведущий летопись
+   * @param loader загрузчик
+   * @param logger логирующий элемент
+   */
+  public Commander(LoaferLoader<V> loader, RadioLogger logger) {
     breadLoader = loader;
     whistleblower = logger;
   }
