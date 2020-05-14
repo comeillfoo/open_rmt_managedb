@@ -1,22 +1,22 @@
 package instructions.rotten.extended;
 
 import entities.Junker;
-import entities.IJunked;
-import instructions.rotten.RawCommiter;
+import instructions.rotten.IJunked;
+import instructions.rotten.RawCommitter;
 
-public class RawRemoveLower extends RawCommiter implements IJunked<Junker> {
+public final class RawRemoveLower extends RawCommitter implements IJunked {
     public static final String NAME = "remove_lower";
     public static final String BRIEF = "удаляет из коллекции элементы, меньшие чем заданный";
     public static final String SYNTAX = NAME + " {element}";
     public static final int ARGNUM = 1;
 
-    @Override
-    public Junker getData() {
-        return junker;
-    }
+    /**
+     * Конструктор, устанавливающий параметры
+     * добавляемого объекта
+     * @param junk
+     */
+    public RawRemoveLower(Junker junk) { super(junk); }
 
-    public RawRemoveLower setData(Junker attachedData) {
-        junker = attachedData;
-        return this;
-    }
+    @Override
+    public final Junker Params() { return JUNK; }
 }

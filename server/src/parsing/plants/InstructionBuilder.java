@@ -1,10 +1,16 @@
 package parsing.plants;
 
 import communication.Component;
+import communication.wrappers.ExecuteBag;
+import communication.wrappers.QueryBag;
+import entities.Organization;
+import instructions.rotten.IJunked;
+import instructions.rotten.RawCommitter;
 import instructions.rotten.RawDecree;
 import parsing.Resolver;
 import parsing.customer.distro.LimboKeeper;
-import instructions.concrete.ConDecree;
+import parsing.plants.pickers.CommittersBuilder;
+import parsing.plants.pickers.JustCommandBuilder;
 
 /**
  * Псевдо-фабрика сборки из абстрактных комманд
@@ -17,9 +23,10 @@ import instructions.concrete.ConDecree;
  * @see Factory
  */
 public final class InstructionBuilder implements Component {
-  protected final Resolver magiV; // ссылка на SSPC
-  protected final Factory marduk; // ссылка на производителя элементов
-
+  protected final Resolver MAGIV; // ссылка на SSPC
+  protected final Factory<Organization> MARDUK; // ссылка на производителя элементов
+  protected final CommittersBuilder HOMIE = new CommittersBuilder();
+  protected final JustCommandBuilder JUSTIFY = new JustCommandBuilder();
   /**
    * Конструктор устанавливающий
    * ссылку на контроллер и фабрику,
@@ -27,9 +34,9 @@ public final class InstructionBuilder implements Component {
    * @param controller контроллер
    * @param facility фабрика
    */
-  public InstructionBuilder(Resolver controller, Factory facility) {
-    magiV = controller;
-    marduk = facility;
+  public InstructionBuilder(Resolver controller, Factory<Organization> facility) {
+    MAGIV = controller;
+    MARDUK = facility;
   }
 
   // метод формирования из отправленной команды
@@ -45,10 +52,13 @@ public final class InstructionBuilder implements Component {
    * формируется конкретный объект
    * @param flesh абстрактная команда
    * @param receiver обработчик коллекции
-   * @return конкретная команда
    */
-  public ConDecree make(RawDecree flesh, LimboKeeper receiver) {
-    return null;
-    // TODO: написать реализацию
+  public void make(QueryBag flesh, LimboKeeper receiver) {
+    RawDecree command = flesh.Query();
+    if (command instanceof IJunked)
+      MAGIV.notify(this, new ExecuteBag(flesh.Channel(), HOMIE.make((RawCommitter) command, receiver, MARDUK)));
+    else MAGIV.notify(this, new ExecuteBag(flesh.Channel(), JUSTIFY.make(command, receiver)));
   }
+
+
 }

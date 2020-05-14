@@ -28,8 +28,8 @@ import java.util.regex.Pattern;
  * @see LoaferLoader
  */
 public final class NakedCrateLoader implements LoaferLoader<Organization> {
-  private static final String testMode = "DEBUG"; // маркер для определения подгрузки тестовой коллекции
-  private static final String calFolder = "storage"; // директория, хранящая все коллекции
+  private static final String TEST_MODE = "DEBUG"; // маркер для определения подгрузки тестовой коллекции
+  private static final String CAL_FOLDER = "storage"; // директория, хранящая все коллекции
   private String birthDay = ZonedDateTime.now().toString(); // дата создания загрузчика коллекции или файла с коллекцией
   private String environment; // название переменной окружения
   private boolean loaded = false; // признак того, что коллекция уже загружена
@@ -50,7 +50,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     // формируем путь до серверных коллекций,
     // возможно критическая зона, если запускать сервер
     // из жопы файловой системы
-    String pathname = System.getProperty("user.dir") + sprt + calFolder + sprt + sayMyFileName();
+    String pathname = System.getProperty("user.dir") + sprt + CAL_FOLDER + sprt + sayMyFileName();
     // берем файловый дескриптор, по этому пути (без комментариев)
     File fuck = new File(pathname);
     // если размер меньше кибибайта, то это повод задуматься
@@ -111,6 +111,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     }
     // по сусекам поскребли, по полками помели и, что нашли, то и вернули
     // TODO: желательно составить рапорт (Report) об успешности загрузки (дабы уведомить клиента) и подергать логгер, выше тоже проверить
+    loaded = true;
     return companies.getCompanies();
   }
 
@@ -125,7 +126,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     // снова для начала берем разделитель нашей OS
     String sptr = System.getProperty("file.separator");
     // также получаем имя файла, куда срать будем, и формируем путь до него
-    String fuck = sayMyFileName(), pathname = System.getProperty("user.dir") + sptr + calFolder + sptr + fuck;
+    String fuck = sayMyFileName(), pathname = System.getProperty("user.dir") + sptr + CAL_FOLDER + sptr + fuck;
     // начинается попа-боль
     // создаем выходной поток, и виновника, от души которого все блага отпускаем
     try (OutputStream otputty = new FileOutputStream(pathname);
@@ -157,6 +158,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     }
     // TODO: левой рукой клиента тереблю, правой - логгер щекочу
     // уведомить о suckцессе
+    loaded = false;
   }
 
   /**
@@ -176,7 +178,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
    * дабы не прерывать сервер на такие глупости.
    * @param environment название переменной окружения
    */
-  private String CheckEnvironment(String environment) { return (RUInvalid(environment) || RUInvalid(System.getenv(environment)))? testMode : environment; }
+  private String CheckEnvironment(String environment) { return (RUInvalid(environment) || RUInvalid(System.getenv(environment)))? TEST_MODE : environment; }
 
   /**
    * Такой же простой геттер для получения
@@ -185,7 +187,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
    * @return название файла с коллекцией
    */
   private String sayMyFileName() {
-    if (environment.equals(testMode)) {
+    if (environment.equals(TEST_MODE)) {
       // TODO: логирование, уведомление что работаем с тестовой коллекцией
       System.err.println("Вниманиме! Так как Ваша коллекция не была найдена, то будет загружена заготовленная тестовая коллекция:");
       System.err.println("Usage: java -jar [jarfile] [varenv]");
@@ -196,12 +198,12 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
   }
 
   /**
-   * Возвращает пустую коллекцию и переходит берет тестовую коллекцию.
+   * Возвращает пустую коллекцию и переходит на тестовую коллекцию.
    * Этот мир прогнил и не осталось ничего, кроме страданий
    * @return компании в общем
    */
   private Organizations NothingButVoid() {
-    environment = testMode; // мы не хотим расстраивать пользователя
+    environment = TEST_MODE; // мы не хотим расстраивать пользователя
     return new Organizations(new ArrayList<>()); // поэтому даем ему поиграться с пустотой
   }
 

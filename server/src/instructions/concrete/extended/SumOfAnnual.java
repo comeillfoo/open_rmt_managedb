@@ -36,7 +36,7 @@ public class SumOfAnnual<K, V extends Mappable<K>, R extends Number> extends Con
    */
   @Override
   public Report execute() {
-    Map<K, R> buffer = sieve.getBy(keySummator);
+    Map<K, R> buffer = SIEVE.getBy(keySummator);
     R sum = (R) buffer
         .values()
         .stream()

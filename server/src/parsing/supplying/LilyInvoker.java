@@ -1,5 +1,6 @@
 package parsing.supplying;
 
+import communication.wrappers.ExecuteBag;
 import parsing.Resolver;
 import instructions.concrete.ConDecree;
 
@@ -33,7 +34,7 @@ public final class LilyInvoker extends FondleEmulator {
    * @param command присланная команда
    */
   @Override
-  public void invoke(ConDecree command) {
+  public void invoke(ExecuteBag command) {
     // TODO: написать реализацию
   }
 }

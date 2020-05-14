@@ -5,6 +5,7 @@ import communication.Valuable;
 import java.io.Serializable;
 
 /**
+ * !!!Не используется
  * Приветственный пакет с именем
  * клиента и названием его переменной окружения
  * обязательно должен быть отправлен клиентом
@@ -19,12 +20,12 @@ public final class HandShakeBag implements Valuable, Serializable {
   /**
    * Конструктор, устанавливающий
    * основные параметры этого пакета
-   * @param CLIENT_NAME имя клиента
-   * @param VAR_NAME название переменной окружения
+   * @param client_name имя клиента
+   * @param var_name название переменной окружения
    */
-  public HandShakeBag(String CLIENT_NAME, String VAR_NAME) {
-    this.CLIENT_NAME = CLIENT_NAME == null? "" : CLIENT_NAME;
-    this.VAR_NAME = VAR_NAME;
+  public HandShakeBag(String client_name, String var_name) {
+    CLIENT_NAME = client_name == null? "" : client_name;
+    VAR_NAME = var_name;
   }
 
   /**

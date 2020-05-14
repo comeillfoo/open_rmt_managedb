@@ -1,5 +1,6 @@
 package parsing.supplying;
 
+import communication.wrappers.ExecuteBag;
 import instructions.concrete.ConDecree;
 
 /**
@@ -20,7 +21,7 @@ public interface Invoker {
   
   /**
    * Метод вызова команды
-   * @param command присланная команда
+   * @param execution присланная команда
    */
-  void invoke(ConDecree command);
+  void invoke(ExecuteBag execution);
 }

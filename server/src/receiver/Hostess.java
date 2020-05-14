@@ -4,12 +4,13 @@ import communication.Component;
 import communication.ServerCustomer;
 import communication.Valuable;
 import communication.wrappers.HandShakeBag;
-import communication.wrappers.NetBag;
+import communication.wrappers.PassBag;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.receiver.S_0D3_GE3;
 import systemcore.ServerController;
 
 import java.io.ByteArrayInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -24,7 +25,7 @@ import java.nio.channels.*;
  * @author Leargy aka Anton Sushkevich
  */
 public final class Hostess extends Receptionist {
-  private final HawkPDroid<Hostess> tetrode; // логгер
+  private final HawkPDroid<Hostess> TETRODE; // логгер
   /**
    * Стандартный конструктор,
    * с установкой контроллера над модулем
@@ -33,7 +34,7 @@ public final class Hostess extends Receptionist {
    */
   public Hostess(ServerController core) {
     super(core);
-    tetrode = (HawkPDroid<Hostess>) S_0D3_GE3.assemble(this, S_0D3_GE3::new);
+    TETRODE = (HawkPDroid<Hostess>) S_0D3_GE3.assemble(this, S_0D3_GE3::new);
   }
 
   /**
@@ -53,7 +54,7 @@ public final class Hostess extends Receptionist {
    * </ul>
    * @param packet входной сетевой пакет
    */
-  public void listen(NetBag packet) {
+  public void listen(PassBag packet) {
     // достать серверный канал
     ServerSocketChannel server = packet.Channel();
     // достать селектор сервера
@@ -66,16 +67,16 @@ public final class Hostess extends Receptionist {
 
     // взять у клиента имя и название переменной окружения
     // попытка прочитать по каналу входной пакет
-    HandShakeBag received = receive(connected);
+    //HandShakeBag received = receive(connected);
     // проверили, отправили нам что-то
-    if (received == null) return;
+    //if (received == null) return;
 
     // достаем нужные параметры как имя и название
-    ServerCustomer newbie = parse(received, connected);
+    //ServerCustomer newbie = parse(received, connected);
     // проверили смогли ли мы создать запись
-    if (newbie == null) return; // TODO: логировать успешную потерю информации о клиенте
+    //if (newbie == null) return; // TODO: логировать успешную потерю информации о клиенте
 
-    customers.put(connected, newbie);
+    //CUSTOMERS.put(connected, newbie);
     // TODO: логировать успешное добавление клиента
   }
 
@@ -134,19 +135,22 @@ public final class Hostess extends Receptionist {
    * @return полученный пакет
    */
   private HandShakeBag receive(SocketChannel client) {
-    // создаем временный буфер
-    ByteBuffer buffer = ByteBuffer.allocate(2*1024);
-    buffer.clear(); // очистка буфера
+    BYTE_BUFFER.clear(); // очистка буфера
     // читаем с клиента байты
-    try { client.read(buffer);
+    try {
+      if (client.read(BYTE_BUFFER) == -1)
+        throw new EOFException("Достигнут конец потока");
+    } catch (EOFException e) {
+      // TODO: логировать, то что клиент нас на*бал и ничего не отправил
+      return null;
     } catch (IOException e) {
       // TODO: логировать неуспешность приветственной передачи
       return null;
     }
     // TODO: логировать успешность входной передачи
-    buffer.flip(); // Смотри, ща салтуху *бану
+    BYTE_BUFFER.flip(); // Смотри, ща салтуху *бану
     // закидываем, полученные данные с поток байтов
-    ByteArrayInputStream bistream = new ByteArrayInputStream(buffer.array());
+    ByteArrayInputStream bistream = new ByteArrayInputStream(BYTE_BUFFER.array());
     // определяем поток сериализации
     ObjectInputStream objstream = null;
     try {
@@ -215,8 +219,8 @@ public final class Hostess extends Receptionist {
     // если какой-то отчет пришел от логгера,
     // то перенаправляем на контроллер,
     // дабы тот отправил клиенту
-    if (sender == tetrode)
-      core.notify(this, data);
+    if (sender == TETRODE)
+      CORE.notify(this, data);
     // по мере увеличения сложности увеличивается
   }
 }

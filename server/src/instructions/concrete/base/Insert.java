@@ -35,20 +35,20 @@ public final class Insert extends Committer {
    */
   @Override
   public Report execute() {
-    if (sieve == null)
+    if (SIEVE == null)
       return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь со своим системным администратором");
     if (key == null)
       return new Report(1, "Неправильный формат ключа добавляемого элемента");
-    if (embedded == null)
+    if (EMBEDDED == null)
       return new Report(1, "Обнаружена попытка добавить неопределенный элемент");
     Organization buffer = null;
-    Receiver<Integer, Organization> realSiever = (Receiver<Integer, Organization>)sieve;
+    Receiver<Integer, Organization> realSiever = (Receiver<Integer, Organization>) SIEVE;
     realSiever.search(key, buffer, (org)->(true));
     if (buffer != null)
       return new Report(3, "Обнаружена попытка добавить элемент по уже существующему ключу");
-    buffer = embedded;
-    realSiever.add(key, embedded, (org)->(true));
-    if (buffer.equals(embedded))
+    buffer = EMBEDDED;
+    realSiever.add(key, EMBEDDED, (org)->(true));
+    if (buffer.equals(EMBEDDED))
       return new Report(0, "Элемент успешно добавлен");
     else return new Report(0xCCCF, "Возникли ошибки при попытки добавления элемента");
   }

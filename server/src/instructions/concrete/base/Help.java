@@ -16,8 +16,8 @@ public final class Help extends instructions.concrete.ConDecree {
   /**
    * Конструктор, устанавливающий ссылку на
    * управленца коллекцией
-   *
    * @param sieve текущий управленец коллекцией
+   * @param commands текущий список доступных комманд
    */
   public Help(Receiver sieve, List<instructions.concrete.ConDecree> commands) {
     super(sieve);

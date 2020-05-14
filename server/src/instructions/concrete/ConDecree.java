@@ -1,5 +1,6 @@
 package instructions.concrete;
 
+import communication.Valuable;
 import parsing.customer.Receiver;
 import instructions.Command;
 import instructions.Decree;
@@ -13,14 +14,14 @@ import instructions.Decree;
  * @see Decree
  * @see Command
  */
-public abstract class ConDecree extends Decree implements Command {
+public abstract class ConDecree extends Decree implements Command, Valuable {
   // ссылка на текущий контроллер коллекции
-  protected final Receiver sieve;
+  protected final Receiver SIEVE;
 
   /**
    * Конструктор, устанавливающий ссылку на
    * управленца коллекцией
    * @param sieve текущий управленец коллекцией
    */
-  public ConDecree(Receiver sieve) { this.sieve = sieve; }
+  public ConDecree(Receiver sieve) { SIEVE = sieve; }
 }

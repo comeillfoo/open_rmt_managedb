@@ -30,9 +30,9 @@ public final class Info extends ConDecree {
    */
   @Override
   public Report execute() {
-    if (sieve == null)
+    if (SIEVE == null)
       return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь с Вашим системным администратором");
-    String buffer = sieve.review();
+    String buffer = SIEVE.review();
     if ((buffer == null) || (buffer.isEmpty()))
       return new Report(0xFEED, "Информация по данной коллекции не найдено");
     else return new Report(0, "Информация по Вашей коллекции:\n" + buffer);

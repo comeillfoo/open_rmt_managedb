@@ -21,7 +21,6 @@ public abstract class LimboKeeper extends TotalCommander {
    * Конструктор, принимающий любой хороший загрузчик и
    * Логгер, который умеет не только составлять протокол,
    * но и отправлять его модулю разбора запросов клиента
-   * @param loader загрузчик коллекции
    * @param logger логгер, взаимодействующий с контроллером
    */
   protected LimboKeeper(LoaferLoader<Organization> loader, HawkPDroid logger) { super(loader, logger); }

@@ -2,27 +2,22 @@ package instructions.rotten.extended;
 
 import entities.Junker;
 import instructions.rotten.IClued;
-import entities.IJunked;
-import instructions.rotten.RawCommiter;
+import instructions.rotten.IJunked;
+import instructions.rotten.RawCommitter;
 
-public class RawReplaceIfLower extends RawCommiter implements IClued<Integer>, IJunked<Junker> {
+public final class RawReplaceIfLower extends RawReplaceIf {
     public static final String NAME = "replace_if_lower";
     public static final String BRIEF = "Находит элементы коллекции по заданному имени";
     public static final String SYNTAX = NAME + " [key] {element}";
     public static final int ARGNUM = 2;
-    private Integer key;
-    private Junker junker;
 
-    public RawReplaceIfLower setKey(Integer key) {
-        this.key = key;
-        return this;
-    }
-    @Override
-    public Integer Key() { return key;}
-    @Override
-    public Junker getData() { return junker;}
-    public RawReplaceIfLower setData(Junker attachedData) {
-        junker = attachedData;
-        return this;
+    /**
+     * Конструктор, устанавливающий параметры
+     * добавляемого объекта
+     * @param key
+     * @param junk
+     */
+    public RawReplaceIfLower(Integer key, Junker junk) {
+        super(key, junk);
     }
 }

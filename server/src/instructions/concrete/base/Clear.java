@@ -28,10 +28,10 @@ public final class Clear extends ConDecree {
    */
   @Override
   public Report execute() {
-    if (sieve == null)
+    if (SIEVE == null)
       return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь с Вашим системным администратором");
     try {
-      sieve.clear();
+      SIEVE.clear();
     } catch (UnsupportedOperationException e) {
       return new Report(0xBAD, "Извините, но данный тип коллекции не поддерживает операцию очистки");
     }

@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Come_1LL_F00 aka Lenar Khannanov
  */
 public class ClientPackage implements Serializable {
-    private static final long serialVersionUID = 1L; //индификатор сериализации
+    private static final long serialVersionUID = 1L; // идентификатор сериализации
     private RawDecree command;
     private Report report;
 

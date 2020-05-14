@@ -42,9 +42,9 @@ public class FilterContains<K, V extends Mappable<K>, R> extends ConDecree {
   @Override
   public Report execute() {
     // коллекция, что содержит соответствие между ключом и полем элемента
-    Map<K, R> buffer = sieve.getBy(fertilizer); // возможно придется добавить ClassCast
+    Map<K, R> buffer = SIEVE.getBy(fertilizer); // возможно придется добавить ClassCast
     // коллекция, что содержит соответствие между ключом и действительным ключом
-    Map<K, K> realkeys = ((Receiver<K, V>) sieve).getBy(V::Key); // костыль
+    Map<K, K> realkeys = ((Receiver<K, V>) SIEVE).getBy(V::Key); // костыль
     // коллекция, которая содержит нужные ключи, равные полю, которое ищем
     Map<K, R> correct = new HashMap<>();
     // заполнили предыдущую коллекцию
@@ -67,7 +67,7 @@ public class FilterContains<K, V extends Mappable<K>, R> extends ConDecree {
     for (Map.Entry<K, K> e : keys)
       realkeys.put(e.getKey(), e.getValue());
     // получаем описание тех элементов, чьи реальные ключи содержатся в фильтрованной коллекции
-    String result = ((Receiver<K, V>) sieve).survey((element)->(realkeys.containsValue(element.Key())));
+    String result = ((Receiver<K, V>) SIEVE).survey((element)->(realkeys.containsValue(element.Key())));
     return new Report(0, result);
   }
 }

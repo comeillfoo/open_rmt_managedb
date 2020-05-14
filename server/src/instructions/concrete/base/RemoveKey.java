@@ -33,11 +33,11 @@ public final class RemoveKey extends ConDecree {
    */
   @Override
   public Report execute() {
-    if (sieve == null)
+    if (SIEVE == null)
       return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь со своим системным администратором");
     if (key == null)
       return new Report(1, "Неправильный формат ключа удаляемого элемента");
-    Receiver<Integer, Organization> realSiever = sieve;
+    Receiver<Integer, Organization> realSiever = SIEVE;
     Organization buffer = null;
     realSiever.search(key, buffer, (org)->(true));
     if (buffer == null)

@@ -21,7 +21,14 @@ import java.util.Map;
  */
 public class TotalCommander extends Commander<Integer, Organization> {
   // builders
+
+  /**
+   * Стандартный конструктор
+   * менеджера коллекции
+   * @param logger
+   */
   public TotalCommander(LoaferLoader<Organization> loader, RadioLogger logger) { super(loader, logger); }
+
   /**
    * Пояснит за коллекцию и ее элементы. Помнит даже
    * дату рождения своей подопечной и ее корни
@@ -214,20 +221,35 @@ public class TotalCommander extends Commander<Integer, Organization> {
   }
 
   /**
-   * Метод сохранения текущего
-   * состояния коллекции
+   * Сеттер для коллекции,
+   * после простых проверок,
+   * тупо загружает все элементы
+   * в базу
+   * @param loaded список загруженных элементов
    */
-  public final void save() {
-    List<Organization> result = new ArrayList<>();
+  @Override
+  public void DataRebase(List<Organization> loaded) {
+    if ((loaded == null) || (loaded.isEmpty())) {
+      peacher().logboard(0, "Коллекция пуста");
+      return;
+    }
+    loaded
+        .stream()
+        .forEach((org) -> { database.put(org.Key(), org); });
+    peacher().notify(0, "Коллекция успешно загружена");
+  }
+
+  /**
+   *
+   */
+  @Override
+  public void save() {
+    List<Organization> unload = new ArrayList<>();
     database
         .entrySet()
         .stream()
-        .forEach(
-            (enter)->
-            {
-              result.add(enter.getValue());
-            });
-    breadLoader.unload(result);
+        .forEach((Map.Entry<Integer, Organization> org)->{ unload.add(org.getValue()); });
+    breadLoader.unload(unload);
     peacher().notify(0, "Коллекция успешно сохранена");
   }
 }

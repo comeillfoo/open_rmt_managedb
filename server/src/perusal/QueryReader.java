@@ -3,6 +3,7 @@ package perusal;
 import communication.Component;
 import communication.Mediator;
 import communication.wrappers.DossierBag;
+import communication.wrappers.TunnelBag;
 import systemcore.ServerController;
 
 /**
@@ -22,14 +23,14 @@ public abstract class QueryReader implements Component, Mediator {
    * его следующему модулю
    * @param parcel копромат на клиента
    */
-  public abstract void retrieve(DossierBag parcel);
+  public abstract void retrieve(TunnelBag parcel);
 
   // главный конструктор модуля
   /**
    * Конструктор по стандарту,
    * в котором устанавливается
    * хозяин модуля
-   * @param m
+   * @param core ядро системы, т.е. контроллер сервера
    */
-  public QueryReader(ServerController m) { KAPELLMEISTER = m; }
+  public QueryReader(ServerController core) { KAPELLMEISTER = core; }
 }

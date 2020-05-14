@@ -1,11 +1,15 @@
 package systemcore;
 
 import communication.Component;
-import communication.wrappers.NetBag;
+import communication.Report;
+import communication.wrappers.AlertBag;
+import communication.wrappers.PassBag;
+import communication.wrappers.QueryBag;
 import communication.wrappers.TunnelBag;
-import czerkaloggers.HawkPDroid;
+import instructions.rotten.base.RawSave;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -24,10 +28,10 @@ import java.util.Set;
  */
 public final class Server implements Runnable, Component {
   private boolean isServerRun; // признак работы сервера
-  private final Selector greedy; // селектор  сервера
-  private final ServerSocketChannel serverTunnel; // канал сервера
+  private final Selector GREEDY; // селектор  сервера
+  private final ServerSocketChannel STUNNEL; // канал сервера
   // ядро сервера, т.е. его контроллер
-  private final ServerController core;
+  private final ServerController CORE;
 
   /**
    * Стандартный конструктор с ссылками
@@ -39,9 +43,9 @@ public final class Server implements Runnable, Component {
    * @param channel канал сервера
    */
   public Server(ServerController core, Selector selector, ServerSocketChannel channel) {
-    this.core = core;
-    greedy = selector;
-    serverTunnel = channel;
+    CORE = core;
+    GREEDY = selector;
+    STUNNEL = channel;
     isServerRun = false;
   }
 
@@ -58,14 +62,14 @@ public final class Server implements Runnable, Component {
       // определяем число готовых каналов
       int numberReady = 0;
       // пытаемся поменять число готовых каналов
-      try { numberReady = greedy.selectNow();
+      try { numberReady = GREEDY.selectNow();
       } catch (IOException e) { // TODO: логировать ошибку
         numberReady = 0;
       }
       // если таковых нет, то идем на новый цикл
       if (numberReady == 0) continue;
       // берем множество готовых ключей
-      Set<SelectionKey> keys = greedy.selectedKeys();
+      Set<SelectionKey> keys = GREEDY.selectedKeys();
       // берем итератор по этому множеству
       Iterator<SelectionKey> keyIterator = keys.iterator();
       // проходимся по всем ключам
@@ -75,7 +79,7 @@ public final class Server implements Runnable, Component {
         if (selected == null) continue;
         if (!selected.isValid()) continue;
         // если к серверу пытаются подключиться, то подключаем
-        if (selected.isAcceptable()) signup(selected, greedy);
+        if (selected.isAcceptable()) signup(selected, GREEDY);
         // если клиент пытается прислать запрос, то обрабатываем
         if (selected.isReadable()) service(selected);
         // убираем обслуженный ключ
@@ -93,8 +97,8 @@ public final class Server implements Runnable, Component {
    * @param fetcher селектор, хранящий ключи
    */
   private void signup(SelectionKey ready2Connect, Selector fetcher) {
-    NetBag clientData = new NetBag((ServerSocketChannel) ready2Connect.channel(), fetcher);
-    core.notify(this, clientData);
+    PassBag clientData = new PassBag((ServerSocketChannel) ready2Connect.channel(), fetcher);
+    CORE.notify(this, clientData);
   }
 
   /**
@@ -107,6 +111,21 @@ public final class Server implements Runnable, Component {
   private void service(SelectionKey clientKey) {
     SocketChannel client = (SocketChannel) clientKey.channel();
     TunnelBag wrap = new TunnelBag(client);
-    core.notify(this, wrap);
+    CORE.notify(this, wrap);
+  }
+
+  public void closeConnection(AlertBag parcel) {
+    try {
+      Socket client = parcel.Channel().socket();
+      String message = "Client disconnect" +
+          "\nclient ip:" + client.getInetAddress().getHostAddress() +
+          "\nclient port:" + client.getPort() +
+          "\n____________________";
+      CORE.notify(this, new AlertBag(null, new Report(0, message)));
+      client.close(); //close client's Socket to remove key from selector
+      CORE.notify(this, new QueryBag(null, new RawSave()));
+    } catch (IOException e) {
+      CORE.notify(this, new AlertBag(null, new Report(1, "Ошибка во время отключения")));
+    }
   }
 }

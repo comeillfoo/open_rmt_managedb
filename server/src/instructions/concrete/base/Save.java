@@ -33,9 +33,9 @@ public final class Save extends ConDecree {
    */
   @Override
   public Report execute() {
-    if (sieve == null)
+    if (SIEVE == null)
       return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь со своим системным администратором");
-    sieve.save();
+    SIEVE.save();
     return new Report(0, "Коллекция успешно сохранена");
   }
   public static final String NAME = "save";

@@ -16,16 +16,14 @@ import java.io.Serializable;
  * @see Decree
  * @see Command
  */
-public abstract class RawCommiter extends RawDecree implements Serializable {
-    protected Junker junker;
+public abstract class RawCommitter extends RawDecree implements Serializable {
+    protected final Junker JUNK;
     /**
      * Конструктор, устанавливающий параметры
      * добавляемого объекта
      * @param parameters инкапсуляция параметров объекта
      */
-    protected RawCommiter() {}
-    /**
-     * Свойство получения сборщика параметров
-     * @return объект инкапсуляции параметров
-     */
+    protected RawCommitter(Junker junk) {
+        JUNK = junk;
+    }
 }

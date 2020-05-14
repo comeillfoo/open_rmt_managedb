@@ -39,7 +39,7 @@ public class MaxBy<K, V extends Mappable<K>, R extends Comparable<? super R>> ex
   @Override
   public Report execute() {
     // взять HashMap из коллекции, где ключи - ключи организации, а значения - поле его
-    Map<K, R> buffer = sieve.getBy(keySearcher);
+    Map<K, R> buffer = SIEVE.getBy(keySearcher);
     // найти в отображении максимальный элемент, вернуть его ключ
     Optional<Map.Entry<K, R>> maxim =
         buffer.entrySet()
@@ -48,7 +48,7 @@ public class MaxBy<K, V extends Mappable<K>, R extends Comparable<? super R>> ex
     K maxim_key = maxim.get().getKey();
     // найти в исходной коллекции тот элемент
     Mappable<K> recology = null;
-    sieve.search(maxim_key, recology, (element)->true);
+    SIEVE.search(maxim_key, recology, (element)->true);
     // вернуть информацию об элементе
     return new Report(0, recology.toString());
   }

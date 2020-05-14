@@ -1,7 +1,11 @@
 package systemcore;
 
-import communication.*;
-import communication.wrappers.DossierBag;
+import communication.Component;
+import communication.Mediator;
+import communication.Valuable;
+import communication.wrappers.AlertBag;
+import communication.wrappers.PassBag;
+import communication.wrappers.QueryBag;
 import communication.wrappers.TunnelBag;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.systemcore.S4_C8_GE3;
@@ -63,6 +67,7 @@ public final class ServerController implements Mediator {
     MAIN_SERVER = new Server(this, selector, channel); // создали сервер
     SECRETARY = new Hostess(this); // поставили девушку на ресепшен
     PARSER = new BookWorm(this); // установили модуль чтения
+    // модуль обработки запросов на каждого клиента свой
     SUPPLIER = new AliExpress(this); // установили модуль отправки
     TRIODE = new S4_C8_GE3(this); // установили логгер
   }
@@ -75,23 +80,41 @@ public final class ServerController implements Mediator {
    */
   @Override
   public void notify(Component sender, Valuable data) {
+    // если получили информацию с ресепшена
+    // в основном уведомления об ошибках
+    // перенаправляем на модуль отправки
+    if (sender == SECRETARY)
+      SUPPLIER.send((AlertBag) data); // отправили клиенту
     // если отправил сервер
     // то отправляем на парсинг
-    if (sender == MAIN_SERVER) {
-      TunnelBag parcel = (TunnelBag) data;
-      // достаем клиентский anal
-      SocketChannel current = (SocketChannel) parcel.Channel();
-      // достать с ресепшена данные о клиенте
-      ServerCustomer record = SECRETARY.search(current);
-      // преобразовать в новый перекидаемый пакет
-      // с данными о клиенте и канале клиенте
-      DossierBag dossier = new DossierBag(current, record);
-      // отправили модулю чтения преобразованный пакет
-      PARSER.retrieve(dossier);
-    } else if (sender == PARSER) {
-      new SubProcessController(this).parse((Segment) data);
+    else if (sender == MAIN_SERVER) {
+      if (data instanceof PassBag)
+        SECRETARY.listen((PassBag) data);
+      else if (data instanceof TunnelBag) {
+        TunnelBag parcel = (TunnelBag) data;
+        // достаем клиентский anal
+        SocketChannel current = (SocketChannel) parcel.Channel();
+        // достать с ресепшена данные о клиенте
+        // ServerCustomer record = SECRETARY.search(current);
+        // преобразовать в новый перекидаемый пакет
+        // с данными о клиенте и канале клиенте
+        // DossierBag dossier = new DossierBag(current, record);
+        // отправили модулю чтения преобразованный пакет
+        PARSER.retrieve(parcel);
+        // проверка надо ли логировать с сервера
+      } else if (data instanceof AlertBag)
+        TRIODE.logboard(0, ((AlertBag) data).Notify().Message());
+      // если отправил модуль чтения запроса
+    } else if ((sender == PARSER) || (sender == MAIN_SERVER)) {
+      // проверка: а запрос ли это отправляем обрабатываться
+      if (data instanceof QueryBag)
+        new SubProcessController(this).parse((QueryBag) data);
+      // иначе: думаем, что уведомление клиенту, которое мы и отправляем
+      else SUPPLIER.send((AlertBag) data);
+      // если кто-то из обработчиков вернул готовый запрос
+      // перенаправляем клиенту
     } else if (sender instanceof Resolver)
-      SUPPLIER.sendCorona((Segment) data); // отправили клиенту
+      SUPPLIER.send((AlertBag) data); // отправили клиенту
   }
 
   /**

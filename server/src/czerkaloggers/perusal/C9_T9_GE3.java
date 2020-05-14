@@ -8,6 +8,7 @@ public final class C9_T9_GE3 extends HawkPDroid<QueryReader> {
 
   public C9_T9_GE3(Mediator controller) { super((QueryReader) controller); }
 
+
   /**
    * Помимо логгирования, еще и составляет протокол действий.
    *

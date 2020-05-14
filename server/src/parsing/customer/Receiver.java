@@ -2,6 +2,7 @@ package parsing.customer;
 
 import entities.Mappable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -78,4 +79,8 @@ public interface Receiver<K, V extends Mappable<K>> {
    * элемента и ключей, с ним связанных
    */
   <R> Map<K, R> getBy(Function<V, R> keyExtractor);
+
+  void DataRebase(List<V> loaded);
+
+  void save();
 }

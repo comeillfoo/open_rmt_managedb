@@ -2,18 +2,18 @@ package factories;
 
 import communication.Component;
 import communication.Mediator;
-import communication.Segment;
 import communication.Valuable;
+import communication.wrappers.AlertBag;
 import entities.Junker;
 import entities.Organization;
 import parsing.Resolver;
 import parsing.SubProcessController;
 import parsing.plants.Factory;
 import parsing.plants.OrganizationBuilder;
+import systemcore.ServerController;
 
 public final class OrganizationBuilderTests implements Mediator {
-  private final Resolver magiV = new SubProcessController(this);
-  private final Factory<Organization> factory = new OrganizationBuilder(magiV);
+  private final Factory<Organization> factory = new OrganizationBuilder(null);
 
   public void NullBuilding() {
     Organization result = factory.make(null);
@@ -58,7 +58,7 @@ public final class OrganizationBuilderTests implements Mediator {
   }
 
   @Override
-  public void notify(Component sender, Segment data) {
-    System.out.println(data.getData());
+  public void notify(Component sender, Valuable data) {
+    System.out.println(((AlertBag) data).Notify().Message());
   }
 }

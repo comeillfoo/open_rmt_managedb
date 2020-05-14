@@ -35,19 +35,19 @@ public final class Update extends Committer {
    */
   @Override
   public Report execute() {
-    if (sieve == null)
+    if (SIEVE == null)
       return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь с Вашим системным администратором");
     if (id == null)
       return new Report(1, "Неправильный формат идентификатора обновляемого элемента");
-    if (embedded == null)
+    if (EMBEDDED == null)
       return new Report(1, "Обнаружена попытка добавить неопределенный элемент");
-    Receiver<Integer, Organization> realSiever = (Receiver<Integer, Organization>) sieve;
+    Receiver<Integer, Organization> realSiever = (Receiver<Integer, Organization>) SIEVE;
     Integer key = null;
     realSiever.search(key, null, (org)->(org.Key().equals(id)));
     if (key != null) {
-      Organization litmus = embedded;
-      realSiever.add(key, embedded, (org)->(true));
-      if (litmus.equals(embedded))
+      Organization litmus = EMBEDDED;
+      realSiever.add(key, EMBEDDED, (org)->(true));
+      if (litmus.equals(EMBEDDED))
         return new Report(0, "Элемент успешно обновлен");
       else return new Report(0xCCCF, "Возникли ошибки при добавлении элемента");
     } else return new Report(0xCCCF, "Элемент с заданным идентификатором не найден");

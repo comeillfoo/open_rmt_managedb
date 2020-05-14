@@ -13,7 +13,7 @@ import instructions.concrete.ConDecree;
  * @see parsing.instructions.Command
  */
 public abstract class Committer extends ConDecree {
-  protected final Organization embedded;
+  protected final Organization EMBEDDED;
   /**
    * Конструктор, устанавливающий ссылку на
    * управленца коллекцией, а также объект
@@ -23,6 +23,6 @@ public abstract class Committer extends ConDecree {
    */
   public Committer(Receiver sieve, Organization added) {
     super(sieve);
-    embedded = added;
+    EMBEDDED = added;
   }
 }

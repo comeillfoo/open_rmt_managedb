@@ -29,9 +29,9 @@ public final class Exit extends ConDecree {
    */
   @Override
   public Report execute() {
-    if (sieve == null)
+    if (SIEVE == null)
       return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь со своим системным администратором");
-    sieve.save();
+    SIEVE.save();
     System.exit(0);
     return new Report(0xDEAD, "Критическая ошибка: не удалось завершить работу сервера");
   }

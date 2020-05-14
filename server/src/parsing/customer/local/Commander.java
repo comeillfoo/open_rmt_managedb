@@ -28,7 +28,6 @@ public abstract class Commander<K, V extends Mappable<K>> implements Receiver<K,
    * Конструктор, принимающий
    * загрузчик коллекции и элемент,
    * ведущий летопись
-   * @param loader загрузчик
    * @param logger логирующий элемент
    */
   public Commander(LoaferLoader<V> loader, RadioLogger logger) {

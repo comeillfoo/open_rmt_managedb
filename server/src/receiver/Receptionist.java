@@ -3,9 +3,10 @@ package receiver;
 import communication.Component;
 import communication.Mediator;
 import communication.ServerCustomer;
-import communication.wrappers.NetBag;
+import communication.wrappers.PassBag;
 import systemcore.ServerController;
 
+import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,22 +23,24 @@ import java.util.Map;
  * @see Mediator
  */
 public abstract class Receptionist implements Component, Mediator {
-  protected final ServerController core; // контроллер системы сервера
+  protected final ServerController CORE; // контроллер системы сервера
   // список подключенных к серверу клиентов
-  protected final Map<SocketChannel, ServerCustomer> customers = new HashMap<>();
+  protected final Map<SocketChannel, ServerCustomer> CUSTOMERS = new HashMap<>();
+  // выделяем буфер на постоянной основе 2 Кибибайта
+  protected final ByteBuffer BYTE_BUFFER = ByteBuffer.allocate(2 * 1024);
 
   /**
    * Стандартный конструктор,
    * с установкой контроллера над модулем
    * @param core контроллер системы модулей
    */
-  public Receptionist(ServerController core) { this.core = core; }
+  public Receptionist(ServerController core) { this.CORE = core; }
 
   /**
    * Метод постановки подключенного клиента на учет
    * @param packet входной сетевой пакет
    */
-  public abstract void listen(NetBag packet);
+  public abstract void listen(PassBag packet);
 
   /**
    * Функция поиска клиента по каналу,
@@ -45,5 +48,5 @@ public abstract class Receptionist implements Component, Mediator {
    * @param clientChannel канал клиента
    * @return информация о клиенте
    */
-  public final ServerCustomer search(SocketChannel clientChannel) { return customers.get(clientChannel); }
+  public final ServerCustomer search(SocketChannel clientChannel) { return CUSTOMERS.get(clientChannel); }
 }

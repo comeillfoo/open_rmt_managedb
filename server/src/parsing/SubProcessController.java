@@ -1,6 +1,9 @@
 package parsing;
 
 import communication.*;
+import communication.wrappers.ExecuteBag;
+import communication.wrappers.QueryBag;
+import entities.Organization;
 import instructions.concrete.ConDecree;
 import instructions.rotten.RawDecree;
 import czerkaloggers.customer.B_4D4_GE3;
@@ -12,6 +15,8 @@ import parsing.plants.OrganizationBuilder;
 import parsing.supplying.LilyInvoker;
 import systemcore.ServerController;
 
+import java.util.List;
+
 /**
  * Контроллер, исполнения запросов клиента.
  * Если весь проект - это ОС, то это подсистема
@@ -20,7 +25,9 @@ import systemcore.ServerController;
  * @author Come_1LL_F00 aka Lenar Khannanov
  */
 public final class SubProcessController extends Resolver {
-  private final HawkPDroid<SubProcessController> RADIOMAN;
+  // название переменной окружения - общая для всех загрузчиков
+  private final static String VAR_NAME = "DBPATH";
+  private final HawkPDroid<SubProcessController> RADIOMAN; // ссылка на логгер
 
   /**
    * Конструктор, инициализирующий
@@ -55,23 +62,28 @@ public final class SubProcessController extends Resolver {
    * Единственный метод, отправляющий
    * команды на исполнение и пробрасывающий
    * результат их исполнения дальше по цепи.
-   * <ul>
-   *   <li>Достать сырую команду</li>
-   *   <li>
-   *     Сформировать конкретную команду
-   *     посредством фабрики комманд
-   *   </li>
-   *   <li>Передать команду Invoker'у</li>
-   *   <li>Получить отчет о работе команды</li>
-   *   <li>Отправить отчет в модуль отправки</li>
-   * </ul>
-   * @param parcel присланные данные о клиенте и команде на исполнение
+   * @param query присланные данные о клиенте и команде на исполнение
    */
   @Override
-  public void parse(Segment parcel) {
-    RawDecree command = (RawDecree)((ClientPackage) parcel.getData()).getCommand();
-    System.out.println(command);
+  public void parse(QueryBag query) {
+    // достаем название переменной окружения
+    // String var_name = query.Customer().$VAR();
+    List<Organization> loaded = null;
+    // проверили была ли загружена коллекция
+    if (!breadLoader.Loaded()) {
+      // установили переменную окружения
+      breadLoader.Environment(VAR_NAME);
+      // загрузили коллекцию
+      loaded = breadLoader.load();
+      // изменили состояние пустой коллекции на полную
+      fate.DataRebase(loaded);
+    }
+    // взяли клиентский запрос
+    RawDecree command = query.Query();
+    // отправляем фабрике, чтобы
+    // построить уже исполняемую команду
     notify(this, command);
+    // а затем исполнить
   }
 
   /**
@@ -87,9 +99,11 @@ public final class SubProcessController extends Resolver {
     if (sender == RADIOMAN)
       CONTROLLER.notify(this, data); // отправили господину распорядителю
     else if (sender == this)
-      wizard.make((RawDecree) data, fate); // отправили на фабрику (мороженого шутка) комманд
+      wizard.make((QueryBag) data, fate); // отправили на фабрику (мороженого шутка) комманд
     else if (sender == wizard)
-      kael.invoke((ConDecree) data); // отправили Invoker'у, чтобы исполнить
+      kael.invoke((ExecuteBag) data); // отправили Invoker'у, чтобы исполнить
+    else if (sender == kael)
+      CONTROLLER.notify(this, data);
     // разрастается по мере увеличения числа компонент модуля
   }
 }

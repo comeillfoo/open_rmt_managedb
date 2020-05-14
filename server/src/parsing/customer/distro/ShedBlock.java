@@ -21,8 +21,6 @@ public final class ShedBlock extends LimboKeeper {
    * Конструктор, принимающий любой хороший загрузчик и
    * Логгер, который умеет не только составлять протокол,
    * но и отправлять его модулю разбора запросов клиента
-   *
-   * @param loader загрузчик коллекции
    * @param logger логгер, взаимодействующий с контроллером
    */
   public ShedBlock(LoaferLoader<Organization> loader, HawkPDroid logger) {

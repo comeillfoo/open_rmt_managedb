@@ -29,10 +29,10 @@ public final class Show extends ConDecree {
    */
   @Override
   public Report execute() {
-    if (sieve == null)
+    if (SIEVE == null)
       return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь со своим системным администратором");
-    Receiver<Integer, Organization> realSiever = (Receiver<Integer, Organization>) sieve;
-    String info = sieve.survey((org)->(true));
+    Receiver<Integer, Organization> realSiever = (Receiver<Integer, Organization>) SIEVE;
+    String info = SIEVE.survey((org)->(true));
     if ((info == null) || (info.isEmpty()))
       return new Report(0, "Информация по элементам данной коллекции не найдено/либо коллекция пуста");
     return new Report(0, "Коллекция состоит из следующих элементов:\n" + info);
