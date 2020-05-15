@@ -1,12 +1,13 @@
 package parsing.supplying.interpreter;
 
 import instructions.rotten.RawDecree;
+import parsing.Resolver;
 import parsing.supplying.Invoker;
 
 public final class LilyShell extends Shell {
 
-  public LilyShell(String filename, Invoker ctrl) {
-    super(filename, ctrl);
+  public LilyShell(Resolver controller, String filename, Invoker ctrl) {
+    super(controller, filename, ctrl);
   }
 
   @Override
