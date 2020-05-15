@@ -108,15 +108,15 @@ public final class Hostess extends Receptionist {
 
     // просто оповещение о подключении
     String message = "Установлено соединение с данным клиентом:" +
-        "\nIP: " + connected.socket().getInetAddress().getHostAddress() +
-        "\nPORT: " + connected.socket().getPort();
+        " IP: " + connected.socket().getInetAddress().getHostAddress() +
+        " PORT: " + connected.socket().getPort();
     TETRODE.logboard(0, message);
     // попытаться сконфигурировать канал в неблокирующий режим
     try { connected.configureBlocking(false); } catch (IOException e) {
       TETRODE.logboard(10, "Ошибка конфигурации клиентского канала");
       return null;
     }
-    TETRODE.logboard(0, "Найстройка клиентского канала прошла успешно");
+    TETRODE.logboard(0, "Настройка клиентского канала прошла успешно");
     // попытка добавить клиента в выборку
     try { connected.register(elector, SelectionKey.OP_READ);
     } catch (ClosedChannelException e) {

@@ -38,10 +38,11 @@ public final class RemoveLower extends RemoveThan {
         .stream()
         .forEach((Map.Entry<Integer, Integer> e)-> {
           Organization taken = null;
-          REAL.search(e.getKey(), taken, (org)->(true));
+          Organization[] takens = new Organization[]{taken};
+          REAL.search(new Integer[]{e.getKey()}, takens, (org)->(true));
           OrganizationTitleComparator cmp = new OrganizationTitleComparator();
-          REAL.remove(e.getKey(), EMBEDDED, MENACE);
-          result.append("Элемент " + taken + " по ключу " + e.getKey() + " удален\n");
+          REAL.remove(new Integer[]{e.getKey()}, new Organization[]{EMBEDDED}, MENACE);
+          result.append("Элемент " + takens[0] + " по ключу " + e.getKey() + " удален\n");
         });
     result.append("Нужные элементы успешно удалены");
     return new Report(0, result.toString());

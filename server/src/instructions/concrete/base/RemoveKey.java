@@ -39,11 +39,13 @@ public final class RemoveKey extends ConDecree {
       return new Report(1, "Неправильный формат ключа удаляемого элемента");
     Receiver<Integer, Organization> realSiever = SIEVE;
     Organization buffer = null;
-    realSiever.search(key, buffer, (org)->(true));
-    if (buffer == null)
+    Organization[] buffers = new Organization[]{buffer};
+    Integer[] keys = new Integer[]{key};
+    realSiever.search(keys, buffers, (org)->(true));
+    if (buffers[0] == null)
       return new Report(0xCCCF, "Элемента по заданному ключу не существует");
     else {
-      realSiever.remove(key, null, (org)->(true));
+      realSiever.remove(keys, new Organization[]{}, (org)->(true));
       return new Report(0, "Элемент успешно удален");
     }
   }

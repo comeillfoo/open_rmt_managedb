@@ -6,6 +6,9 @@ import communication.Report;
 import communication.wrappers.AlertBag;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.RadioLogger;
+import czerkaloggers.dispatching.TT_32_GE3;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import parsing.Resolver;
 
 import java.nio.channels.SocketChannel;
@@ -21,8 +24,10 @@ import java.nio.channels.SocketChannel;
  * @see RadioLogger
  */
 public final class B_4D4_GE3 extends HawkPDroid<Resolver> implements Component {
-  // builders
 
+  private static final Logger log = LoggerFactory.getLogger(B_4D4_GE3.class);
+
+  // builders
   public B_4D4_GE3(Mediator controller) { super((Resolver) controller); }
 
   /**
@@ -47,6 +52,10 @@ public final class B_4D4_GE3 extends HawkPDroid<Resolver> implements Component {
    */
   @Override
   public void logboard(Integer errorCode, String message) {
-    // TODO: посмотреть теорию и написать реализацию
+    if (errorCode == 1)
+      log.error("[{}] : {}", errorCode, message);
+    else if (errorCode == 2)
+      log.warn("[{}] : {}", errorCode, message);
+    else log.info("[{}] : {}", errorCode, message);
   }
 }

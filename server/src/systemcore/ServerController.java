@@ -100,8 +100,14 @@ public final class ServerController implements Mediator {
         TRIODE.logboard(0, "Получено сообщение от сервера с запросом на регистрацию клиента");
         TRIODE.logboard(0, "Запрос перенаправлен на ресепшен");
         SECRETARY.listen((PassBag) data);
+      } else if (data instanceof AlertBag)
+        TRIODE.logboard(0, ((AlertBag) data).Notify().Message());
+      else if (data instanceof QueryBag) {
+        TRIODE.logboard(0, "Пришел прочитанный запрос");
+        TRIODE.logboard(0, "Данные отправлены в модуль обработки запросов");
+        new SubProcessController(this, ((QueryBag) data).Channel()).parse((QueryBag) data);
       } else if (data instanceof TunnelBag) {
-        TRIODE.logboard(0, "Получен запрос от клиента");
+        TRIODE.logboard(0, "Получен запрос");
         TunnelBag parcel = (TunnelBag) data;
         // достаем клиентский anal
         SocketChannel current = (SocketChannel) parcel.Channel();
@@ -115,10 +121,9 @@ public final class ServerController implements Mediator {
         PARSER.SetClientChannel((SocketChannel) parcel.Channel());
         PARSER.retrieve(parcel);
         // проверка надо ли логировать с сервера
-      } else if (data instanceof AlertBag)
-        TRIODE.logboard(0, ((AlertBag) data).Notify().Message());
+      }
       // если отправил модуль чтения запроса
-    } else if ((sender == PARSER) || (sender == MAIN_SERVER)) {
+    } else if (sender == PARSER) {
       // проверка: а запрос ли это отправляем обрабатываться
       if (data instanceof QueryBag) {
         TRIODE.logboard(0, "Пришел прочитанный запрос");
@@ -144,4 +149,6 @@ public final class ServerController implements Mediator {
    * @return текущий сервер
    */
   public final Server whereServer() { return MAIN_SERVER; }
+
+  public final void ImmediateStop(AlertBag log) { MAIN_SERVER.closeConnection(log); }
 }

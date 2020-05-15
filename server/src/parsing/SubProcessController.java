@@ -52,7 +52,7 @@ public final class SubProcessController extends Resolver {
     RADIOMAN = (HawkPDroid<SubProcessController>) B_4D4_GE3.assemble(this, B_4D4_GE3::new);
     RADIOMAN.logboard(0, "Успешно собран логгер модуля обработки запросов");
     // определяем загрузчик коллекции
-    breadLoader = new NakedCrateLoader();
+    breadLoader = new NakedCrateLoader(this, RADIOMAN);
     RADIOMAN.logboard(0, "Успешно создан загрузчик коллекции");
     // определяем ресивер коллекции
     fate = new ShedBlock(breadLoader, RADIOMAN);

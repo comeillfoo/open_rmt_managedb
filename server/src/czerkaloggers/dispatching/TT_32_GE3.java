@@ -4,13 +4,17 @@ import communication.Component;
 import communication.Mediator;
 import communication.wrappers.AlertBag;
 import czerkaloggers.HawkPDroid;
+import czerkaloggers.systemcore.C7_E3_GE3;
 import dispatching.AliExpress;
 import dispatching.Dispatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class TT_32_GE3 extends HawkPDroid<Dispatcher> implements Component {
-  protected TT_32_GE3(Dispatcher controller) { super(controller); }
 
-  public TT_32_GE3(Mediator controller) { this((Dispatcher) controller); }
+  private static final Logger log = LoggerFactory.getLogger(TT_32_GE3.class);
+
+  public TT_32_GE3(Mediator controller) { super((Dispatcher) controller); }
 
 
   /**
@@ -29,6 +33,10 @@ public final class TT_32_GE3 extends HawkPDroid<Dispatcher> implements Component
    */
   @Override
   public void logboard(Integer errorCode, String message) {
-    // TODO: log
+    if (errorCode == 1)
+      log.error("[{}] : {}", errorCode, message);
+    else if (errorCode == 2)
+      log.warn("[{}] : {}", errorCode, message);
+    else log.info("[{}] : {}", errorCode, message);
   }
 }

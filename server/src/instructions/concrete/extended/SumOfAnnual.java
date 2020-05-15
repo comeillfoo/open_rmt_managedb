@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @param <V> тип элементов коллекции
  * @param <R> тип поля, по которому суммируем
  */
-public class SumOfAnnual<K, V extends Mappable<K>, R extends Number> extends ConDecree {
+public class SumOfAnnual<K extends Number, V extends Mappable<K>, R extends Number> extends ConDecree {
   protected final Function<? super V,? extends R> keySummator;
   /**
    * Конструктор, устанавливающий ссылку на

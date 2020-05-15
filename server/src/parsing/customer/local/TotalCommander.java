@@ -52,12 +52,12 @@ public class TotalCommander extends Commander<Integer, Organization> {
    * @param menace  признак, по которому данный элемент должен добавится
    */
   @Override
-  public void add(Integer key, Organization value, Indicator menace) {
+  public void add(Integer[] key, Organization[] value, Indicator menace) {
     // проверка: добавляем ли мы ошибку природы
-    if (value != null) {
+    if (value[0] != null) {
       // проверка: нужно ли добавлять данное детище
-      if (menace.verify(value))
-        value = database.put((key == null)? value.Key() : key, value);
+      if (menace.verify(value[0]))
+        value[0] = database.put(key[0] == null? value[0].Key() : key[0], value[0]);
       else peacher().notify(3, "Не удалось добавить элемент: не удовлетворяет условию");
     } else peacher().notify(1, "Обнаружена попытка добавления пустого элемента: выполнение метода прервано");
   }
@@ -96,36 +96,36 @@ public class TotalCommander extends Commander<Integer, Organization> {
    * @param menace признак того, нужно ли удалять данный элемент
    */
   @Override
-  public void remove(Integer key, Organization value, Indicator menace) {
+  public void remove(Integer[] key, Organization[] value, Indicator menace) {
     // проверяем нужно ли удалять элемент по ключу
-    if ((key != null) && (value == null)) {
+    if ((key[0] != null) && (value[0] == null)) {
       // проверяем есть ли такой ключ в базе
-      if (database.containsKey(key)) {
+      if (database.containsKey(key[0])) {
         // выбрасываем этот мусор из коллекции, и, чтобы подстраховаться, даем ссылку команде, ради дальнейших проверок
-        value = database.remove(key);
-        peacher().notify(0, "Элемент по ключу " + key + " удален");
-      } else peacher().notify(3, "Невозможно удалить элемент: ключ " + key + " не найден");
-    } else if ((key == null) && (value != null)) {
+        value[0] = database.remove(key[0]);
+        peacher().notify(0, "Элемент по ключу " + key[0] + " удален");
+      } else peacher().notify(3, "Невозможно удалить элемент: ключ " + key[0] + " не найден");
+    } else if ((key[0] == null) && (value[0] != null)) {
       // проверили: нужно ли удалить элемент по значению и дальше смотрим, а есть ли эта тварь в коллекции вообще
-      if (database.containsValue(value)) {
+      if (database.containsValue(value[0])) {
         // если все-таки есть, то пытаемся найти ключ этой падлы
         search(key, value, (v)->(true)); // а чо зря функцию писал, вот и понадобилась
         // делаем проверку: нужно ли удалять этот элемент
-        if (menace.verify(value)) {
+        if (menace.verify(value[0])) {
           // удаляем и сверяем с требуемым на удаление
-          if (value.equals(database.remove(key)))
-            peacher().notify(0, "Элемент " + value + " успешно удален");
+          if (value[0].equals(database.remove(key[0])))
+            peacher().notify(0, "Элемент " + value[0] + " успешно удален");
           else peacher().notify(2, "Случайно удален не тот элемент, данные будут восстановлены");
         } else peacher().notify(3, "Невозможно стереть элемент: не удовлетворяет условию удаления");
-      } else peacher().notify(1, "Нельзя удалить элемент " + value + ": из-за его отсутствия");
-    } else if ((key != null) && (value != null)) {
+      } else peacher().notify(1, "Нельзя удалить элемент " + value[0] + ": из-за его отсутствия");
+    } else if ((key[0] != null) && (value[0] != null)) {
       // проверяем: содержит ли коллекция и ключ, и значение
-      if ((database.containsKey(key)) || (database.containsValue(value))) {
+      if ((database.containsKey(key[0])) || (database.containsValue(value[0]))) {
         // проверяем: а нужно ли нам все это
-          if (menace.verify(value)) {
+          if (menace.verify(value[0])) {
           // проверяем: удалилось ли
-          if (database.remove(key, value)) peacher().notify(0, "Удаление прошло успешно");
-          else peacher().notify(1, "Не удалось удалить элемент по ключу " + key + " и значению " + value);
+          if (database.remove(key[0], value[0])) peacher().notify(0, "Удаление прошло успешно");
+          else peacher().notify(1, "Не удалось удалить элемент по ключу " + key[0] + " и значению " + value[0]);
         } else peacher().notify(3, "Не удалось удалить элемент: не подходит под условия");
       } else peacher().logboard(2, "Данные для удаления не найдены в коллекции");
     } else peacher().logboard(0xEE, "Произошел неправильный вызов метода remove");
@@ -141,33 +141,33 @@ public class TotalCommander extends Commander<Integer, Organization> {
    * @param menace  признак того, нужен ли нам данный элемент
    */
   @Override
-  public void search(Integer key, Organization value, Indicator menace) {
+  public void search(Integer[] key, Organization[] value, Indicator menace) {
     // проверка: по ключу ли искать
-    if ((key != null) && (value == null)) {
+    if ((key[0] != null) && (value[0] == null)) {
       // проверка: есть ли данный ключ в коллекции
-      if (database.containsKey(key)) {
-        Organization buffer = database.getOrDefault(key, value); // сохраняем найденный элемент
-        peacher().notify(0, "В базе найдены данные по Вашему ключу " + key);
+      if (database.containsKey(key[0])) {
+        Organization buffer = database.getOrDefault(key[0], value[0]); // сохраняем найденный элемент
+        peacher().notify(0, "В базе найдены данные по Вашему ключу " + key[0]);
         if (menace.verify(buffer)) {
-          value = buffer; // возвращаем найденное наверх
+          value[0] = buffer; // возвращаем найденное наверх
           peacher().notify(0, "Условие удовлетворено, данные предоставлены");
         } else peacher().notify(3, "Условие не удовлетворено, данные не могут быть предоставлены");
-      } else peacher().notify(1, "Ключ " + key + " отсутствует в коллекции, данные по нему не могут быть найдены");
-    } else if ((key == null) && (value != null)) {
+      } else peacher().notify(1, "Ключ " + key[0] + " отсутствует в коллекции, данные по нему не могут быть найдены");
+    } else if ((key[0] == null) && (value[0] != null)) {
       // проверка: есть ли элемент в коллекции
-      if (database.containsValue(value)) {
+      if (database.containsValue(value[0])) {
         // Хайпим на Stream API
-        Organization finalized = value; // копируем значение, чтобы оно оставалось постоянным, требование ФИ
-        key = database.entrySet() // получаем множество пар ключ-значение
+        Organization finalized = value[0]; // копируем значение, чтобы оно оставалось постоянным, требование ФИ
+        key[0] = database.entrySet() // получаем множество пар ключ-значение
             .stream() // преобразуем в поток
             .filter(entry -> entry.getValue().equals(finalized) && menace.verify(entry.getValue())) // оставляем только значения, равные нашему и соответствующие условию
             .map(Map.Entry::getKey) // сохраняем их ключи
             .findFirst() // берем первый ключ
-            .orElse(key); // или звоним бывшему (сохраняем прежний ключ)
+            .orElse(key[0]); // или звоним бывшему (сохраняем прежний ключ)
         // возврат ключа наверх
-        peacher().notify(0, "Найден ключ элемента " + value);
-      } else peacher().notify(2, "Элемент " + value + " отсутствует в коллекции");
-    } else if ((key == null) && (value == null)) {
+        peacher().notify(0, "Найден ключ элемента " + value[0]);
+      } else peacher().notify(2, "Элемент " + value[0] + " отсутствует в коллекции");
+    } else if ((key[0] == null) && (value[0] == null)) {
       // ищем ключ первого элемента, удовлетворяющего признаку
       Integer buffer_key =
           database
@@ -176,7 +176,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
           .filter((enter)->(menace.verify(enter.getValue())))
           .findFirst().get().getKey();
       // возвращаем ключ
-      key = buffer_key;
+      key[0] = buffer_key;
     } else peacher().logboard(1, "Не корректный вызов функции поиска");
   }
 
@@ -230,15 +230,10 @@ public class TotalCommander extends Commander<Integer, Organization> {
    */
   @Override
   public void DataRebase(List<Organization> loaded) {
-    if ((loaded == null) || (loaded.isEmpty())) {
-      peacher().logboard(0, "Коллекция пуста");
-      return;
-    }
     loaded
         .stream()
         .forEach((org) -> { database.put(org.Key(), org); });
-    peacher().notify(0, "Коллекция успешно загружена");
-    System.out.println(database.size());
+    peacher().logboard(0, "Коллекция успешно загружена");
   }
 
   /**

@@ -13,6 +13,7 @@ import instructions.rotten.base.*;
 import instructions.rotten.extended.RawExecuteScript;
 import instructions.rotten.extended.RawFilterContainsName;
 import instructions.rotten.extended.RawMaxByDate;
+import instructions.rotten.extended.RawSumOfAnnualTurnover;
 import parsing.customer.distro.LimboKeeper;
 import parsing.supplying.interpreter.Shell;
 
@@ -43,7 +44,8 @@ public final class JustCommandBuilder {
       else if (c instanceof RawSave) return new Save(receiver);
       else if (c instanceof RawShow) return new Show(receiver);
       else if (c instanceof RawMaxByDate) return new MaxByDate(receiver);
-      else return new SumOfAnnualTurnover(receiver);
+      else if (c instanceof RawSumOfAnnualTurnover) return new SumOfAnnualTurnover(receiver);
+      else return new Help(receiver);
     }
   }
 }

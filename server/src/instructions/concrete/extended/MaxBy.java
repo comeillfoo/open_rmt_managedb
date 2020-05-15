@@ -18,7 +18,7 @@ import java.util.function.Function;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public class MaxBy<K, V extends Mappable<K>, R extends Comparable<? super R>> extends ConDecree {
+public class MaxBy<K extends Number, V extends Mappable<K>, R extends Comparable<? super R>> extends ConDecree {
   protected final Function<? super V,? extends R> keySearcher;
   /**
    * Конструктор, устанавливающий ссылку на
@@ -48,9 +48,11 @@ public class MaxBy<K, V extends Mappable<K>, R extends Comparable<? super R>> ex
     K maxim_key = maxim.get().getKey();//TODO: NoSuchElementException
     // найти в исходной коллекции тот элемент
     Mappable<K> recology = null;
-    SIEVE.search(maxim_key, recology, (element)->true);
+    Mappable<K>[] recologys = new Mappable[]{recology};
+    Number[] maxim_keys = new Number[]{maxim_key};
+    SIEVE.search(maxim_keys, recologys, (element)->true);
     // вернуть информацию об элементе
-    return new Report(0, recology.toString());
+    return new Report(0, recologys[0].toString());
   }
 
   @Override

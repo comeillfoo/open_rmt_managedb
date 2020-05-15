@@ -1,7 +1,9 @@
 package parsing.plants.pickers;
 
 import entities.Organization;
+import instructions.concrete.ConDecree;
 import instructions.concrete.base.Committer;
+import instructions.concrete.base.Help;
 import instructions.concrete.base.Insert;
 import instructions.concrete.base.Update;
 import instructions.concrete.extended.RemoveLower;
@@ -22,7 +24,7 @@ import parsing.customer.distro.LimboKeeper;
 import parsing.plants.Factory;
 
 public final class CommittersBuilder {
-  public final Committer make(RawCommitter c, LimboKeeper r, Factory<Organization> f) {
+  public final ConDecree make(RawCommitter c, LimboKeeper r, Factory<Organization> f) {
     Organization o = f.make(((IJunked) c).Params());
     if (c instanceof IClued) {
       Integer p = ((IClued) c).Key();
@@ -33,6 +35,7 @@ public final class CommittersBuilder {
       else if (c instanceof RawReplaceIfGreater)
           return new ReplaceIfGreater(r, p, o);
       else return new ReplaceIfLower(r, p, o);
-    } else return new RemoveLower(r, o);
+    } else if (c instanceof RawRemoveLower) return new RemoveLower(r, o);
+    else return new Help(r);
   }
 }

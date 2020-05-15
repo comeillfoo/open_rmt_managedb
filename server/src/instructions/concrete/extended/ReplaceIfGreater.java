@@ -23,12 +23,14 @@ public final class ReplaceIfGreater extends ReplaceIf {
     Map<Integer, Integer> keys = REAL.getBy(Organization::Key);
     if (keys.containsKey(KEY)) {
       Organization replaced = null;
-      REAL.search(KEY, replaced, (org)->(true));
-      boolean isReplaced = new OrganizationTitleComparator().compare(EMBEDDED, replaced) > 0;
-      REAL.add(KEY, EMBEDDED, (org)->(isReplaced));
-      REAL.search(KEY, replaced, (org)->(true));
-      if ((replaced == EMBEDDED) && (isReplaced))
-        return new Report(0, "Проведена успешная замена по ключу: " + KEY);
+      Organization[] replaceds = new Organization[]{replaced};
+      Integer[] KEYS = new Integer[]{KEY};
+      REAL.search(KEYS, replaceds, (org)->(true));
+      boolean isReplaced = new OrganizationTitleComparator().compare(EMBEDDED, replaceds[0]) > 0;
+      REAL.add(KEYS, new Organization[]{EMBEDDED}, (org)->(isReplaced));
+      REAL.search(KEYS, replaceds, (org)->(true));
+      if ((replaceds[0] == EMBEDDED) && (isReplaced))
+        return new Report(0, "Проведена успешная замена по ключу: " + KEYS[0]);
       else return new Report(0, "Заменить элемент не удалось, т.к. "
           + (isReplaced? "элемент оказался меньше" : "произошла ошибка при замене"));
     } else return new Report(2, "Ключ " + KEY + " не найден в коллекции");

@@ -43,11 +43,13 @@ public final class Update extends Committer {
       return new Report(1, "Обнаружена попытка добавить неопределенный элемент");
     Receiver<Integer, Organization> realSiever = (Receiver<Integer, Organization>) SIEVE;
     Integer key = null;
-    realSiever.search(key, null, (org)->(org.Key().equals(id)));
+    Integer[] keys = new Integer[]{key};
+    realSiever.search(keys, new Organization[]{}, (org)->(org.Key().equals(id)));
     if (key != null) {
       Organization litmus = EMBEDDED;
-      realSiever.add(key, EMBEDDED, (org)->(true));
-      if (litmus.equals(EMBEDDED))
+      Organization[] buffers = new Organization[]{litmus};
+      realSiever.add(keys, buffers, (org)->(true));
+      if (buffers[0].equals(EMBEDDED))
         return new Report(0, "Элемент успешно обновлен");
       else return new Report(0xCCCF, "Возникли ошибки при добавлении элемента");
     } else return new Report(0xCCCF, "Элемент с заданным идентификатором не найден");

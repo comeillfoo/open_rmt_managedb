@@ -120,15 +120,16 @@ public final class Server implements Runnable, Component {
   public void closeConnection(AlertBag parcel) {
     try {
       Socket client = parcel.Channel().socket();
-      String message = "Client disconnect" +
-          "\nclient ip:" + client.getInetAddress().getHostAddress() +
-          "\nclient port:" + client.getPort() +
-          "\n____________________";
-      CORE.notify(this, new AlertBag(null, new Report(0, message)));
+      String message = "Клиент отключился" +
+          " IP: " + client.getInetAddress().getHostAddress() +
+          " PORT: " + client.getPort() +
+          " REASON : " + parcel.Notify().Message();
       client.close(); //close client's Socket to remove key from selector
+      CORE.notify(this, new AlertBag(null, new Report(0, message)));
       CORE.notify(this, new QueryBag(null, new RawSave()));
     } catch (IOException e) {
       CORE.notify(this, new AlertBag(null, new Report(1, "Ошибка во время отключения")));
-    }
+      CORE.notify(this, new QueryBag(null, new RawSave()));
+    } catch (NullPointerException e) {}
   }
 }

@@ -44,7 +44,7 @@ public interface Receiver<K, V extends Mappable<K>> {
    * @param value записываемый элемент
    * @param menace признак, по которому данный элемент должен добавится
    */
-  void add(K key, V value, Indicator menace);
+  void add(K[] key, V[] value, Indicator menace);
 
   /**
    * Общий метод удаления элемента из коллекции
@@ -52,7 +52,7 @@ public interface Receiver<K, V extends Mappable<K>> {
    * @param value удаляемый элемент
    * @param menace признак того, нужно ли удалять данный элемент
    */
-  void remove(K key, V value, Indicator menace);
+  void remove(K[] key, V[] value, Indicator menace);
 
   /**
    * Общий метод поиска элемента
@@ -60,7 +60,7 @@ public interface Receiver<K, V extends Mappable<K>> {
    * @param value элемент, который мы ищем
    * @param menace признак того, нужен ли нам данный элемент
    */
-  void search(K key, V value, Indicator menace);
+  void search(K[] key, V[] value, Indicator menace);
 
   /**
    * Делаем обзор на коллекцию, фильтруя базар

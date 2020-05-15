@@ -3,6 +3,7 @@ package parsing;
 
 import communication.Component;
 import communication.Mediator;
+import communication.wrappers.AlertBag;
 import communication.wrappers.QueryBag;
 import entities.Organization;
 import parsing.customer.bootstrapper.LoaferLoader;
@@ -48,4 +49,9 @@ public abstract class Resolver implements Mediator, Component {
   public Resolver(ServerController controller) { CONTROLLER = controller; }
 
   public SocketChannel ClientChannel() { return client; }
+
+  public void ImmediateStop(AlertBag alert) {
+    AlertBag clientAlert = new AlertBag(client, alert.Notify());
+    CONTROLLER.ImmediateStop(clientAlert);
+  }
 }

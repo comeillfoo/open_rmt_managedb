@@ -2,6 +2,7 @@ package instructions.concrete.base;
 
 import communication.Report;
 import entities.Organization;
+import entities.Organizations;
 import parsing.customer.Receiver;
 
 /**
@@ -42,13 +43,16 @@ public final class Insert extends Committer {
     if (EMBEDDED == null)
       return new Report(1, "Обнаружена попытка добавить неопределенный элемент");
     Organization buffer = null;
+    Integer[] keys = new Integer[]{key};
+    Organization[] buffers = new Organization[]{buffer};
     Receiver<Integer, Organization> realSiever = (Receiver<Integer, Organization>) SIEVE;
-    realSiever.search(key, buffer, (org)->(true));
-    if (buffer != null)
+    realSiever.search(keys, buffers, (org)->(true));
+    if (buffers[0] != null)
       return new Report(3, "Обнаружена попытка добавить элемент по уже существующему ключу");
-    buffer = EMBEDDED;
-    realSiever.add(key, EMBEDDED, (org)->(true));
-    if (buffer.equals(EMBEDDED))
+    buffers[0] = EMBEDDED;
+    Organization[] added = new Organization[]{EMBEDDED};
+    realSiever.add(keys, added, (org)->(true));
+    if (buffers[0].equals(added[0]))
       return new Report(0, "Элемент успешно добавлен");
     else return new Report(0xCCCF, "Возникли ошибки при попытки добавления элемента");
   }

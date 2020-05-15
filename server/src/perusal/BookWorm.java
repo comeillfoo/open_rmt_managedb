@@ -3,7 +3,9 @@ package perusal;
 
 import communication.ClientPackage;
 import communication.Component;
+import communication.Report;
 import communication.Valuable;
+import communication.wrappers.AlertBag;
 import communication.wrappers.QueryBag;
 import communication.wrappers.TunnelBag;
 import czerkaloggers.HawkPDroid;
@@ -64,12 +66,14 @@ public final class BookWorm extends QueryReader {
       if (tmpChannel.read(BYTE_BUFFER) == -1)
         throw new EOFException("Достигнут конец потока");
     } catch (EOFException e) {
-      CHRONICLER.logboard(0xe0f,"Неожиданно достигнут конец потока (возможно клиент забыл отправить данные)");
-      CHRONICLER.notify(0xe0f,"Неожиданно достигнут конец потока (возможно Вы забыли поместить данные)");
+      CHRONICLER.logboard(0xe0f,"Неожиданно достигнут конец потока");
+      CHRONICLER.notify(0xe0f,"Неожиданно достигнут конец потока");
+      KAPELLMEISTER.ImmediateStop(new AlertBag(null, new Report(0xe0f, "Неожиданно достигнут конец потока")));
       return;
     } catch (IOException e) {
       CHRONICLER.logboard(10,"Не удалось прочитать пользовательский запрос");
       CHRONICLER.notify(10,"Не удалось прочитать пользовательский запрос");
+      KAPELLMEISTER.ImmediateStop(new AlertBag(null, new Report(10, "Не удалось прочитать пользовательский запрос")));
       return;
     }
     // смотри, ща сальтуху *бану

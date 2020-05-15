@@ -3,6 +3,7 @@ package parsing.supplying;
 import communication.Report;
 import communication.wrappers.AlertBag;
 import communication.wrappers.ExecuteBag;
+import instructions.concrete.base.Save;
 import instructions.concrete.extended.ExecuteScript;
 import parsing.Resolver;
 import instructions.concrete.ConDecree;
@@ -42,6 +43,7 @@ public class LilyInvoker extends FondleEmulator {
     ConDecree concmd = cmd.Exec();
     Report result = concmd.execute();
     Report respond = new Report(0, "Команда " + concmd + " успешно выполнена с результатом:\n" + result.Message());
-    MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
+    if (!(concmd instanceof Save))
+      MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
   }
 }
