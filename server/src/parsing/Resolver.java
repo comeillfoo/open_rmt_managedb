@@ -21,7 +21,7 @@ import java.nio.channels.SocketChannel;
  * и делегирующий свою работу по обработке готовым классам.
  */
 public abstract class Resolver implements Mediator, Component {
-  protected final ServerController CONTROLLER; // контроллер модуля
+  protected  ServerController CONTROLLER; // контроллер модуля
   protected FondleEmulator kael; // сутенер комманд
   protected LimboKeeper fate; // сутенер коллекции
   protected InstructionBuilder wizard; // фабрика вызываемых комманд
@@ -42,6 +42,7 @@ public abstract class Resolver implements Mediator, Component {
 
   // конструктор по умолчанию
   // в терминах лабы
+  public Resolver() {}
   /**
    * Конструктор, устанавливающий хозяина
    * @param controller контроллер подсистемы

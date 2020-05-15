@@ -31,8 +31,29 @@ import java.util.List;
 public final class SubProcessController extends Resolver {
   // название переменной окружения - общая для всех загрузчиков
   private final static String VAR_NAME = "DBPATH";
-  private final HawkPDroid<SubProcessController> RADIOMAN; // ссылка на логгер
+  private HawkPDroid<SubProcessController> RADIOMAN; // ссылка на логгер
 
+  public SubProcessController() {
+    // определяем логгер
+    RADIOMAN = (HawkPDroid<SubProcessController>) B_4D4_GE3.assemble(this, B_4D4_GE3::new);
+    RADIOMAN.logboard(0, "Успешно собран логгер модуля обработки запросов");
+    // определяем загрузчик коллекции
+
+    RADIOMAN.logboard(0, "Успешно создан загрузчик коллекции");
+    // определяем ресивер коллекции
+    breadLoader = new NakedCrateLoader();
+    fate = new ShedBlock(breadLoader, RADIOMAN);
+    RADIOMAN.logboard(0, "Успешно создан менеджер коллекции");
+    // определяем вызывателя комманд
+    kael = new LilyInvoker(this);
+    RADIOMAN.logboard(0, "Успешно создан вызыватель комманд");
+    // определяем фабрику элементов коллекции
+    plant = new OrganizationBuilder(this);
+    RADIOMAN.logboard(0, "Успешно создана фабрика элементов коллекции");
+    // определяем преобразователя комманд
+    wizard = new InstructionBuilder(this, plant);
+    RADIOMAN.logboard(0, "Успешно создана фабрика вызываемых комманд");
+  }
   /**
    * Конструктор, инициализирующий
    * подсистему полностью. Она состоит из
@@ -46,27 +67,11 @@ public final class SubProcessController extends Resolver {
    * </ul>
    * @param m контроллер подсистемы
    */
-  public SubProcessController(ServerController m, SocketChannel client) {
-    super(m);
-    // определяем логгер
-    RADIOMAN = (HawkPDroid<SubProcessController>) B_4D4_GE3.assemble(this, B_4D4_GE3::new);
-    RADIOMAN.logboard(0, "Успешно собран логгер модуля обработки запросов");
-    // определяем загрузчик коллекции
-    breadLoader = new NakedCrateLoader(this, RADIOMAN);
-    RADIOMAN.logboard(0, "Успешно создан загрузчик коллекции");
-    // определяем ресивер коллекции
-    fate = new ShedBlock(breadLoader, RADIOMAN);
-    RADIOMAN.logboard(0, "Успешно создан менеджер коллекции");
-    // определяем вызывателя комманд
-    kael = new LilyInvoker(this);
-    RADIOMAN.logboard(0, "Успешно создан вызыватель комманд");
-    // определяем фабрику элементов коллекции
-    plant = new OrganizationBuilder(this);
-    RADIOMAN.logboard(0, "Успешно создана фабрика элементов коллекции");
-    // определяем преобразователя комманд
-    wizard = new InstructionBuilder(this, plant);
-    RADIOMAN.logboard(0, "Успешно создана фабрика вызываемых комманд");
+  public SubProcessController setSubProcessController(ServerController m, SocketChannel client) {
+    super.CONTROLLER = m;
+
     this.client = client;
+    return this;
   }
 
   /**
@@ -89,7 +94,7 @@ public final class SubProcessController extends Resolver {
       RADIOMAN.logboard(0, "Строим окружение");
       // загрузили коллекцию
       loaded = breadLoader.load();
-      System.out.println("че ты забыл тут??");
+
       RADIOMAN.logboard(0, "Коллекция загружена");
       // изменили состояние пустой коллекции на полную
       fate.DataRebase(loaded);

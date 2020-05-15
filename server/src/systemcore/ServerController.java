@@ -45,6 +45,7 @@ public final class ServerController implements Mediator {
   private final QueryReader PARSER; // модуль чтения запросов
   private final Dispatcher SUPPLIER; // модуль отправки запроса обратно клиента
   private final HawkPDroid<ServerController> TRIODE; // логгер
+  private final SubProcessController subProcessController = new SubProcessController();
 
 
   // конструктор, инициализирующий полностью систему
@@ -105,7 +106,8 @@ public final class ServerController implements Mediator {
       else if (data instanceof QueryBag) {
         TRIODE.logboard(0, "Пришел прочитанный запрос");
         TRIODE.logboard(0, "Данные отправлены в модуль обработки запросов");
-        new SubProcessController(this, ((QueryBag) data).Channel()).parse((QueryBag) data);
+        subProcessController.setSubProcessController(this, ((QueryBag) data).Channel()).parse((QueryBag) data);
+      //new SubProcessController(this, ((QueryBag) data).Channel()).parse((QueryBag) data);
       } else if (data instanceof TunnelBag) {
         TRIODE.logboard(0, "Получен запрос");
         TunnelBag parcel = (TunnelBag) data;
@@ -128,7 +130,8 @@ public final class ServerController implements Mediator {
       if (data instanceof QueryBag) {
         TRIODE.logboard(0, "Пришел прочитанный запрос");
         TRIODE.logboard(0, "Данные отправлены в модуль обработки запросов");
-        new SubProcessController(this, ((QueryBag) data).Channel()).parse((QueryBag) data);
+        subProcessController.setSubProcessController(this, ((QueryBag) data).Channel()).parse((QueryBag) data);
+        //new SubProcessController(this, ((QueryBag) data).Channel()).parse((QueryBag) data);
         // иначе: думаем, что уведомление клиенту, которое мы и отправляем
       } else {
         TRIODE.logboard(0, "Получено уведомление для клиента");

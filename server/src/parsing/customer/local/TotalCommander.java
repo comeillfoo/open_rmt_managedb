@@ -1,5 +1,6 @@
 package parsing.customer.local;
 
+import entities.Mappable;
 import entities.Organization;
 import czerkaloggers.RadioLogger;
 import parsing.customer.Indicator;
@@ -198,7 +199,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
     // for (Map.Entry<Integer, Organization> entry : database.entrySet())
     //  if (menace.verify(entry.getValue()))
     //    bufferSurvey.append("KEY: " + entry.getKey() + ";\n\tVALUE: " + entry.getValue() + "\n");
-    peacher().notify(0, "Данные по элементам коллекции предоставлены");
+    peacher().logboard(0, "Данные по элементам коллекции предоставлены");
     return bufferSurvey.toString(); // возвращаем результат
   }
 
