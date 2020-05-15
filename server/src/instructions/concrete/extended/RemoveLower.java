@@ -51,4 +51,7 @@ public final class RemoveLower extends RemoveThan {
   public static final String BRIEF = "удаляет из коллекции элементы, меньшие чем заданный";
   public static final String SYNTAX = NAME + " {element}";
   public static final int ARGNUM = 1;
+
+    @Override
+    public String toString() { return NAME; }
 }

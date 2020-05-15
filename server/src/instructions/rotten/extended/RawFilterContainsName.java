@@ -3,7 +3,9 @@ package instructions.rotten.extended;
 import instructions.rotten.ITitled;
 import instructions.rotten.RawDecree;
 
-public final class RawFilterContainsName extends RawDecree implements ITitled {
+import java.io.Serializable;
+
+public final class RawFilterContainsName extends RawDecree implements ITitled, Serializable {
     public static final String NAME = "filter_contains_name";
     public static final String BRIEF = "Находит элементы коллекции по заданному имени";
     public static final String SYNTAX = NAME + " [name]";

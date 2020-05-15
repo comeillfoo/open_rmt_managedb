@@ -45,11 +45,14 @@ public class MaxBy<K, V extends Mappable<K>, R extends Comparable<? super R>> ex
         buffer.entrySet()
         .stream()
         .max((Map.Entry<K, R> enter1, Map.Entry<K, R> enter2)->(enter1.getValue().compareTo(enter2.getValue())));
-    K maxim_key = maxim.get().getKey();
+    K maxim_key = maxim.get().getKey();//TODO: NoSuchElementException
     // найти в исходной коллекции тот элемент
     Mappable<K> recology = null;
     SIEVE.search(maxim_key, recology, (element)->true);
     // вернуть информацию об элементе
     return new Report(0, recology.toString());
   }
+
+  @Override
+  public String toString() { return NAME; }
 }

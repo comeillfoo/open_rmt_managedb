@@ -13,6 +13,14 @@ import java.time.ZonedDateTime;
  * @author Leargy aka Anton Sushkevich
  * @see Mappable
  */
+
+// TODO: (*желательно) добавить описание полям на SQL
+/**
+ * Основной класс, выполняющий роль элемента коллекции
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
+ * @see Mappable
+ */
 @XmlRootElement(name = "organization") // установка имени тега
 @XmlAccessorType(XmlAccessType.FIELD) // установить доступ по полям
 public final class Organization implements Mappable<Integer> {
@@ -137,8 +145,8 @@ public final class Organization implements Mappable<Integer> {
    * @param address адрес организации
    */
   public Organization(
-      String name, String fullname, float turnover, int employees,
-      OrganizationType type, Coordinates cord, Address address) {
+          String name, String fullname, float annualTurnover, int employeesCount,
+          OrganizationType type, Coordinates cord, Address officialAddress) {
     // проверили корректность названия
     this.name = (name.isEmpty() || (name == null))? "SampleOrganization" : name;
     // проверили корректность полного названия
@@ -146,11 +154,11 @@ public final class Organization implements Mappable<Integer> {
     // проверка корректности координат
     coordinates = (cord == null)? new Coordinates() : cord;
     // проверка корректности прибыли
-    annualTurnover = turnover > 0? turnover : Float.MIN_VALUE;
+    this.annualTurnover = annualTurnover > 0? annualTurnover : Float.MIN_VALUE;
     // проверка корректности числа сотрудников
-    employeesCount = employees > 0? employees : 1;
+    this.employeesCount = employeesCount > 0? employeesCount : 1;
     this.type = type;
-    officialAddress = address;
+    this.officialAddress = officialAddress;
     // организуем буферное значение, дабы не было отрицательных идентификаторов
     int buffer = hashCode() + counter++;
     id = (buffer == Integer.MIN_VALUE)? --buffer : Math.abs(buffer);
@@ -179,14 +187,14 @@ public final class Organization implements Mappable<Integer> {
     if (!this.getClass().getName().equals(other.getClass().getName())) return false;
     Organization another = (Organization) other;
     return (id == another.id)
-        && (employeesCount == another.employeesCount)
-        && (annualTurnover == another.annualTurnover)
-        && (type == another.type)
-        && (name.equals(another.name))
-        && (fullname.equals(another.fullname))
-        && (coordinates.equals(another.coordinates))
-        && ((officialAddress == null)? false : officialAddress.equals(another.officialAddress))
-        && (creationDate.isEqual(another.creationDate));
+            && (employeesCount == another.employeesCount)
+            && (annualTurnover == another.annualTurnover)
+            && (type == another.type)
+            && (name.equals(another.name))
+            && (fullname.equals(another.fullname))
+            && (coordinates.equals(another.coordinates))
+            && ((officialAddress == null)? false : officialAddress.equals(another.officialAddress))
+            && (creationDate.isEqual(another.creationDate));
     // TODO: возможны nullPointerException
   }
 
@@ -198,13 +206,13 @@ public final class Organization implements Mappable<Integer> {
   @Override
   public int hashCode() {
     return (int) (
-        name.hashCode() + fullname.hashCode()
-        + (employeesCount + annualTurnover) % 2
-        + (coordinates.hashCode()
-            + ((officialAddress != null)? officialAddress.hashCode() : 0)) % 3
-        + creationDate.hashCode()
-        + ((type == null)? 0 : type.hashCode())
-        );
+            name.hashCode() + fullname.hashCode()
+                    + (employeesCount + annualTurnover) % 2
+                    + (coordinates.hashCode()
+                    + ((officialAddress != null)? officialAddress.hashCode() : 0)) % 3
+                    + creationDate.hashCode()
+                    + ((type == null)? 0 : type.hashCode())
+    );
   }
 
   /**
@@ -214,13 +222,13 @@ public final class Organization implements Mappable<Integer> {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[id = " + id + "; name: " + name
-        + "; fullname: " + fullname
-        + "; type: " + type
-        + "; creationDate: " + creationDate
-        + "; annualTurnover = " + annualTurnover
-        + "; employeesCount = " + employeesCount
-        + "; coordinates: " + coordinates
-        + "; official-address: " + officialAddress + "]";
+            + "[id = " + id + "; name: " + name
+            + "; fullname: " + fullname
+            + "; type: " + type
+            + "; creationDate: " + creationDate
+            + "; annualTurnover = " + annualTurnover
+            + "; employeesCount = " + employeesCount
+            + "; coordinates: " + coordinates
+            + "; official-address: " + officialAddress + "]";
   }
 }

@@ -25,4 +25,7 @@ public abstract class Committer extends ConDecree {
     super(sieve);
     EMBEDDED = added;
   }
+
+  @Override
+  public String toString() { return NAME; }
 }

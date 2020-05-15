@@ -70,4 +70,7 @@ public class FilterContains<K, V extends Mappable<K>, R> extends ConDecree {
     String result = ((Receiver<K, V>) SIEVE).survey((element)->(realkeys.containsValue(element.Key())));
     return new Report(0, result);
   }
+
+  @Override
+  public String toString() { return NAME; }
 }

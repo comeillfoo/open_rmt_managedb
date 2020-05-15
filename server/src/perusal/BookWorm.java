@@ -27,7 +27,7 @@ public final class BookWorm extends QueryReader {
   private ByteArrayInputStream byteArrayInputStream;
   private ObjectInputStream objectInputStream;
   // наш буфер с приходящими данными все 2 Кибибайта наши на веки-вечные
-  private final ByteBuffer BYTE_BUFFER = ByteBuffer.allocate(2*1024);
+  private final ByteBuffer BYTE_BUFFER = ByteBuffer.allocate(3*1024);
 
   // builders
 

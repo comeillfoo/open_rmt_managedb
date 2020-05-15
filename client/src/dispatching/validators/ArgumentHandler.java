@@ -4,14 +4,9 @@ import communication.Segment;
 import dataSection.Commands;
 import entities.JunkerCreator;
 import exceptions.CommandSyntaxException;
+import instructions.rotten.base.*;
+import instructions.rotten.extended.*;
 import instructions.rotten.RawDecree;
-import instructions.rotten.extended.RawInsert;
-import instructions.rotten.extended.RawRemoveKey;
-import instructions.rotten.extended.RawUpdate;
-import instructions.rotten.extended.RawFilterContainsName;
-import instructions.rotten.extended.RawRemoveLower;
-import instructions.rotten.extended.RawReplaceIfGreater;
-import instructions.rotten.extended.RawReplaceIfLower;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +19,7 @@ import java.util.regex.Pattern;
  * @author Leargy aka Anton Sushkevich
  */
 public class ArgumentHandler extends DataHandler{
-    private HashMap<String,RawDecree> commandMap;
+    private final HashMap<String,String> commandMap;
 
     /**
      * Конструктор принимающий список команд относительно которых будет производиться проверка.
@@ -55,6 +50,10 @@ public class ArgumentHandler extends DataHandler{
             throw new CommandSyntaxException("Command should have at list one argument!");
         }
 
+        if(parcel.getStringData()[0].equals(RawExecuteScript.NAME)) {
+            return new RawExecuteScript(stringArgument);
+        }
+
         Integer intArgument = null;
         try {
             intArgument = Integer.valueOf(stringArgument);
@@ -66,7 +65,7 @@ public class ArgumentHandler extends DataHandler{
         Pattern argumentCommandPattern = Pattern.compile(".*\\{.+}");
         Matcher matcher = null;
         String key = "";
-        for (Map.Entry<String, RawDecree> entry : commandMap.entrySet()) {
+        for (Map.Entry<String, String> entry : commandMap.entrySet()) {
             key = entry.getKey().split(" ")[0];
             matcher = argumentCommandPattern.matcher(entry.getKey());
             if (key.equals(tempCommand)) {
@@ -74,22 +73,22 @@ public class ArgumentHandler extends DataHandler{
                     //взываем к конструктору junker'а
                     switch (key) {
                         case RawInsert.NAME:
-                            return new RawInsert().setKey(intArgument).setData(junkerCreator.prepareJunker());
+                            return new RawInsert(intArgument,junkerCreator.prepareJunker());
                         case RawUpdate.NAME:
-                            return new RawUpdate().setKey(intArgument).setData(junkerCreator.prepareJunker());
+                            return new RawUpdate(intArgument,junkerCreator.prepareJunker());
                         case RawRemoveLower.NAME:
-                            return new RawRemoveLower().setData(junkerCreator.prepareJunker());
+                            return new RawRemoveLower(junkerCreator.prepareJunker());
                         case RawReplaceIfLower.NAME:
-                            return new RawReplaceIfLower().setKey(intArgument).setData(junkerCreator.prepareJunker());
+                            return new RawReplaceIfLower(intArgument,junkerCreator.prepareJunker());
                         case RawReplaceIfGreater.NAME:
-                            return new RawReplaceIfGreater().setKey(intArgument).setData(junkerCreator.prepareJunker());
+                            return new RawReplaceIfGreater(intArgument,junkerCreator.prepareJunker());
                     }
                 } else {
                     switch (key) {
                         case RawRemoveKey.NAME:
-                            return ((RawRemoveKey) entry.getValue()).setKey(intArgument);
+                            return new RawRemoveKey(intArgument);
                         case RawFilterContainsName.NAME:
-                            return ((RawFilterContainsName) entry.getValue()).setKey(stringArgument);
+                            return new RawFilterContainsName(stringArgument);
                     }
                 }
             }

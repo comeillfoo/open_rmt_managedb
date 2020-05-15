@@ -59,7 +59,7 @@ public class Dispatcher extends ADispatcher {
             System.out.println("For more information use \"help\" command.");
             return;
         }
-        if(tempCommand.getClass().isInstance(new RawExit())) {
+        if(tempCommand instanceof RawExit) {
             try {
                 byteArrayOutputStream.close();
                 objectOutputStream.close();

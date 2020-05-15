@@ -1,6 +1,7 @@
 package сlient;
 
 import communication.ClientPackage;
+import communication.Report;
 import dataSection.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
@@ -48,7 +49,7 @@ public class Servant extends AServant {
         while (true){
             try{
                 client.killSocket();
-            }catch (NullPointerException e) {}
+            }catch (NullPointerException e) { /*NOP*/}
             if (client.connect("localhost", 0xdead)) break;
                 String answer = "";
                 while (true){
@@ -95,10 +96,19 @@ public class Servant extends AServant {
         }
         return stringData;
     }
-//    @Override
-//    public void notification(Segment parcel) {
-//        pipeOut.printf("Server: %f" +((ClientPackage)parcel.getClientPackage()).getReport());
-//        pipeOut.printf("Server Error report:%f" + ((ClientPackage)parcel.getClientPackage()).getReport());
-//        //TODO: make good notifications
-//    }
+
+    /**
+     * метод по выводу ответа от сервера.
+     * @param parcel
+     */
+    @Override
+    public void notification(Segment parcel) {
+        Report serverReport = parcel.getClientPackage().getReport();
+        if (serverReport.isSuccessful()) {
+            pipeOut.println("Server: " +serverReport.Message());
+        }
+        else {
+            System.err.printf("Server error: " +serverReport.Message());
+        }
+    }
 }

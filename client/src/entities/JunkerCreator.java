@@ -14,7 +14,7 @@ import java.util.Scanner;
  * @author Leargy aka Anton Sushkevich
  */
 public class JunkerCreator {
-    private Scanner scanner;
+    private final Scanner scanner;
     /**
      * Конструктор, инициализирующий Scanner
      */

@@ -41,4 +41,7 @@ public final class Show extends ConDecree {
   public static final String BRIEF = "выводит все элементы в stdout";
   public static final String SYNTAX = NAME;
   public static final int ARGNUM = 0;
+
+  @Override
+  public String toString() { return NAME; }
 }

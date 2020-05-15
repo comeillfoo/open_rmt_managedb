@@ -55,7 +55,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     File fuck = new File(pathname);
     // если размер меньше кибибайта, то это повод задуматься
     // Джонни, там подсунули чухню, откатывай до пустой коллекции
-    if (fuck.length() <= 1) return (companies = NothingButVoid()).getCompanies();
+    if (fuck.length() <= 0) return (companies = NothingButVoid()).getCompanies();
     // Ооо, первый try поехал, а вместе с ней и кукуха
     try {
       if (!checkFile(fuck)) {

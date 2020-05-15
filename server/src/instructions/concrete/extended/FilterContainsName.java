@@ -20,4 +20,7 @@ public final class FilterContainsName extends FilterContains<Integer, Organizati
   public static final String BRIEF = "Находит элементы коллекции по заданному имени";
   public static final String SYNTAX = NAME + " [name]";
   public static final int ARGNUM = 1;
+
+  @Override
+  public String toString() { return NAME; }
 }

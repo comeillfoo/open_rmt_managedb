@@ -1,7 +1,6 @@
 package communication;
 
 import dataSection.enumSection.Markers;
-import entities.Junker;
 import instructions.rotten.RawDecree;
 
 import java.nio.channels.SocketChannel;

@@ -27,4 +27,5 @@ public abstract class RawReplaceIf extends RawCommitter implements IClued, IJunk
 
   @Override
   public final Integer Key() { return KEY; }
+
 }

@@ -12,4 +12,6 @@ public abstract class Decree {
   public static final String SYNTAX = "debug";
   public static final int ARGNUM = 0;
   public static boolean isArgumented() { return ARGNUM > 0; }
+
+  public String toString() { return NAME; }
 }

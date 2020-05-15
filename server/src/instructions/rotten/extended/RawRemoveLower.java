@@ -4,7 +4,9 @@ import entities.Junker;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;
 
-public final class RawRemoveLower extends RawCommitter implements IJunked {
+import java.io.Serializable;
+
+public final class RawRemoveLower extends RawCommitter implements IJunked, Serializable {
     public static final String NAME = "remove_lower";
     public static final String BRIEF = "удаляет из коллекции элементы, меньшие чем заданный";
     public static final String SYNTAX = NAME + " {element}";

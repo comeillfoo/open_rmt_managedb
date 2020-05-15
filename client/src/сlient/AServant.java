@@ -18,10 +18,10 @@ import java.util.Scanner;
  */
 public abstract class AServant implements Component {
     protected Client client;
-    protected Mediating mediator;
-    protected Scanner scanner;
-    protected InputStream pipeIn;
-    protected PrintStream pipeOut;
+    protected final Mediating mediator;
+    protected final Scanner scanner;
+    protected final InputStream pipeIn;
+    protected final PrintStream pipeOut;
 
     /**
      * Конструктор принимающий ссылку на посредника, инициализирующий точки In и Out, а также Scanner.

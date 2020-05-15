@@ -29,6 +29,9 @@ public class Client extends AClient implements Component, Runnable {
      */
     public Client(Mediating mediator) {
         super(mediator);
+        try {
+            selector = Selector.open();
+        }catch (IOException ex) {/*NOP*/}
     }
 
     /**
@@ -39,7 +42,6 @@ public class Client extends AClient implements Component, Runnable {
      */
     public boolean connect(String hostName,int serverPort){
         try {
-            selector = Selector.open();
             socketChannel = SocketChannel.open(new InetSocketAddress(InetAddress.getByName(hostName),serverPort));
             socketChannel.configureBlocking(false);
             while (!socketChannel.finishConnect()){
@@ -80,6 +82,9 @@ public class Client extends AClient implements Component, Runnable {
     public void run() {
         while (socketChannel.isConnected()) {
             try {
+                Thread.sleep(500);
+            }catch (InterruptedException ex) {/*NOP*/}
+            try {
                 if (selector.selectNow() == 0) continue;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -91,6 +96,8 @@ public class Client extends AClient implements Component, Runnable {
                 if (key.isReadable()) {
                     mediator.notify(this, new Segment((SocketChannel) key.channel(),Markers.READ));
                 }
+                //if connection was interrupted, the key has been deleted,so we should pass the writable check.
+                if(!key.isValid()) continue;
                 if (key.isWritable()) {
                     mediator.notify(this, new Segment((SocketChannel) key.channel(), Markers.WRITE));
                 }

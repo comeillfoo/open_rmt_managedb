@@ -1,6 +1,5 @@
 package dataSection;
 
-import instructions.rotten.RawDecree;
 import java.util.HashMap;
 
 /**
@@ -9,5 +8,5 @@ import java.util.HashMap;
  * @author Leargy aka Anton Sushkevich
  */
 public interface Commands {
-    public HashMap<String,RawDecree> getCommandMap();
+    public HashMap<String,String> getCommandMap();
 }

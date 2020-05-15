@@ -238,6 +238,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
         .stream()
         .forEach((org) -> { database.put(org.Key(), org); });
     peacher().notify(0, "Коллекция успешно загружена");
+    System.out.println(database.size());
   }
 
   /**

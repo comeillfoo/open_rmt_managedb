@@ -42,4 +42,7 @@ public final class Save extends ConDecree {
   public static final String BRIEF = "Сохраняет коллекцию в файл.";
   public static final String SYNTAX = NAME;
   public static final int ARGNUM = 0;
+
+  @Override
+  public String toString() { return NAME; }
 }

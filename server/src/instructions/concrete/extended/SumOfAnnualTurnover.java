@@ -10,6 +10,10 @@ import parsing.customer.Receiver;
  * @author Leargy aka Anton Sushkevich
  */
 public final class SumOfAnnualTurnover extends SumOfAnnual<Integer, Organization, Float> {
+  public static final String NAME = "sum_of_annual_turnover";
+  public static final String BRIEF = "выводит сумму поля \\\"turnover\\\" всех элементов коллекции";
+  public static final String SYNTAX = NAME;
+  public static final int ARGNUM = 0;
   /**
    * Конструктор, устанавливающий ссылку на
    * управленца коллекцией и геттер,
@@ -19,4 +23,7 @@ public final class SumOfAnnualTurnover extends SumOfAnnual<Integer, Organization
   public SumOfAnnualTurnover(Receiver sieve) {
     super(sieve, Organization::getAnnualTurnover);
   }
+
+  @Override
+  public String toString() { return NAME; }
 }

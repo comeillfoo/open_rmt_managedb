@@ -36,4 +36,7 @@ public final class ReplaceIfLower extends ReplaceIf {
   public static final String BRIEF = "заменяет на новое значение по ключу [key], если оно меньше старого";
   public static final String SYNTAX = NAME + " [key] {element}";
   public static final int ARGNUM = 2;
+
+  @Override
+  public String toString() { return NAME; }
 }

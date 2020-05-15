@@ -56,4 +56,7 @@ public final class Insert extends Committer {
   public static final String BRIEF = "Добавляет элемент с указанным [key] в колекцию.";
   public static final String SYNTAX = NAME + " [key] {element}";
   public static final int ARGNUM = 2;
+
+  @Override
+  public String toString() { return NAME; }
 }

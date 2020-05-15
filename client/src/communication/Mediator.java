@@ -19,11 +19,10 @@ import java.io.IOException;
  * @see Mediating
  */
 public class Mediator implements Mediating {
-    private DataHandler dataHandler;
-    private Client client;
-    private AReceiver receiver;
-    private ADispatcher dispatcher;
-    private AServant servant;
+    private final Client client;
+    private final AReceiver receiver;
+    private final ADispatcher dispatcher;
+    private final AServant servant;
 
     public Mediator() {
         client = new Client(this);

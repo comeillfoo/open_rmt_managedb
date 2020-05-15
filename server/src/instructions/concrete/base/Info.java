@@ -41,4 +41,7 @@ public final class Info extends ConDecree {
   public static final String BRIEF = "выводит информацию о коллекции";
   public static final String SYNTAX = NAME;
   public static final int ARGNUM = 0;
+
+  @Override
+  public String toString() { return NAME; }
 }

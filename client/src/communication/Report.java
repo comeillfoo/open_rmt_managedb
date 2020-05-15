@@ -11,30 +11,37 @@ import java.io.Serializable;
  *   <li>Хранения результатов чтения запросов</li>
  *   <li>Хранения результатов попытки отправки результатов обработки запросов</li>
  * </ul>
- * @author Leargy aka Anton Sushkevich
- * @author Come_1LL_F00 aka Lenar Khannanov
- * @see Serializable
  */
 public final class Report implements Serializable {
     // fields
-    private final int errorCode;
-    private final String message;
+    private final int ERROR_CODE; // код ошибки
+    private final String MESSAGE; // сообщение
+
     // builders
+
+    // главный конструктор
+    /**
+     * Основной конструктор, устанавливающий
+     * параметры отправляемого ответа
+     * @param errorCode код ошибки
+     * @param message передаваемое сообщение
+     */
     public Report(int errorCode, String message) {
-        this.errorCode = errorCode;
-        this.message = (message == null)? "" : message;
+        ERROR_CODE = errorCode;
+        MESSAGE = (message == null)? "" : message;
     }
+
     // properties and methods
     /**
      * Свойство, определяющее успешность
      * выполнения операции
      * @return успешно/неуспешно
      */
-    public boolean isSuccessful() { return errorCode == 0; }
+    public boolean isSuccessful() { return ERROR_CODE == 0; }
 
     /**
      * Метод взятия сообщения
      * @return строка с сообщением
      */
-    public String account() { return message; }
+    public String Message() { return MESSAGE; }
 }

@@ -32,4 +32,7 @@ public final class ExecuteScript extends ConDecree {
   public static final String BRIEF = "исполняет скрипт по указанному имени файла";
   public static final String SYNTAX = NAME + " [file_name]";
   public static final int ARGNUM = 1;
+
+  @Override
+  public String toString() { return NAME; }
 }

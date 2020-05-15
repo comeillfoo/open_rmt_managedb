@@ -51,4 +51,7 @@ public final class RemoveKey extends ConDecree {
   public static final String BRIEF = "Удаляет элемент по [key].";
   public static final String SYNTAX = NAME + " [key]";
   public static final int ARGNUM = 2;
+
+  @Override
+  public String toString() { return NAME; }
 }

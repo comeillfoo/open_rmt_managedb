@@ -82,13 +82,14 @@ public final class SubProcessController extends Resolver {
     // String var_name = query.Customer().$VAR();
     List<Organization> loaded = null;
     // проверили была ли загружена коллекция
-    if (!breadLoader.Loaded()) {
+  if (!breadLoader.Loaded()) {
       RADIOMAN.logboard(0, "В первый раз? Загружаем Вашу коллекцию");
       // установили переменную окружения
       breadLoader.Environment(VAR_NAME);
       RADIOMAN.logboard(0, "Строим окружение");
       // загрузили коллекцию
       loaded = breadLoader.load();
+      System.out.println("че ты забыл тут??");
       RADIOMAN.logboard(0, "Коллекция загружена");
       // изменили состояние пустой коллекции на полную
       fate.DataRebase(loaded);

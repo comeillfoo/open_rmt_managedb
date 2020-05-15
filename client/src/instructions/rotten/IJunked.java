@@ -1,4 +1,6 @@
-package entities;
+package instructions.rotten;
+
+import entities.Junker;
 
 /**
  * Обобщение для т.н. "сырых"
@@ -7,6 +9,6 @@ package entities;
  * при создании точной команды.
  * @param <D>
  */
-public interface IJunked<D> {
-    D getData();
+public interface IJunked {
+    Junker Params();
 }

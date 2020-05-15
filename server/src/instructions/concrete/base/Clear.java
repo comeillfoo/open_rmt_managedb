@@ -41,4 +41,7 @@ public final class Clear extends ConDecree {
   public static final String BRIEF = "очищает коллекцию";
   public static final String SYNTAX = NAME;
   public static final int ARGNUM = 0;
+
+  @Override
+  public String toString() { return NAME; }
 }

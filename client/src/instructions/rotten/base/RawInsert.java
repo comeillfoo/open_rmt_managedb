@@ -1,8 +1,8 @@
 package instructions.rotten.base;
 
 import entities.Junker;
-import instructions.rotten.IJunked;
 import instructions.rotten.IClued;
+import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;
 
 import java.io.Serializable;
@@ -28,4 +28,5 @@ public final class RawInsert extends RawCommitter implements IClued, IJunked, Se
     public final Junker Params() {
         return JUNK;
     }
+
 }

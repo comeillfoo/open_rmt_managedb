@@ -38,4 +38,7 @@ public final class ReplaceIfGreater extends ReplaceIf {
   public static final String BRIEF = "заменяет на новое значение по ключу [key], если оно больше старого";
   public static final String SYNTAX = NAME + " [key] {element}";
   public static final int ARGNUM = 2;
+
+  @Override
+  public String toString() { return NAME; }
 }

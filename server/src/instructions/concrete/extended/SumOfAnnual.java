@@ -43,4 +43,7 @@ public class SumOfAnnual<K, V extends Mappable<K>, R extends Number> extends Con
         .collect(Collectors.summingDouble(R::doubleValue));
     return new Report(0, "Find sum: " + sum.toString());
   }
+
+  @Override
+  public String toString() { return NAME; }
 }

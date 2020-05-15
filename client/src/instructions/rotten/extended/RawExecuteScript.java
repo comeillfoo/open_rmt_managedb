@@ -1,7 +1,7 @@
 package instructions.rotten.extended;
 
-import instructions.rotten.ITitled;
 import instructions.rotten.RawDecree;
+import instructions.rotten.ITitled;
 
 import java.io.Serializable;
 
@@ -17,4 +17,5 @@ public class RawExecuteScript extends RawDecree implements ITitled, Serializable
   public static final String BRIEF = "исполняет скрипт по указанному имени файла";
   public static final String SYNTAX = NAME + " [file_name]";
   public static final int ARGNUM = 1;
+
 }

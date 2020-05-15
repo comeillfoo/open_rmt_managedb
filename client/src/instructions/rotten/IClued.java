@@ -7,10 +7,10 @@ package instructions.rotten;
  * при создании точной команды
  * @param <K> ключ элементов коллекции
  */
-public interface IClued<K> {
+public interface IClued {
     /**
      * Свойство взятие ключа
      * @return ключ
      */
-    K Key();
+    Integer Key();
 }
