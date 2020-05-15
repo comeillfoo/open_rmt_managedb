@@ -9,7 +9,7 @@ import parsing.customer.distro.LimboKeeper;
 
 import java.util.Map;
 
-public class ReplaceIfLower extends ReplaceIf {
+public final class ReplaceIfLower extends ReplaceIf {
   public ReplaceIfLower(LimboKeeper r, Integer p, Organization o) { super(r, p, o); }
 
   /**
@@ -31,4 +31,9 @@ public class ReplaceIfLower extends ReplaceIf {
           + (isReplaced? "элемент оказался больше" : "произошла ошибка"));
     } else return new Report(2, "Ключ " + KEY + " не найден в коллекции");
   }
+
+  public static final String NAME = "replace_if_lower";
+  public static final String BRIEF = "заменяет на новое значение по ключу [key], если оно меньше старого";
+  public static final String SYNTAX = NAME + " [key] {element}";
+  public static final int ARGNUM = 2;
 }

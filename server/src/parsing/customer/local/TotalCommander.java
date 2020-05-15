@@ -121,7 +121,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
       // проверяем: содержит ли коллекция и ключ, и значение
       if ((database.containsKey(key)) || (database.containsValue(value))) {
         // проверяем: а нужно ли нам все это
-        if (menace.verify(value)) {
+          if (menace.verify(value)) {
           // проверяем: удалилось ли
           if (database.remove(key, value)) peacher().notify(null, null); // TODO: уведомить, что все в порядке
           else peacher().notify(null, null); // TODO: уведомить, что клиент налажал с данными

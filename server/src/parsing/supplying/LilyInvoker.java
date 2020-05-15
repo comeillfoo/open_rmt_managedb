@@ -1,5 +1,7 @@
 package parsing.supplying;
 
+import communication.Report;
+import communication.wrappers.AlertBag;
 import communication.wrappers.ExecuteBag;
 import parsing.Resolver;
 import instructions.concrete.ConDecree;
@@ -10,7 +12,7 @@ import instructions.concrete.ConDecree;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public final class LilyInvoker extends FondleEmulator {
+public class LilyInvoker extends FondleEmulator {
 
   /**
    * Конструктор, устанавливающий
@@ -27,14 +29,17 @@ public final class LilyInvoker extends FondleEmulator {
    * @param commandName название команды
    */
   @Override
-  public void signup(ConDecree command) { availableCommands.put(command.NAME, command); }
+  public void signup(ConDecree command) { availableCommands.put(command.toString(), command); }
 
   /**
    * Метод вызова команды
-   * @param command присланная команда
+   * @param cmd присланная команда
    */
   @Override
-  public void invoke(ExecuteBag command) {
-    // TODO: написать реализацию
+  public void invoke(ExecuteBag cmd) {
+    ConDecree concmd = cmd.Exec();
+    concmd.execute();
+    Report respond = new Report(0, "Команда " + concmd + " успешно выполнена");
+    MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
   }
 }

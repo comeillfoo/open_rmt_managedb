@@ -22,14 +22,14 @@ import java.util.Map;
  * @see Invoker
  */
 public abstract class FondleEmulator extends Prompter implements Component {
-  protected final Resolver magiV; // ссылка на SSPC
+  protected final Resolver MAGIV; // ссылка на SSPC
 
   /**
    * Конструктор устанавливающий контроллер
    * над эмулятором
    * @param controller ссылка на SSPC
    */
-  public FondleEmulator(Resolver controller) { magiV = controller; }
+  public FondleEmulator(Resolver controller) { MAGIV = controller; }
 
   /**
    * Вместо скроллинга ленты в ВК,

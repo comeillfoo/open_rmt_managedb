@@ -9,7 +9,7 @@ import parsing.customer.Receiver;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public class SumOfAnnualTurnover extends SumOfAnnual<Integer, Organization, Float> {
+public final class SumOfAnnualTurnover extends SumOfAnnual<Integer, Organization, Float> {
   /**
    * Конструктор, устанавливающий ссылку на
    * управленца коллекцией и геттер,

@@ -25,4 +25,9 @@ public class ExecuteScript extends ConDecree {
    */
   @Override
   public Report execute() { return null; }
+
+  public static final String NAME = "execute_script";
+  public static final String BRIEF = "исполняет скрипт по указанному имени файла";
+  public static final String SYNTAX = NAME + " [file_name]";
+  public static final int ARGNUM = 1;
 }

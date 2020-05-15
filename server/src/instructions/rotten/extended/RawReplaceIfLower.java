@@ -7,7 +7,7 @@ import instructions.rotten.RawCommitter;
 
 public final class RawReplaceIfLower extends RawReplaceIf {
     public static final String NAME = "replace_if_lower";
-    public static final String BRIEF = "Находит элементы коллекции по заданному имени";
+    public static final String BRIEF = "заменяет на новое значение по ключу [key], если оно меньше старого";
     public static final String SYNTAX = NAME + " [key] {element}";
     public static final int ARGNUM = 2;
 

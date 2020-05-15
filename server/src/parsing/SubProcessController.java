@@ -1,6 +1,7 @@
 package parsing;
 
 import communication.*;
+import communication.wrappers.AlertBag;
 import communication.wrappers.ExecuteBag;
 import communication.wrappers.QueryBag;
 import entities.Organization;
@@ -97,13 +98,15 @@ public final class SubProcessController extends Resolver {
     // если отправляет логирующий элемент,
     // то отправляем клиенту
     if (sender == RADIOMAN)
-      CONTROLLER.notify(this, data); // отправили господину распорядителю
+      CONTROLLER.notify(this, (AlertBag) data); // отправили господину распорядителю
     else if (sender == this)
       wizard.make((QueryBag) data, fate); // отправили на фабрику (мороженого шутка) комманд
-    else if (sender == wizard)
+    else if (sender == wizard) {
+      ExecuteBag bag = (ExecuteBag) data;
+      kael.signup(bag.Exec());
       kael.invoke((ExecuteBag) data); // отправили Invoker'у, чтобы исполнить
-    else if (sender == kael)
-      CONTROLLER.notify(this, data);
+    } else if (sender == kael)
+      CONTROLLER.notify(this, (AlertBag) data);
     // разрастается по мере увеличения числа компонент модуля
   }
 }
