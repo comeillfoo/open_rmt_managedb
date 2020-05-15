@@ -41,8 +41,8 @@ public final class RemoveLower extends RemoveThan {
           Organization[] takens = new Organization[]{taken};
           REAL.search(new Integer[]{e.getKey()}, takens, (org)->(true));
           OrganizationTitleComparator cmp = new OrganizationTitleComparator();
-          REAL.remove(new Integer[]{e.getKey()}, new Organization[]{EMBEDDED}, MENACE);
-          result.append("Элемент " + takens[0] + " по ключу " + e.getKey() + " удален\n");
+          REAL.remove(new Integer[]{e.getKey()}, new Organization[]{takens[0]}, MENACE);
+          if (MENACE.verify(takens[0])) result.append("Элемент " + takens[0] + " по ключу " + e.getKey() + " удален\n");
         });
     result.append("Нужные элементы успешно удалены");
     return new Report(0, result.toString());

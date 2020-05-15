@@ -40,6 +40,11 @@ public class ArgumentHandler extends DataHandler{
     public RawDecree handle(Segment parcel) throws CommandSyntaxException {
         String tempCommand = parcel.getStringData()[0];
 
+
+
+
+
+
         String stringArgument = "";
         try {
             stringArgument = parcel.getStringData()[1];
@@ -47,11 +52,12 @@ public class ArgumentHandler extends DataHandler{
                 throw new CommandSyntaxException("Wrongly entered argument part of command!");
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CommandSyntaxException("Command should have at list one argument!");
+           // throw new CommandSyntaxException("Command should have at list one argument!");
         }
 
-        if(parcel.getStringData()[0].equals(RawExecuteScript.NAME)) {
-            return new RawExecuteScript(stringArgument);
+        switch (parcel.getStringData()[0]) {
+            case RawExecuteScript.NAME: return new RawExecuteScript(stringArgument);
+            case RawFilterContainsName.NAME: return new RawFilterContainsName(stringArgument);
         }
 
         Integer intArgument = null;
@@ -87,8 +93,7 @@ public class ArgumentHandler extends DataHandler{
                     switch (key) {
                         case RawRemoveKey.NAME:
                             return new RawRemoveKey(intArgument);
-                        case RawFilterContainsName.NAME:
-                            return new RawFilterContainsName(stringArgument);
+
                     }
                 }
             }
