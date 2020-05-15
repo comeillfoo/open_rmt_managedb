@@ -8,7 +8,7 @@ import parsing.customer.Receiver;
 
 import java.util.Map;
 
-public class RemoveLower extends RemoveThan {
+public final class RemoveLower extends RemoveThan {
   protected final Indicator MENACE;
   /**
    * Конструктор, устанавливающий ссылку на
@@ -28,7 +28,8 @@ public class RemoveLower extends RemoveThan {
    * Метод исполнения, для этих команд общее
    * @return отчет выполнения
    */
-  public Report execute() {
+  @Override
+  public final Report execute() {
     Receiver<Integer, Organization> REAL = (Receiver<Integer, Organization>) SIEVE;
     StringBuilder result = new StringBuilder();
     Map<Integer, Integer> keys = REAL.getBy(Organization::Key);

@@ -11,6 +11,7 @@ import parsing.Resolver;
 import parsing.customer.distro.LimboKeeper;
 import parsing.plants.pickers.CommittersBuilder;
 import parsing.plants.pickers.JustCommandBuilder;
+import parsing.supplying.interpreter.Shell;
 
 /**
  * Псевдо-фабрика сборки из абстрактных комманд

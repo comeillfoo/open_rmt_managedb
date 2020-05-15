@@ -10,7 +10,10 @@ import parsing.customer.distro.LimboKeeper;
 import parsing.plants.Factory;
 import parsing.plants.InstructionBuilder;
 import parsing.supplying.FondleEmulator;
+import parsing.supplying.interpreter.Shell;
 import systemcore.ServerController;
+
+import java.nio.channels.SocketChannel;
 
 /**
  * Шаблон класса модуля, вытаскивающего пользовательский запрос
@@ -23,6 +26,7 @@ public abstract class Resolver implements Mediator, Component {
   protected InstructionBuilder wizard; // фабрика вызываемых комманд
   protected Factory plant; // фабрика элементов коллекции
   protected LoaferLoader<Organization> breadLoader; // загрузчик коллекции
+  protected SocketChannel client;
 
   // основной метод обработки клиентского запроса
   /**
@@ -42,4 +46,6 @@ public abstract class Resolver implements Mediator, Component {
    * @param controller контроллер подсистемы
    */
   public Resolver(ServerController controller) { CONTROLLER = controller; }
+
+  public SocketChannel ClientChannel() { return client; }
 }

@@ -2,6 +2,8 @@ package instructions.concrete.base;
 
 import communication.Report;
 import instructions.concrete.ConDecree;
+import instructions.concrete.extended.*;
+import instructions.rotten.RawDecree;
 import parsing.customer.Receiver;
 
 import java.util.ArrayList;
@@ -12,17 +14,30 @@ import java.util.List;
  * доступных командах
  */
 public final class Help extends instructions.concrete.ConDecree {
-  protected final List<instructions.concrete.ConDecree> orders;
+  private final List<String[]> CMDS = new ArrayList<>();
+  {
+    CMDS.add(new String[]{ Clear.NAME, Clear.BRIEF, Clear.SYNTAX });
+    CMDS.add(new String[]{ Help.NAME, Help.BRIEF, Help.SYNTAX });
+    CMDS.add(new String[]{ Info.NAME, Info.BRIEF, Info.SYNTAX });
+    CMDS.add(new String[]{ Insert.NAME, Insert.BRIEF, Insert.SYNTAX });
+    CMDS.add(new String[]{ RemoveKey.NAME, RemoveKey.BRIEF, RemoveKey.SYNTAX });
+    CMDS.add(new String[]{ Save.NAME, Save.BRIEF, Save.SYNTAX });
+    CMDS.add(new String[]{ Show.NAME, Show.BRIEF, Show.SYNTAX });
+    CMDS.add(new String[]{ Update.NAME, Update.BRIEF, Update.SYNTAX });
+    CMDS.add(new String[]{ ExecuteScript.NAME, ExecuteScript.BRIEF, ExecuteScript.SYNTAX });
+    CMDS.add(new String[]{ FilterContainsName.NAME, FilterContainsName.BRIEF, FilterContainsName.SYNTAX });
+    CMDS.add(new String[]{ MaxByDate.NAME, MaxByDate.BRIEF, MaxByDate.SYNTAX });
+    CMDS.add(new String[]{ RemoveLower.NAME, RemoveLower.BRIEF, RemoveLower.SYNTAX });
+    CMDS.add(new String[]{ ReplaceIfGreater.NAME, ReplaceIfGreater.BRIEF, ReplaceIfGreater.SYNTAX });
+    CMDS.add(new String[]{ ReplaceIfLower.NAME, ReplaceIfLower.BRIEF, ReplaceIfLower.SYNTAX });
+    CMDS.add(new String[]{ SumOfAnnualTurnover.NAME, SumOfAnnualTurnover.BRIEF, SumOfAnnualTurnover.SYNTAX });
+  }
   /**
    * Конструктор, устанавливающий ссылку на
    * управленца коллекцией
    * @param sieve текущий управленец коллекцией
-   * @param commands текущий список доступных комманд
    */
-  public Help(Receiver sieve, List<instructions.concrete.ConDecree> commands) {
-    super(sieve);
-    orders = (commands == null)? new ArrayList<>() : commands;
-  }
+  public Help(Receiver sieve) { super(sieve); }
 
   /**
    * Пишем альманах всех комманд,
@@ -31,12 +46,12 @@ public final class Help extends instructions.concrete.ConDecree {
   @Override
   public Report execute() {
     StringBuilder manual = new StringBuilder();
-    orders
+    CMDS
         .stream()
         .forEach(
-            (order)->
+            (o)->
             {
-              manual.append(less(order));
+              manual.append(less(o[0], o[1], o[2]));
             });
     return new Report(0, "Список доступных комманд:\n" + manual.toString());
   }
@@ -44,13 +59,15 @@ public final class Help extends instructions.concrete.ConDecree {
   /**
    * Вспомогательный метод
    * формирования информации о команде
-   * @param command команда
+   * @param NAME название команды
+   * @param BRIEF краткое описание команды
+   * @param SYNTAX синтаксис команды
    * @return информация по команде
    */
-  private final String less(ConDecree command) {
+  private final String less(String NAME, String BRIEF, String SYNTAX) {
     StringBuilder page = new StringBuilder();
-    page.append("name: " + command.NAME + " -- brief: " + command.BRIEF + "\n");
-    page.append("synopsys: " + command.SYNTAX + "\n");
+    page.append("name: " + NAME + " -- brief: " + BRIEF + "\n");
+    page.append("synopsys: " + SYNTAX + "\n");
     return page.toString();
   }
   public static final String NAME = "help";

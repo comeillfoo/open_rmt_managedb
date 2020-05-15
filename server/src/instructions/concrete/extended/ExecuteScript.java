@@ -3,12 +3,14 @@ package instructions.concrete.extended;
 import communication.Report;
 import instructions.concrete.ConDecree;
 import parsing.customer.Receiver;
+import parsing.supplying.Invoker;
+import parsing.supplying.interpreter.Shell;
 
 /**
  * Команда исполнения скрипта из
  * каталога scripts
  */
-public class ExecuteScript extends ConDecree {
+public final class ExecuteScript extends ConDecree {
   private final String FILE_NAME;
   /**
    * Конструктор, устанавливающий ссылку на

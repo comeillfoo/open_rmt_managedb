@@ -18,7 +18,7 @@ public final class ServerRun {
      */
     public static void main(String[] args) {
         // вызвали настройщика
-        SystemAdmin AndrewBot = SystemAdmin.summon();
+        SystemAdmin AndrewBot = SystemAdmin.summon("Андрей");
         // установили сервер на нужный хост и порт
         AndrewBot.install(hostname, port);
         // запустили сервер

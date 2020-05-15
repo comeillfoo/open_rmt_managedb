@@ -63,7 +63,10 @@ public final class Server implements Runnable, Component {
       int numberReady = 0;
       // пытаемся поменять число готовых каналов
       try { numberReady = GREEDY.selectNow();
-      } catch (IOException e) { // TODO: логировать ошибку
+      } catch (IOException e) {
+        CORE.notify(this,
+            new AlertBag(null,
+                new Report(10, "Не удалось определить число готовых каналов")));
         numberReady = 0;
       }
       // если таковых нет, то идем на новый цикл

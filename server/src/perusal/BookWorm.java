@@ -41,6 +41,7 @@ public final class BookWorm extends QueryReader {
     super(kapellmeister);
     // собираем наш логгер
     CHRONICLER = (HawkPDroid<BookWorm>) C9_T9_GE3.assemble(this, C9_T9_GE3::new);
+    CHRONICLER.logboard(0,"Собран логгер модуля чтения");
   }
 
   // methods
@@ -63,12 +64,12 @@ public final class BookWorm extends QueryReader {
       if (tmpChannel.read(BYTE_BUFFER) == -1)
         throw new EOFException("Достигнут конец потока");
     } catch (EOFException e) {
-      // TODO: логировать
-      // TODO: отправить уведомление клиенту
+      CHRONICLER.logboard(0xe0f,"Неожиданно достигнут конец потока (возможно клиент забыл отправить данные)");
+      CHRONICLER.notify(0xe0f,"Неожиданно достигнут конец потока (возможно Вы забыли поместить данные)");
       return;
     } catch (IOException e) {
-      // TODO: логировать
-      // TODO: отправить уведомление клиенту
+      CHRONICLER.logboard(10,"Не удалось прочитать пользовательский запрос");
+      CHRONICLER.notify(10,"Не удалось прочитать пользовательский запрос");
       return;
     }
     // смотри, ща сальтуху *бану
@@ -80,8 +81,7 @@ public final class BookWorm extends QueryReader {
     try {
       objstream = new ObjectInputStream(bstream);
     } catch (IOException e) {
-      // TODO: логировать
-      // TODO: отправить отчет посреднику, чтобы тот уведомил клиента (возможно, только для режима debug)
+      CHRONICLER.logboard(10,"Не удалось создать поток сериализации");
       return;
     }
     ClientPackage query = null; // выделяем переменную под клиентский пакет
@@ -89,24 +89,25 @@ public final class BookWorm extends QueryReader {
     try {
      query = (ClientPackage) objstream.readObject();
     } catch (ClassNotFoundException e) {
-      // TODO: логировать
-      // TODO: отправить отчет посреднику, чтобы тот уведомил клиента (возможно, только для режима debug)
+      CHRONICLER.logboard(0xcfe,"Присланные данные не удовлетворяют протоколу между сервером и клиентом");
+      CHRONICLER.notify(0xcfe,"Присланные Вами данные не соответсвуют формату сервера, проверьте: туда ли Вы подключились");
       return;
     } catch (IOException e) {
-      // TODO: логировать
-      // TODO: отправить отчет посреднику, чтобы тот уведомил клиента (возможно, только для режима debug)
+      CHRONICLER.logboard(10,"Не удалось десериализовать данные из потока");
+      CHRONICLER.notify(10,"Не удалось десериализовать данные из потока");
       return;
     }
     // TODO: разобраться с присылаемыми данными
     // формируем команду, требующую исполнения
     RawDecree decree = query.getCommand();
-
+    CHRONICLER.logboard(0,"Данные успешно прочитаны -- сформирован запрос");
     // формируем полностью запрос
     // сокет клиента нужен, чтобы можно
     // из модуля обработки сразу перенаправить
     // на модуль отправки результатов
     QueryBag q = new QueryBag(tmpChannel, decree);
     // отправляем полученные данные на модуль обработки запроса
+    CHRONICLER.logboard(0,"Запрос отправлен на обработку");
     notify(this, q);
   }
 

@@ -41,6 +41,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
     info.append("\t* Collection element type name: Organization extends Mappable<Integer>;\n");
     info.append("\t* Is collection empty?: " + database.isEmpty() + ";\n");
     info.append("\t* Collection size: " + database.size() + ";");
+    peacher().logboard(0, "Данные о коллекции успешно предоставлены");
     return info.toString();
   }
 
@@ -56,9 +57,9 @@ public class TotalCommander extends Commander<Integer, Organization> {
     if (value != null) {
       // проверка: нужно ли добавлять данное детище
       if (menace.verify(value))
-        value = database.put((key == null)? value.Key() : key, value); // добавляем и возвращаем, то чем заменили (null если добавили)
-      else peacher().notify(null, null); // TODO: пояснить, что данному элементу нету прохода на район нашей коллекции
-    } else peacher().notify(null, null); // TODO: попорицать клиента, за его жалкую попытку создать нам проблемы
+        value = database.put((key == null)? value.Key() : key, value);
+      else peacher().notify(3, "Не удалось добавить элемент: не удовлетворяет условию");
+    } else peacher().notify(1, "Обнаружена попытка добавления пустого элемента: выполнение метода прервано");
   }
 
   /**
@@ -102,8 +103,8 @@ public class TotalCommander extends Commander<Integer, Organization> {
       if (database.containsKey(key)) {
         // выбрасываем этот мусор из коллекции, и, чтобы подстраховаться, даем ссылку команде, ради дальнейших проверок
         value = database.remove(key);
-        peacher().notify(null, null); // TODO: сформировать отчетность
-      } else peacher().notify(null, null); //TODO: попытка обращения по несуществующему ключу (Боги олимпа накажут его за это)
+        peacher().notify(0, "Элемент по ключу " + key + " удален");
+      } else peacher().notify(3, "Невозможно удалить элемент: ключ " + key + " не найден");
     } else if ((key == null) && (value != null)) {
       // проверили: нужно ли удалить элемент по значению и дальше смотрим, а есть ли эта тварь в коллекции вообще
       if (database.containsValue(value)) {
@@ -113,21 +114,21 @@ public class TotalCommander extends Commander<Integer, Organization> {
         if (menace.verify(value)) {
           // удаляем и сверяем с требуемым на удаление
           if (value.equals(database.remove(key)))
-            peacher().notify(null, null); // TODO: сформивать отчет, что удаление прошло успешно
-          else peacher().notify(null, null); // TODO: повиниться, что случайно удалили не того
-        } else peacher().notify(null, null); // TODO: уведомить, что звезды не сошлись, поэтому элемент не удален
-      } else peacher().notify(null, null); // TODO: уведомить клиента, что он (дебил) зря нас беспокоит и такого элемента в коллекции нет
+            peacher().notify(0, "Элемент " + value + " успешно удален");
+          else peacher().notify(2, "Случайно удален не тот элемент, данные будут восстановлены");
+        } else peacher().notify(3, "Невозможно стереть элемент: не удовлетворяет условию удаления");
+      } else peacher().notify(1, "Нельзя удалить элемент " + value + ": из-за его отсутствия");
     } else if ((key != null) && (value != null)) {
       // проверяем: содержит ли коллекция и ключ, и значение
       if ((database.containsKey(key)) || (database.containsValue(value))) {
         // проверяем: а нужно ли нам все это
           if (menace.verify(value)) {
           // проверяем: удалилось ли
-          if (database.remove(key, value)) peacher().notify(null, null); // TODO: уведомить, что все в порядке
-          else peacher().notify(null, null); // TODO: уведомить, что клиент налажал с данными
-        } else peacher().notify(null, null); // TODO: уведомить, что у элемента и коллекции разные интересы, что дело не в нем, а в коллекции (хотя больше в нем)
-      } else peacher().logboard(null, null); // TODO: потеря-потерь, подстава-подстав: лажа с данными
-    } else peacher().logboard(null, null); // TODO: дергаем логгер и жалуемся, что нас неправильно вызвали
+          if (database.remove(key, value)) peacher().notify(0, "Удаление прошло успешно");
+          else peacher().notify(1, "Не удалось удалить элемент по ключу " + key + " и значению " + value);
+        } else peacher().notify(3, "Не удалось удалить элемент: не подходит под условия");
+      } else peacher().logboard(2, "Данные для удаления не найдены в коллекции");
+    } else peacher().logboard(0xEE, "Произошел неправильный вызов метода remove");
   }
 
   /**
@@ -146,12 +147,12 @@ public class TotalCommander extends Commander<Integer, Organization> {
       // проверка: есть ли данный ключ в коллекции
       if (database.containsKey(key)) {
         Organization buffer = database.getOrDefault(key, value); // сохраняем найденный элемент
-        peacher().notify(null, null); // TODO: посвятить клиента, что мы что-то нашли
+        peacher().notify(0, "В базе найдены данные по Вашему ключу " + key);
         if (menace.verify(buffer)) {
           value = buffer; // возвращаем найденное наверх
-          peacher().notify(null, null); // TODO: уведомить, что у нас полная совместимость с найденным элементов
-        } else peacher().notify(null, null); // TODO: уведомить, что звезды не сошлись, элемент не подходит
-      } else peacher().notify(null, null); // TODO: уведомить, что такого ключа нет
+          peacher().notify(0, "Условие удовлетворено, данные предоставлены");
+        } else peacher().notify(3, "Условие не удовлетворено, данные не могут быть предоставлены");
+      } else peacher().notify(1, "Ключ " + key + " отсутствует в коллекции, данные по нему не могут быть найдены");
     } else if ((key == null) && (value != null)) {
       // проверка: есть ли элемент в коллекции
       if (database.containsValue(value)) {
@@ -164,8 +165,8 @@ public class TotalCommander extends Commander<Integer, Organization> {
             .findFirst() // берем первый ключ
             .orElse(key); // или звоним бывшему (сохраняем прежний ключ)
         // возврат ключа наверх
-        peacher().notify(null, null); // TODO: дать ответочку за ключик золотой
-      } else peacher().notify(null, null); // TODO: пояснить за то, что данного элемента нет
+        peacher().notify(0, "Найден ключ элемента " + value);
+      } else peacher().notify(2, "Элемент " + value + " отсутствует в коллекции");
     } else if ((key == null) && (value == null)) {
       // ищем ключ первого элемента, удовлетворяющего признаку
       Integer buffer_key =
@@ -176,7 +177,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
           .findFirst().get().getKey();
       // возвращаем ключ
       key = buffer_key;
-    } else peacher().logboard(null, null); // TODO: дергаем логгер и жалуемся, что нас неправильно вызвали
+    } else peacher().logboard(1, "Не корректный вызов функции поиска");
   }
 
   /**
@@ -197,7 +198,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
     // for (Map.Entry<Integer, Organization> entry : database.entrySet())
     //  if (menace.verify(entry.getValue()))
     //    bufferSurvey.append("KEY: " + entry.getKey() + ";\n\tVALUE: " + entry.getValue() + "\n");
-    peacher().notify(null, null); // TODO: возможно и здесь нужно подергать логгер и создать клиентское уведомление
+    peacher().notify(0, "Данные по элементам коллекции предоставлены");
     return bufferSurvey.toString(); // возвращаем результат
   }
 
@@ -207,7 +208,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
   @Override
   public void clear() {
     database.clear(); // очистка коллекции стандартным методом
-    peacher().notify(null, null); // TODO: я хочу знать, что все хорошо (ваш клиент)
+    peacher().notify(0, "Коллекции успешно очищена");
   }
 
   /**

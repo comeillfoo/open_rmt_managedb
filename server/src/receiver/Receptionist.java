@@ -49,4 +49,6 @@ public abstract class Receptionist implements Component, Mediator {
    * @return информация о клиенте
    */
   public final ServerCustomer search(SocketChannel clientChannel) { return CUSTOMERS.get(clientChannel); }
+
+
 }

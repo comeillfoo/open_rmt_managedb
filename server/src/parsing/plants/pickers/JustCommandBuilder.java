@@ -14,6 +14,7 @@ import instructions.rotten.extended.RawExecuteScript;
 import instructions.rotten.extended.RawFilterContainsName;
 import instructions.rotten.extended.RawMaxByDate;
 import parsing.customer.distro.LimboKeeper;
+import parsing.supplying.interpreter.Shell;
 
 /**
  *
@@ -23,6 +24,7 @@ public final class JustCommandBuilder {
    *
    * @param c
    * @param receiver
+   * @param parser
    * @return
    */
   public ConDecree make(RawDecree c, LimboKeeper receiver) {
@@ -35,7 +37,7 @@ public final class JustCommandBuilder {
       Integer key = ((IClued) c).Key();
       return new RemoveKey(receiver, key);
     } else {
-      if (c instanceof RawHelp) return new Help(receiver, null);
+      if (c instanceof RawHelp) return new Help(receiver);
       else if (c instanceof RawClear) return new Clear(receiver);
       else if (c instanceof RawInfo) return new Info(receiver);
       else if (c instanceof RawSave) return new Save(receiver);

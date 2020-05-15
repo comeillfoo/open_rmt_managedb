@@ -3,8 +3,10 @@ package parsing.supplying;
 import communication.Report;
 import communication.wrappers.AlertBag;
 import communication.wrappers.ExecuteBag;
+import instructions.concrete.extended.ExecuteScript;
 import parsing.Resolver;
 import instructions.concrete.ConDecree;
+import parsing.supplying.interpreter.LilyShell;
 
 /**
  * Эмулятор клиента, что вызывает приходящие
@@ -38,8 +40,8 @@ public class LilyInvoker extends FondleEmulator {
   @Override
   public void invoke(ExecuteBag cmd) {
     ConDecree concmd = cmd.Exec();
-    concmd.execute();
-    Report respond = new Report(0, "Команда " + concmd + " успешно выполнена");
+    Report result = concmd.execute();
+    Report respond = new Report(0, "Команда " + concmd + " успешно выполнена с результатом:\n" + result);
     MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
   }
 }

@@ -1,9 +1,14 @@
 package czerkaloggers.customer;
 
+import communication.Component;
 import communication.Mediator;
+import communication.Report;
+import communication.wrappers.AlertBag;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.RadioLogger;
 import parsing.Resolver;
+
+import java.nio.channels.SocketChannel;
 
 /**
  * Вот, самое сложное похоже это придумать название всему,
@@ -15,19 +20,23 @@ import parsing.Resolver;
  * @see HawkPDroid
  * @see RadioLogger
  */
-public final class B_4D4_GE3 extends HawkPDroid<Resolver> {
+public final class B_4D4_GE3 extends HawkPDroid<Resolver> implements Component {
   // builders
 
   public B_4D4_GE3(Mediator controller) { super((Resolver) controller); }
+
   /**
    * Помимо логгирования, еще и составляет протокол действий.
    *
    * @param errorCode код ошибки
-   * @param message   передаваемое сообщение
+   * @param message передаваемое сообщение
    */
   @Override
   public void notify(Integer errorCode, String message) {
-    // TODO: посмотреть теорию и написать реализацию
+    logboard(errorCode, message);
+    SocketChannel client = MAGIV.ClientChannel();
+    AlertBag alert = new AlertBag(client, new Report(errorCode, message));
+    MAGIV.notify(this, alert);
   }
 
   /**

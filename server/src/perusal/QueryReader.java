@@ -6,6 +6,9 @@ import communication.wrappers.DossierBag;
 import communication.wrappers.TunnelBag;
 import systemcore.ServerController;
 
+import java.net.Socket;
+import java.nio.channels.SocketChannel;
+
 /**
  * Шаблон модуля чтения запросов от клиента,
  * преобразующий полученные байты во внятный клиентский запрос.
@@ -13,6 +16,7 @@ import systemcore.ServerController;
  * @author Leargy aka Anton Sushkevich
  */
 public abstract class QueryReader implements Component, Mediator {
+  protected SocketChannel client;
   protected final ServerController KAPELLMEISTER; // контроллер модуля
 
   // главный метод чтения
@@ -33,4 +37,7 @@ public abstract class QueryReader implements Component, Mediator {
    * @param core ядро системы, т.е. контроллер сервера
    */
   public QueryReader(ServerController core) { KAPELLMEISTER = core; }
+
+  public SocketChannel ClientChannel() { return client; }
+  public void SetClientChannel(SocketChannel client) { this.client = client; }
 }

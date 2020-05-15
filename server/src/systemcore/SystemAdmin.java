@@ -1,5 +1,11 @@
 package systemcore;
 
+import communication.Component;
+import communication.Mediator;
+import communication.Valuable;
+import czerkaloggers.HawkPDroid;
+import czerkaloggers.systemcore.C7_E3_GE3;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -19,9 +25,11 @@ import java.nio.channels.ServerSocketChannel;
  *   <li>модуля отправки результатов обработки запросов</li>
  * </ul>
  */
-public final class SystemAdmin {
+public final class SystemAdmin implements Mediator {
+  private final String NAME;
   private Server myLittleBigRunt; // я не знал как правильно перевести мой п*здюк
-  // TODO: добавить логгер
+  private final HawkPDroid<SystemAdmin> TONGUE;
+
   /**
    * Порядок действий по настройке системы:
    * <ol>
@@ -40,20 +48,22 @@ public final class SystemAdmin {
     ServerSocketChannel firstChannel = null; // создание серверного канала
     // попытка открыть канал
     try { firstChannel = ServerSocketChannel.open(); } catch (IOException e) {
-      // TODO: залогировать ошибку
+      TONGUE.logboard(1, NAME + ": у меня не получилось поднять сервер");
       System.exit(1);
     }
 
     // попытка связать открытый канал с нужным адресом
     try { firstChannel.bind(new InetSocketAddress(InetAddress.getByName(hostname), port)); } catch (UnknownHostException outer) {
-      // TODO: логировать, что не найден хост
-      try { firstChannel.close(); } catch (IOException inner) { // TODO: логировать ошибку закрытия
+      TONGUE.logboard(1, NAME + ": у меня не получилось найти хост, помогите");
+      try { firstChannel.close(); } catch (IOException inner) {
+        TONGUE.logboard(1, NAME + ": у меня не получилось закрыть каналы");
       } finally { System.exit(1); }
       // в любом случае не забываем завершить приложение
     } catch (IOException outer) {
-      // TODO: логировать
+      TONGUE.logboard(1, NAME + ": у меня не получилось связать канал с хостом и портом");
       // попытка закрыть испорченный канал
-      try { firstChannel.close(); } catch (IOException inner) { // TODO: логировать ошибку закрытия
+      try { firstChannel.close(); } catch (IOException inner) {
+        TONGUE.logboard(1, NAME + ": у меня не получилось закрыть каналы");
       } finally { System.exit(1); }
       // в любом случае не забываем завершить приложение
     }
@@ -62,18 +72,20 @@ public final class SystemAdmin {
     // попытка открыть селектор
     try { greedy = Selector.open(); }
     catch (IOException outer) {
-      // TODO: логировать ошибку
-      try { firstChannel.close(); } catch (IOException inner) { // TODO: логировать ошибку закрытия
+      TONGUE.logboard(1, NAME + ": у меня не получилось открыть селектор");
+      try { firstChannel.close(); } catch (IOException inner) {
+        TONGUE.logboard(1, NAME + ": у меня не получилось закрыть каналы");
       } finally { System.exit(1); }
       // в любом случае не забываем завершить приложение
     }
     
     // попытка сконфигурировать канал
     try { firstChannel.configureBlocking(false); } catch (IOException outer) {
-      // TODO: логировать ошибку конфигурации
+      TONGUE.logboard(1, NAME + ": у меня не получилось настроить серверный канал");
       try {
         firstChannel.close();
-        greedy.close(); } catch (IOException inner) { // TODO: логировать ошибку закрытия
+        greedy.close(); } catch (IOException inner) {
+        TONGUE.logboard(1, NAME + ": у меня не получилось закрыть каналы");
       } finally { System.exit(1); }
       // в любом случае не забываем завершить приложение
     }
@@ -81,10 +93,11 @@ public final class SystemAdmin {
     // попытка зарегистрировать канал в селектор
     try { firstChannel.register(greedy, SelectionKey.OP_ACCEPT); }
     catch (ClosedChannelException e) {
-      // TODO: логировать ошибку
+      TONGUE.logboard(0, NAME + ": Упс...канал сервера закрылся");
       try {
         firstChannel.close();
-        greedy.close(); } catch (IOException inner) { // TODO: логировать ошибку закрытия
+        greedy.close(); } catch (IOException inner) {
+        TONGUE.logboard(1, NAME + ": у меня не получилось закрыть каналы");
       } finally { System.exit(1); }
       // в любом случае не забываем завершить приложение
     }
@@ -93,7 +106,7 @@ public final class SystemAdmin {
     ServerController core = new ServerController(greedy, firstChannel);
     // получаем ссылку на собранный сервер
     myLittleBigRunt = core.whereServer();
-    System.out.println("----Server installed----"); // TODO: залогировать успешность установки сервера
+    TONGUE.logboard(0, NAME + ": подняль сервер");
   }
 
   /**
@@ -103,7 +116,7 @@ public final class SystemAdmin {
   public void launch() {
     if (myLittleBigRunt != null) new Thread(myLittleBigRunt).start();
     else {
-      // TODO: логировать ошибку
+      TONGUE.logboard(1, NAME + ": у меня не получилось запустить это");
       System.exit(1);
       // закрываем приложение
     }
@@ -113,5 +126,13 @@ public final class SystemAdmin {
    * Надстройка над конструктором, чтобы веселее было
    * @return сына маминой подруги, который поставит сервер по майнкрафту
    */
-  public static SystemAdmin summon() { return new SystemAdmin(); }
+  public static SystemAdmin summon(String name) { return new SystemAdmin(name); }
+
+  public SystemAdmin(String name) {
+    NAME = name;
+    TONGUE = (HawkPDroid<SystemAdmin>) C7_E3_GE3.assemble(this, C7_E3_GE3::new);
+  }
+
+  @Override
+  public void notify(Component sender, Valuable data) {  }
 }

@@ -72,9 +72,9 @@ public final class Hostess extends Receptionist {
     //if (received == null) return;
 
     // достаем нужные параметры как имя и название
-    //ServerCustomer newbie = parse(received, connected);
+    // ServerCustomer newbie = parse(received, connected);
     // проверили смогли ли мы создать запись
-    //if (newbie == null) return; // TODO: логировать успешную потерю информации о клиенте
+    // if (newbie == null) return; // TODO: логировать успешную потерю информации о клиенте
 
     //CUSTOMERS.put(connected, newbie);
     // TODO: логировать успешное добавление клиента
@@ -94,35 +94,36 @@ public final class Hostess extends Receptionist {
     // определить канал клиента
     SocketChannel connected = null;
     // попробовать подключить клиента к серверу
-    try { connected = server.accept(); } catch (IOException e) { // TODO: логировать о неуспешности подключения
+    try { connected = server.accept(); } catch (IOException e) {
+      TETRODE.logboard(10, "Не удалось приянть клиента на сервер");
       return null;
     }
 
     //добавил чтобы избежать написание второго try
     if (connected == null) {
-      System.err.println("Connection interrupted");
+      TETRODE.logboard(12, "Потеря связи с клиентом (возможно подключение прервано");
       return null;
     }
     // TODO: правильно обработать прерванное подключение
 
     // просто оповещение о подключении
-    System.out.println("Connection is set" +
-        "\nclient ip:" + connected.socket().getInetAddress().getHostAddress() +
-        "\nclient port:" + connected.socket().getPort() +
-        "\n____________________");
-    // TODO: залогировать успешное подключение
+    String message = "Установлено соединение с данным клиентом:" +
+        "\nIP: " + connected.socket().getInetAddress().getHostAddress() +
+        "\nPORT: " + connected.socket().getPort();
+    TETRODE.logboard(0, message);
     // попытаться сконфигурировать канал в неблокирующий режим
-    try { connected.configureBlocking(false); } catch (IOException e) { // TODO: логировать неуспешност конфигурации
+    try { connected.configureBlocking(false); } catch (IOException e) {
+      TETRODE.logboard(10, "Ошибка конфигурации клиентского канала");
       return null;
     }
-    // TODO: логировать успешность конфигурации
+    TETRODE.logboard(0, "Найстройка клиентского канала прошла успешно");
     // попытка добавить клиента в выборку
     try { connected.register(elector, SelectionKey.OP_READ);
     } catch (ClosedChannelException e) {
-      // TODO: логировать неуспешность регистрации
+      TETRODE.logboard(0xCCE, "Не удалось зарегистрировать клиента: произошло непредвиденное закрытие канала");
       return null;
     }
-    // TODO: логировать успешность регистрации
+    TETRODE.logboard(0, "Регистрация клиента успешно завершена");
     return connected;
   }
 

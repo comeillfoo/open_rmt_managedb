@@ -1,6 +1,7 @@
 package czerkaloggers;
 
 import communication.Mediator;
+import communication.wrappers.AlertBag;
 
 /**
  * Список требований к логгеру любого receiver'а.
@@ -11,7 +12,7 @@ public interface RadioLogger {
   /**
    * Помимо логгирования, еще и составляет протокол действий.
    * @param errorCode код ошибки
-   * @param message передаваемое сообщение
+   * @param message отправляемое сообщение
    */
   void notify(Integer errorCode, String message);
   // TODO: Подумать нужен ли он здесь, так, чтобы соответствовало логике

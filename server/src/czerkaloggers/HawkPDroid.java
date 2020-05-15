@@ -11,9 +11,9 @@ import communication.Mediator;
  */
 public abstract class HawkPDroid<T extends Mediator> implements RadioLogger, Component {
   // TODO: добавить ссылку на логгер
-  protected final T magiV; // ссылка на SSPC
+  protected final T MAGIV; // ссылка на SSPC
   // SubSystem Process Controller
-  protected HawkPDroid(T controller) { magiV = controller; }
+  protected HawkPDroid(T controller) { MAGIV = controller; }
 
   public static HawkPDroid<? extends Mediator> assemble(Mediator controller, DroidFactory plant) {
     return plant.create(controller);

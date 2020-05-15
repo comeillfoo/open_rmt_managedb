@@ -29,7 +29,7 @@ public final class LocationBuilder implements Factory<Location> {
       x = 0;
       y = Long.MIN_VALUE;
     } else if (digits.length == 1) {
-      y = digits[1];
+      y = digits[0];
       x = 0;
     } else  {
       x = (int) digits[0];

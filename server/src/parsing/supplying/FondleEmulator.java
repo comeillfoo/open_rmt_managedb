@@ -5,6 +5,7 @@ import instructions.concrete.ConDecree;
 import instructions.concrete.base.Exit;
 import instructions.concrete.base.Save;
 import parsing.Resolver;
+import parsing.supplying.interpreter.Shell;
 
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.Map;
  */
 public abstract class FondleEmulator extends Prompter implements Component {
   protected final Resolver MAGIV; // ссылка на SSPC
+  protected Shell fReader;
 
   /**
    * Конструктор устанавливающий контроллер

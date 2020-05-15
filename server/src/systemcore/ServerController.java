@@ -64,12 +64,17 @@ public final class ServerController implements Mediator {
    * </ul>
    */
   public ServerController(Selector selector, ServerSocketChannel channel) {
+    TRIODE = (HawkPDroid<ServerController>) S4_C8_GE3.assemble(this, S4_C8_GE3::new); // установили логгер
+    TRIODE.logboard(0, "Меня успешно собрали и я работаю");
     MAIN_SERVER = new Server(this, selector, channel); // создали сервер
+    TRIODE.logboard(0, "Успешное создание сервера");
     SECRETARY = new Hostess(this); // поставили девушку на ресепшен
+    TRIODE.logboard(0, "Успешное создание модуля обработки клиентов");
     PARSER = new BookWorm(this); // установили модуль чтения
+    TRIODE.logboard(0, "Успешное создание модуля чтения");
     // модуль обработки запросов на каждого клиента свой
     SUPPLIER = new AliExpress(this); // установили модуль отправки
-    TRIODE = new S4_C8_GE3(this); // установили логгер
+    TRIODE.logboard(0, "Успешное создание модуля отправки");
   }
 
   /**
@@ -83,14 +88,20 @@ public final class ServerController implements Mediator {
     // если получили информацию с ресепшена
     // в основном уведомления об ошибках
     // перенаправляем на модуль отправки
-    if (sender == SECRETARY)
+    if (sender == SECRETARY) {
       SUPPLIER.send((AlertBag) data); // отправили клиенту
+      TRIODE.logboard(0, "Получено сообщение с ресепшена");
+      TRIODE.logboard(0, "Данное сообщение перенаправлено клиенту");
+    }
     // если отправил сервер
     // то отправляем на парсинг
     else if (sender == MAIN_SERVER) {
-      if (data instanceof PassBag)
+      if (data instanceof PassBag) {
+        TRIODE.logboard(0, "Получено сообщение от сервера с запросом на регистрацию клиента");
+        TRIODE.logboard(0, "Запрос перенаправлен на ресепшен");
         SECRETARY.listen((PassBag) data);
-      else if (data instanceof TunnelBag) {
+      } else if (data instanceof TunnelBag) {
+        TRIODE.logboard(0, "Получен запрос от клиента");
         TunnelBag parcel = (TunnelBag) data;
         // достаем клиентский anal
         SocketChannel current = (SocketChannel) parcel.Channel();
@@ -100,6 +111,8 @@ public final class ServerController implements Mediator {
         // с данными о клиенте и канале клиенте
         // DossierBag dossier = new DossierBag(current, record);
         // отправили модулю чтения преобразованный пакет
+        TRIODE.logboard(0, "Запрос отправлен на чтение");
+        PARSER.SetClientChannel((SocketChannel) parcel.Channel());
         PARSER.retrieve(parcel);
         // проверка надо ли логировать с сервера
       } else if (data instanceof AlertBag)
@@ -107,14 +120,23 @@ public final class ServerController implements Mediator {
       // если отправил модуль чтения запроса
     } else if ((sender == PARSER) || (sender == MAIN_SERVER)) {
       // проверка: а запрос ли это отправляем обрабатываться
-      if (data instanceof QueryBag)
-        new SubProcessController(this).parse((QueryBag) data);
-      // иначе: думаем, что уведомление клиенту, которое мы и отправляем
-      else SUPPLIER.send((AlertBag) data);
+      if (data instanceof QueryBag) {
+        TRIODE.logboard(0, "Пришел прочитанный запрос");
+        TRIODE.logboard(0, "Данные отправлены в модуль обработки запросов");
+        new SubProcessController(this, ((QueryBag) data).Channel()).parse((QueryBag) data);
+        // иначе: думаем, что уведомление клиенту, которое мы и отправляем
+      } else {
+        TRIODE.logboard(0, "Получено уведомление для клиента");
+        TRIODE.logboard(0, "Производим перессылку");
+        SUPPLIER.send((AlertBag) data);
+      }
       // если кто-то из обработчиков вернул готовый запрос
       // перенаправляем клиенту
-    } else if (sender instanceof Resolver)
+    } else if (sender instanceof Resolver) {
+      TRIODE.logboard(0, "Получено уведомление для клиента");
+      TRIODE.logboard(0, "Производим перессылку");
       SUPPLIER.send((AlertBag) data); // отправили клиенту
+    }
   }
 
   /**

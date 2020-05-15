@@ -6,6 +6,8 @@ import communication.Mediator;
 import communication.wrappers.AlertBag;
 import systemcore.ServerController;
 
+import java.nio.channels.SocketChannel;
+
 /**
  * Шаблон модуля отправки результатов клиенту
  */
