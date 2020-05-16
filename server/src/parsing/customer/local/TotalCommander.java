@@ -60,8 +60,8 @@ public class TotalCommander extends Commander<Integer, Organization> {
       // проверка: нужно ли добавлять данное детище
       if (menace.verify(value[0]))
         value[0] = database.put(key[0] == null? value[0].Key() : key[0], value[0]);
-      else peacher().notify(3, "Не удалось добавить элемент: не удовлетворяет условию");
-    } else peacher().notify(1, "Обнаружена попытка добавления пустого элемента: выполнение метода прервано");
+      else peacher().logboard(3, "Не удалось добавить элемент: не удовлетворяет условию");
+    } else peacher().logboard(1, "Обнаружена попытка добавления пустого элемента: выполнение метода прервано");
   }
 
   /**
