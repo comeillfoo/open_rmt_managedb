@@ -3,11 +3,11 @@
   But now the collection is kept on the remote server, and client work with it by connection by `TCP` protocol.
 
 ## TT (En)
-  * Client app should use ***SocketChannel*** as data exchange sistem.
-  * Server app should use ***IOStream*** as data exchange sistem.
+  * сlient.сlient app should use ***SocketChannel*** as data exchange sistem.
+  * systemcore.Server app should use ***IOStream*** as data exchange sistem.
   * Network channels should be used in ***non-blocking*** mode
   * Object processing operations should be done with ***Stream API*** with lambda expression.
-  * Client must correctly handle the temporary unavailability of the server.
+  * сlient.сlient must correctly handle the temporary unavailability of the server.
   * Objects should be sent to server in serialized form.
   * Objects in collection sent to the client should be sorted by name.
   * Remove `save` command from client app.
@@ -15,25 +15,25 @@
   ## !Attention!
   `Commands and their arguments must be class objects. The exchange of "simple" lines is not allowed. So, for the add command or its analogue, it is necessary to form an object containing the type of command and the object that should be stored in your collection.`
 
-  ### Server modules.
+  ### systemcore.Server modules.
    * Connection-accepter modul
    * Request modul
    * Command-handler modul
    * Reply modul
 
-  ### Server responsibilities:
+  ### systemcore.Server responsibilities:
    * Working with the file storing collections.
    * Object collection managment.
    * Fields auto-generating managment.
    * Waiting for client connections and requests.
    * Handling clients requests.
    * Saving collections into file when app stopped or with the special command available only on server(client can't send this command).
-   ### Client responsibilities:
+   ### сlient.сlient responsibilities:
    * Reading comands from console.
    * Data validation.
    * Command and arguments serrialisation.
    * Sending command with arguments to the server.
-   * Server's reply handling (sending result to console).
+   * systemcore.Server's reply handling (sending result to console).
    * `exit` command should complete working of app.
    
    ### Extra task:
