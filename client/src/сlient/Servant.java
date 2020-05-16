@@ -105,10 +105,10 @@ public class Servant extends AServant {
     public void notification(Segment parcel) {
         Report serverReport = parcel.getClientPackage().getReport();
         if (serverReport.isSuccessful()) {
-            pipeOut.println("Server: " +serverReport.Message());
+            pipeOut.println("Server> " +serverReport.Message());
         }
         else {
-            System.err.printf("Server error: " +serverReport.Message());
+            System.err.printf("Server error> " +serverReport.Message());
         }
     }
 }

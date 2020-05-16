@@ -42,7 +42,7 @@ public class LilyInvoker extends FondleEmulator {
   public void invoke(ExecuteBag cmd) {
     ConDecree concmd = cmd.Exec();
     Report result = concmd.execute();
-    Report respond = new Report(0, "Команда " + concmd + " успешно выполнена с результатом:\n" + result.Message());
+    Report respond = new Report(0, result.Message()); //latest text which was replaced: "Команда " + concmd + " успешно выполнена с результатом:\n"
     if (!(concmd instanceof Save))
       MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
   }

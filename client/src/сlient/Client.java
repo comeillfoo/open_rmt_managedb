@@ -82,7 +82,7 @@ public class Client extends AClient implements Component, Runnable {
     public void run() {
         while (socketChannel.isConnected()) {
             try {
-                Thread.sleep(200);
+                Thread.sleep(400);
             }catch (InterruptedException ex) {/*NOP*/}
             try {
                 if (selector.selectNow() == 0) continue;

@@ -127,7 +127,7 @@ public final class SubProcessController extends Resolver {
     } else if (sender == wizard) {
       ExecuteBag bag = (ExecuteBag) data;
       kael.signup(bag.Exec());
-      RADIOMAN.logboard(0, "Пытаемся вызвать команду");
+      RADIOMAN.logboard(0, "Пытаемся вызвать команду: " + bag.Exec().getClass().getSimpleName());
       kael.invoke((ExecuteBag) data); // отправили Invoker'у, чтобы исполнить
     } else if (sender == kael) {
       RADIOMAN.logboard(0, "Отправляем результаты клиенту");
