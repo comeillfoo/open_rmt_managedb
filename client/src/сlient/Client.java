@@ -42,24 +42,21 @@ public class Client extends AClient implements Component, Runnable {
      */
     public boolean connect(String hostName,int serverPort){
         try {
+            System.out.println("──────>Setting connection...");
             socketChannel = SocketChannel.open(new InetSocketAddress(InetAddress.getByName(hostName),serverPort));
             socketChannel.configureBlocking(false);
             while (!socketChannel.finishConnect()){
                 System.out.println("Waiting for connection...");
             }
-            System.out.println("───────Connection is set───────");
+            System.out.println("──────>Connection is set<──────");
 
             socketChannel.register(selector,SelectionKey.OP_READ|SelectionKey.OP_WRITE);
 
             return true;
         } catch (UnknownHostException e) {
-            e.printStackTrace();
-            return false;
-        } catch (SocketException e){
-            System.err.println("──w─> <Connection is lost> <─w──");
             return false;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("──────>Connection is lost< <─w──");
             return false;
         }
     }

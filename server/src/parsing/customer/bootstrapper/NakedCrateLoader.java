@@ -189,9 +189,9 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     if (environment.equals(TEST_MODE)) {
       // TODO: логирование, уведомление что работаем с тестовой коллекцией
       System.err.println("Вниманиме! Так как Ваша коллекция не была найдена, то будет загружена заготовленная тестовая коллекция:");
-      System.err.println("Usage: java -jar [jarfile] [varenv]");
-      System.err.println("[jarfile] - the path or just name for server jar executable file;");
-      System.err.println("[varenv] - the name of environment variable within relative path to XML collection file (like DBPATH or etc.)");
+//      System.err.println("Usage: java -jar [jarfile] [varenv]");
+//      System.err.println("[jarfile] - the path or just name for server jar executable file;");
+//      System.err.println("[varenv] - the name of environment variable within relative path to XML collection file (like DBPATH or etc.)");
       return "tutor.xml";
     } else return System.getenv(environment);
   }

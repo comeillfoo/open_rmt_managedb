@@ -17,6 +17,11 @@ public final class ServerRun {
      * @param args аргументы командной строки
      */
     public static void main(String[] args) {
+        Thread serverInputThread = new Thread(
+                ()->{
+
+                }
+        );
         // вызвали настройщика
         SystemAdmin AndrewBot = SystemAdmin.summon("Андрей");
         // установили сервер на нужный хост и порт

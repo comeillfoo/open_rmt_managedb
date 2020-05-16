@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <organizations>
+    <organization id="27985" name="sosi bibu" annual-turnover="1.0" employees-count="1">
+        <coordinates x="1" y="1.0"/>
+        <fullname>sam
+ sosi</fullname>
+        <organization-type>trust</organization-type>
+        <official-address zipcode="0">
+            <town x="0" y="2" z="1.0"/>
+        </official-address>
+    </organization>
     <organization id="48297" name="helpers" annual-turnover="12.0" employees-count="21">
         <coordinates x="1" y="2.0"/>
         <fullname></fullname>
@@ -16,13 +25,4 @@
             <town x="0" y="55" z="33.0"/>
         </official-address>
     </organization>
-    <organization id="27985" name="sosi bibu" annual-turnover="1.0" employees-count="1">
-        <coordinates x="1" y="1.0"/>
-        <fullname>sam
- sosi</fullname>
-        <organization-type>trust</organization-type>
-        <official-address zipcode="0">
-            <town x="0" y="2" z="1.0"/>
-        </official-address>
-    </organization></organizations>
- 
+</organizations>

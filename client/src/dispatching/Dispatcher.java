@@ -63,12 +63,11 @@ public class Dispatcher extends ADispatcher {
             try {
                 byteArrayOutputStream.close();
                 objectOutputStream.close();
-            }catch (IOException e) {
-                new IOException("Dropped an exception during closing streams.",e);
-            }
+            }catch (IOException ex) {
+                new IOException("Dropped an exception during closing streams.", ex);
+            }catch (NullPointerException ex) {/*NOP*/}
             parcel.setMarker(Markers.STOP);
             mediator.notify(this,parcel);
-            return;
         }
         parcel.setCommandData(tempCommand);
         send(parcel);
