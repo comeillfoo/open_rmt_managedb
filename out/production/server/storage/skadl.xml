@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<organizations>
+    <organization id="48297" name="helpers" annual-turnover="12.0" employees-count="21">
+        <coordinates x="1" y="2.0"/>
+        <fullname></fullname>
+        <organization-type>public</organization-type>
+        <official-address zipcode="12">
+            <town x="2" y="3" z="4.0"/>
+        </official-address>
+    </organization>
+    <organization id="30491" name="gg" annual-turnover="44.0" employees-count="22">
+        <coordinates x="22" y="33.0"/>
+        <fullname>ff</fullname>
+        <organization-type>public</organization-type>
+        <official-address zipcode="11">
+            <town x="0" y="55" z="33.0"/>
+        </official-address>
+    </organization>
+    <organization id="27985" name="sosi bibu" annual-turnover="1.0" employees-count="1">
+        <coordinates x="1" y="1.0"/>
+        <fullname>sam
+ sosi</fullname>
+        <organization-type>trust</organization-type>
+        <official-address zipcode="0">
+            <town x="0" y="2" z="1.0"/>
+        </official-address>
+    </organization></organizations>
+ 
