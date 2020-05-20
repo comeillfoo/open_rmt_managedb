@@ -13,6 +13,7 @@ import parsing.plants.InstructionBuilder;
 import parsing.supplying.FondleEmulator;
 import parsing.supplying.interpreter.Shell;
 import systemcore.ServerController;
+import systemcore.ServerListener;
 
 import java.nio.channels.SocketChannel;
 
@@ -21,13 +22,14 @@ import java.nio.channels.SocketChannel;
  * и делегирующий свою работу по обработке готовым классам.
  */
 public abstract class Resolver implements Mediator, Component {
-  protected  ServerController CONTROLLER; // контроллер модуля
+  protected ServerController CONTROLLER; // контроллер модуля
   protected FondleEmulator kael; // сутенер комманд
   protected LimboKeeper fate; // сутенер коллекции
   protected InstructionBuilder wizard; // фабрика вызываемых комманд
   protected Factory plant; // фабрика элементов коллекции
   protected LoaferLoader<Organization> breadLoader; // загрузчик коллекции
   protected SocketChannel client;
+  protected Thread serverListener;
 
   // основной метод обработки клиентского запроса
   /**

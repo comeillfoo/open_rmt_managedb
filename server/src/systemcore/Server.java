@@ -16,6 +16,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Timer;
 
 /**
  * Ну, сервер и сервер. Чо бубнить-то.
@@ -126,10 +127,10 @@ public final class Server implements Runnable, Component {
           " REASON : " + parcel.Notify().Message();
       client.close(); //close client's Socket to remove key from selector
       CORE.notify(this, new AlertBag(null, new Report(0, message)));
-      CORE.notify(this, new QueryBag(null, new RawSave()));
+//      CORE.notify(this, new QueryBag(null, new RawSave()));
     } catch (IOException e) {
       CORE.notify(this, new AlertBag(null, new Report(1, "Ошибка во время отключения")));
-      CORE.notify(this, new QueryBag(null, new RawSave()));
+//      CORE.notify(this, new QueryBag(null, new RawSave()));
     } catch (NullPointerException e) {}
   }
 }

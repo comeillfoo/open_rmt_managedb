@@ -251,6 +251,6 @@ public class TotalCommander extends Commander<Integer, Organization> {
         .stream()
         .forEach((Map.Entry<Integer, Organization> org)->{ unload.add(org.getValue()); });
     breadLoader.unload(unload);
-    peacher().notify(0, "Коллекция успешно сохранена");
+    //peacher().notify(0, "Коллекция успешно сохранена");
   }
 }

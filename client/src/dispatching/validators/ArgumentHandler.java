@@ -44,14 +44,15 @@ public class ArgumentHandler extends DataHandler{
     public RawDecree handle(Segment parcel) throws CommandSyntaxException {
         String tempCommand = parcel.getStringData()[0];
 
-        boolean isLimited = false;
+        boolean isLimited = true;
         Map.Entry<String,String> foundedCommand = commandMap.entrySet().stream().filter((a) -> (a.getValue().equals(tempCommand))).findFirst().get();
-        if (foundedCommand.getKey().matches(".*\\s\\[(key|id)\\].*")) {
-            isLimited = true;
+        if (foundedCommand.getKey().matches(".*\\s*\\[(key|id)\\].*")) {
+            isLimited = false;
         }
 
         String stringArgument = "";
         try {
+            if (parcel.getStringData()[1] != null)
             for (int i = 1; i < parcel.getStringData().length; i++) {
                 stringArgument += parcel.getStringData()[i] ;
                 if (i != parcel.getStringData().length - 1) {
@@ -62,7 +63,7 @@ public class ArgumentHandler extends DataHandler{
              throw new CommandSyntaxException("Command should have at list one argument!");
         }
         Integer intArgument = null;
-        if (isLimited) {
+        if (!isLimited) {
             try {
                 intArgument = Integer.valueOf(stringArgument);
                 if (intArgument < 0) throw new NumberFormatException();
@@ -70,7 +71,7 @@ public class ArgumentHandler extends DataHandler{
                     throw new CommandSyntaxException("Argument should be only one number!");
                 }
             } catch (NumberFormatException e) {
-                throw new CommandSyntaxException("Entered argument should be a positive integer!");
+                throw new CommandSyntaxException("Entered argument should be one positive integer!");
             }
             switch (foundedCommand.getValue()) {
                 case RawRemoveKey.NAME: return new RawRemoveKey(intArgument);
