@@ -41,9 +41,13 @@ public class LilyInvoker extends FondleEmulator {
   @Override
   public void invoke(ExecuteBag cmd) {
     ConDecree concmd = cmd.Exec();
-    Report result = concmd.execute();
+    Report result = null;
+    if (concmd instanceof ExecuteScript)
+      result = new LilyShell(MAGIV, ((ExecuteScript) concmd).getfilename(), this).read(cmd);
+    else
+      result = concmd.execute();
     Report respond = new Report(0, "Команда " + concmd + " успешно выполнена с результатом:\n" + result.Message());
-    if (!(concmd instanceof Save))
+    if (!(concmd instanceof Save) && cmd.Channel() != null)
       MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
   }
 }

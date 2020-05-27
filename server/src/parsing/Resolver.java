@@ -54,4 +54,24 @@ public abstract class Resolver implements Mediator, Component {
     AlertBag clientAlert = new AlertBag(client, alert.Notify());
     CONTROLLER.ImmediateStop(clientAlert);
   }
+
+  /**
+   * Геттер для получения
+   * фабрики иструкций, нужен шелу
+   * для построения инструкций
+   * Бооооооооооооооооб, строитель --
+   * все построит,
+   * Бооооооооооооооооб, строитель --
+   * без проблем
+   * @return ссылка на (Боба) строителя инструкций
+   */
+  public InstructionBuilder getInstBuilder() { return wizard; }
+
+  /**
+   * Обычный геттер для получения ресивера,
+   * нужен фабрике инструкций и шелу,
+   * который всеми этими геттерами и пользуется
+   * @return ссылка на ресивер
+   */
+  public LimboKeeper getFate() { return fate; }
 }

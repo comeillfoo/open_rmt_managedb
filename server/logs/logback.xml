@@ -16,7 +16,6 @@
 
     <logger name = "czerkaloggers.customer.B_4D4_GE3" level = "INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
     </logger>
 
     <logger name = "czerkaloggers.dispatching.TT_32_GE3" level = "INFO">
@@ -25,26 +24,21 @@
     </logger>
     <logger name = "czerkaloggers.perusal.C9_T9_GE3" level = "INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
     </logger>
 
     <logger name = "czerkaloggers.receiver.S_0D3_GE3" level = "INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
     </logger>
 
     <logger name = "czerkaloggers.systemcore.C7_E3_GE3" level = "INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
     </logger>
 
     <logger name = "czerkaloggers.systemcore.S4_C8_GE3" level = "INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
     </logger>
 
     <root level="debug">
-        <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>
 </configuration>

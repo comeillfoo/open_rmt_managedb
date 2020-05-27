@@ -2,8 +2,12 @@ package parsing.supplying.interpreter;
 
 import instructions.rotten.RawDecree;
 import parsing.Resolver;
+import parsing.plants.InstructionBuilder;
 import parsing.supplying.Invoker;
 import parsing.supplying.LilyInvoker;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 /**
  * Абстракция интерпретатора,
@@ -17,7 +21,8 @@ public abstract class Shell extends LilyInvoker {
     super(controller);
     FILE_NAME = filename;
     CTRL = ctrl;
+
   }
 
-  public abstract RawDecree parse(String line);
+  public abstract RawDecree parse(String line, BufferedReader paramReader);
 }

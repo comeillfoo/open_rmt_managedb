@@ -89,7 +89,6 @@ public final class SubProcessController extends Resolver {
       RADIOMAN.logboard(0, "Строим окружение");
       // загрузили коллекцию
       loaded = breadLoader.load();
-      System.out.println("че ты забыл тут??");
       RADIOMAN.logboard(0, "Коллекция загружена");
       // изменили состояние пустой коллекции на полную
       fate.DataRebase(loaded);

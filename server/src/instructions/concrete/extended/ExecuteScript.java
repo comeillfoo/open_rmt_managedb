@@ -22,6 +22,8 @@ public final class ExecuteScript extends ConDecree {
     FILE_NAME = filename;
   }
 
+  public String getfilename() { return FILE_NAME; }
+
   /**
    * Общий метод исполнения для всех исполняемых комманд
    */
