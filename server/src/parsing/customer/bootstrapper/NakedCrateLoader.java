@@ -126,7 +126,12 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     // снова для начала берем разделитель нашей OS
     String sptr = System.getProperty("file.separator");
     // также получаем имя файла, куда срать будем, и формируем путь до него
-    String fuck = sayMyFileName(), pathname = System.getProperty("user.dir") + sptr + CAL_FOLDER + sptr + fuck;
+    String fuck = sayMyFileName();
+    if (fuck == "") {
+      System.err.println("Коллекция для сохранения не была онаружена.");
+      return;
+    }
+    String pathname = System.getProperty("user.dir") + sptr + CAL_FOLDER + sptr + fuck;
     // начинается попа-боль
     // создаем выходной поток, и виновника, от души которого все блага отпускаем
     try (OutputStream otputty = new FileOutputStream(pathname);
@@ -186,14 +191,18 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
    * @return название файла с коллекцией
    */
   private String sayMyFileName() {
-    if (environment.equals(TEST_MODE)) {
-      // TODO: логирование, уведомление что работаем с тестовой коллекцией
-      System.err.println("Вниманиме! Так как Ваша коллекция не была найдена, то будет загружена заготовленная тестовая коллекция:");
+    try {
+      if (TEST_MODE.equals(environment)) {
+        // TODO: логирование, уведомление что работаем с тестовой коллекцией
+        System.err.println("Вниманиме! Так как Ваша коллекция не была найдена, то будет загружена заготовленная тестовая коллекция:");
 //      System.err.println("Usage: java -jar [jarfile] [varenv]");
 //      System.err.println("[jarfile] - the path or just name for server jar executable file;");
 //      System.err.println("[varenv] - the name of environment variable within relative path to XML collection file (like DBPATH or etc.)");
-      return "tutor.xml";
-    } else return System.getenv(environment);
+        return "tutor.xml";
+      } else return System.getenv(environment);
+    }catch (NullPointerException ex) {
+      return "";
+    }
   }
 
   /**

@@ -6,11 +6,9 @@ import czerkaloggers.RadioLogger;
 import parsing.customer.Indicator;
 import parsing.customer.Receiver;
 import parsing.customer.bootstrapper.LoaferLoader;
+import entities.HashMapS;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Конкретный пацан в паттерне. Оперирует организациями, как
@@ -191,7 +189,8 @@ public class TotalCommander extends Commander<Integer, Organization> {
   public String survey(Indicator menace) {
     StringBuilder bufferSurvey = new StringBuilder();
     // добавляем к текущей пустой строке весь текст с готовой информацией
-    Optional result = database.entrySet() // получаем пары ключ-значение
+    LinkedHashMap<Integer,Organization> tempCollection = ((HashMapS)database).sortByNameOfOrganization();
+    Optional result = tempCollection.entrySet() // получаем пары ключ-значение
             .stream() // преобразуем в поток, дабы быть на волне
             .filter(entry -> menace.verify(entry.getValue())) // отсеиваем только не нужные
             .map((entry)->("\tKEY: " + entry.getKey() + ";\n\tVALUE: " + entry.getValue() + "\n")) // преобразуем в строки с информацией

@@ -2,6 +2,7 @@ package systemcore;
 
 import communication.Component;
 import communication.wrappers.QueryBag;
+import instructions.rotten.base.RawExit;
 import instructions.rotten.base.RawSave;
 import parsing.SubProcessController;
 
@@ -26,11 +27,13 @@ public class ServerListener extends Thread implements Component {
         String[] tempCommand = listenForCommand().split(" ");
         switch (tempCommand[0]) {
             case RawSave.NAME: return new QueryBag(null, new RawSave());
+            case RawExit.NAME: return new QueryBag(null, new RawExit());
         }
         return null;
     }
 
     private void sendCommand(QueryBag queryBag) {
+        if (queryBag == null) return;
         subProcessController.notify(this, queryBag);
     }
 

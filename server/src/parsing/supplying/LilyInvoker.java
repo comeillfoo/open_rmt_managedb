@@ -3,8 +3,10 @@ package parsing.supplying;
 import communication.Report;
 import communication.wrappers.AlertBag;
 import communication.wrappers.ExecuteBag;
+import instructions.concrete.base.Exit;
 import instructions.concrete.base.Save;
 import instructions.concrete.extended.ExecuteScript;
+import instructions.rotten.base.RawExit;
 import parsing.Resolver;
 import instructions.concrete.ConDecree;
 import parsing.supplying.interpreter.LilyShell;
@@ -43,7 +45,8 @@ public class LilyInvoker extends FondleEmulator {
     ConDecree concmd = cmd.Exec();
     Report result = concmd.execute();
     Report respond = new Report(0, result.Message()); //latest text which was replaced: "Команда " + concmd + " успешно выполнена с результатом:\n"
-    if (!(concmd instanceof Save))
+    if (!(concmd instanceof Save || concmd instanceof Exit)) {
       MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
+    }
   }
 }
