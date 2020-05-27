@@ -2,12 +2,14 @@ package dispatching.validators;
 
 import communication.Segment;
 import dataSection.Commands;
+import entities.Descriptor;
 import entities.JunkerCreator;
 import exceptions.CommandSyntaxException;
 import instructions.rotten.base.*;
 import instructions.rotten.extended.*;
 import instructions.rotten.RawDecree;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +26,7 @@ import java.util.stream.StreamSupport;
  */
 public class ArgumentHandler extends DataHandler{
     private final HashMap<String,String> commandMap;
-
+    private final Descriptor fileDescriptor;
     /**
      * Конструктор принимающий список команд относительно которых будет производиться проверка.
      * @param commandList
@@ -32,6 +34,7 @@ public class ArgumentHandler extends DataHandler{
     public ArgumentHandler(Commands commandList){
         commandMap = commandList.getCommandMap();
         junkerCreator = new JunkerCreator();
+        fileDescriptor = new Descriptor();
     }
 
     /**
@@ -82,7 +85,12 @@ public class ArgumentHandler extends DataHandler{
             }
         }else {
             switch (foundedCommand.getValue()) {
-                case RawExecuteScript.NAME: return new RawExecuteScript(stringArgument);
+                case RawExecuteScript.NAME:
+                    try{
+                        return new RawExecuteScript(fileDescriptor.discript(stringArgument));
+                    }catch (IOException ex) {
+                        throw new CommandSyntaxException(ex.getMessage());
+                    }
                 case RawFilterContainsName.NAME: return new RawFilterContainsName(stringArgument);
                 case RawRemoveLower.NAME: return new RawRemoveLower(junkerCreator.prepareJunker());
             }

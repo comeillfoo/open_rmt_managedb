@@ -6,23 +6,25 @@ import parsing.customer.Receiver;
 import parsing.supplying.Invoker;
 import parsing.supplying.interpreter.Shell;
 
+import java.util.ArrayList;
+
 /**
  * Команда исполнения скрипта из
  * каталога scripts
  */
 public final class ExecuteScript extends ConDecree {
-  private final String FILE_NAME;
+  private final ArrayList<String> scriptString;
   /**
    * Конструктор, устанавливающий ссылку на
    * управленца коллекцией
    * @param sieve текущий управленец коллекцией
    */
-  public ExecuteScript(Receiver sieve, String filename) {
+  public ExecuteScript(Receiver sieve, ArrayList<String> scriptString) {
     super(sieve);
-    FILE_NAME = filename;
+    this.scriptString = scriptString;
   }
 
-  public String getfilename() { return FILE_NAME; }
+  public ArrayList<String> getScriptParts() { return scriptString; }
 
   /**
    * Общий метод исполнения для всех исполняемых комманд

@@ -42,10 +42,11 @@ public class LilyInvoker extends FondleEmulator {
   public void invoke(ExecuteBag cmd) {
     ConDecree concmd = cmd.Exec();
     Report result = null;
-    if (concmd instanceof ExecuteScript)
-      result = new LilyShell(MAGIV, ((ExecuteScript) concmd).getfilename(), this).read(cmd);
-    else
+    if (concmd instanceof ExecuteScript) {
+      result = new LilyShell(MAGIV, this).read(cmd);
+    }else {
       result = concmd.execute();
+    }
     Report respond = new Report(0, "Команда " + concmd + " успешно выполнена с результатом:\n" + result.Message());
     if (!(concmd instanceof Save) && cmd.Channel() != null)
       MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));

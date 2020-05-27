@@ -28,8 +28,8 @@ public final class BookWorm extends QueryReader {
   private final HawkPDroid<BookWorm> CHRONICLER; // логирующий элемент
   private ByteArrayInputStream byteArrayInputStream;
   private ObjectInputStream objectInputStream;
-  // наш буфер с приходящими данными все 2 Кибибайта наши на веки-вечные
-  private final ByteBuffer BYTE_BUFFER = ByteBuffer.allocate(3*1024);
+  // наш буфер с приходящими данными все 10 Кибибайта наши на веки-вечные
+  private final ByteBuffer BYTE_BUFFER = ByteBuffer.allocate(10*1024);
 
   // главный конструктор
   /**

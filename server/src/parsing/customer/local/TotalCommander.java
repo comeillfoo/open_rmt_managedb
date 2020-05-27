@@ -152,7 +152,10 @@ public class TotalCommander extends Commander<Integer, Organization> {
           value[0] = buffer; // возвращаем найденное наверх
           peacher().logboard(0, "Условие удовлетворено, данные предоставлены");
         } else peacher().notify(3, "Условие не удовлетворено, данные не могут быть предоставлены");
-      } else peacher().logboard(1, "Ключ " + key[0] + " отсутствует в коллекции, данные по нему не могут быть найдены");
+      } else {
+        peacher().logboard(1, "Ключ " + key[0] + " отсутствует в коллекции, данные по нему не могут быть найдены");
+        key[0] = null;
+      }
     } else if ((key[0] == null) && (value[0] != null)) {
       // проверка: есть ли элемент в коллекции
       if (database.containsValue(value[0])) {
@@ -249,7 +252,12 @@ public class TotalCommander extends Commander<Integer, Organization> {
         .entrySet()
         .stream()
         .forEach((Map.Entry<Integer, Organization> org)->{ unload.add(org.getValue()); });
-    breadLoader.unload(unload);
-    //peacher().notify(0, "Коллекция успешно сохранена");
+    try {
+      breadLoader.unload(unload);
+    }catch (NullPointerException e) {
+      System.err.println("Коллекция для сохранения не была онаружена.");
+      return;
+    }
+    peacher().logboard(0, "Коллекция успешно сохранена");
   }
 }

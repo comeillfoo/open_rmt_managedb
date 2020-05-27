@@ -177,7 +177,7 @@ public class Organization implements Mappable<Integer> {
   }
   @Override
   public int hashCode() {
-    return (int)((name.hashCode() + fullname.hashCode()) * (annualTurnover % employeesCount) + creationDate.hashCode() + coordinates.hashCode() + type.hashCode() + officialAddress.hashCode()) % 0xdead;
+    return (int)((name.hashCode() + fullname.hashCode()) * (annualTurnover % employeesCount) + creationDate.hashCode() + coordinates.hashCode() /* + type.hashCode() + officialAddress.hashCode()*/) % 0xdead;
   }
 
   /**

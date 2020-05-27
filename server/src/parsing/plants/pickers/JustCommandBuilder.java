@@ -32,7 +32,7 @@ public final class JustCommandBuilder {
     if (c instanceof ITitled) {
       String name = ((ITitled) c).Name();
       if (c instanceof RawExecuteScript)
-        return new ExecuteScript(receiver, name);
+        return new ExecuteScript(receiver, ((RawExecuteScript) c).getScriptString());
       else return new FilterContainsName(receiver, name);
     } else if (c instanceof IClued) {
       Integer key = ((IClued) c).Key();

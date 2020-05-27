@@ -122,14 +122,13 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
    * @param elements коллекция элементов
    */
   @Override
-  public void unload(List<Organization> elements) {
+  public void unload(List<Organization> elements) throws NullPointerException {
     // снова для начала берем разделитель нашей OS
     String sptr = System.getProperty("file.separator");
     // также получаем имя файла, куда срать будем, и формируем путь до него
     String fuck = sayMyFileName();
     if (fuck == "") {
-      System.err.println("Коллекция для сохранения не была онаружена.");
-      return;
+      throw new NullPointerException();
     }
     String pathname = System.getProperty("user.dir") + sptr + CAL_FOLDER + sptr + fuck;
     // начинается попа-боль

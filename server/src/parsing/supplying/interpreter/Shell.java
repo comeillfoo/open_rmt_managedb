@@ -8,6 +8,8 @@ import parsing.supplying.LilyInvoker;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 /**
  * Абстракция интерпретатора,
@@ -15,14 +17,19 @@ import java.io.InputStreamReader;
  * переданные в поток
  */
 public abstract class Shell extends LilyInvoker {
-  protected final String FILE_NAME;
+  protected String fileName;
   protected final Invoker CTRL;
-  protected Shell(Resolver controller, String filename, Invoker ctrl) {
-    super(controller);
-    FILE_NAME = filename;
-    CTRL = ctrl;
 
+  protected Shell(Resolver controller, String fileName, Invoker ctrl) {
+    super(controller);
+    this.fileName = fileName;
+    CTRL = ctrl;
   }
 
-  public abstract RawDecree parse(String line, BufferedReader pReader);
+  protected Shell(Resolver controller, Invoker ctrl) {
+    super(controller);
+    CTRL = ctrl;
+  }
+
+  public abstract RawDecree parse(String line, ArrayDeque<String> scriptParts);
 }

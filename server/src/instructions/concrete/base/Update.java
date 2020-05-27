@@ -4,6 +4,8 @@ import communication.Report;
 import entities.Organization;
 import parsing.customer.Receiver;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * Команда обновления элемента
  * коллекции по идентификатору
@@ -43,8 +45,10 @@ public final class Update extends Committer {
       return new Report(1, "Обнаружена попытка добавить неопределенный элемент");
     Receiver<Integer, Organization> realSiever = (Receiver<Integer, Organization>) SIEVE;
     Integer key = null;
-    Integer[] keys = new Integer[]{key};
-    realSiever.search(keys, new Organization[]{}, (org)->(org.Key().equals(id)));
+    Integer[] keys = new Integer[]{id};
+    realSiever.search(keys, new Organization[]{null}, (org)->(org.Key().equals(id)));
+    key = keys[0];
+    System.out.println(key);
     if (key != null) {
       Organization litmus = EMBEDDED;
       Organization[] buffers = new Organization[]{litmus};
@@ -60,5 +64,7 @@ public final class Update extends Committer {
   public static final int ARGNUM = 2;
 
   @Override
-  public String toString() { return NAME; }
+  public String toString() {
+    return NAME;
+  }
 }

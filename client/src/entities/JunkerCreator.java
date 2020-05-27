@@ -98,8 +98,8 @@ public class JunkerCreator {
                     organizationType = tempType;
                 }
             }
-            if (organizationType == null) System.err.println("Entered invalid organization type.");
-        }while (organizationType == null);
+            if (!clientSuggestion.isEmpty() && organizationType == null) System.err.println("Entered invalid organization type.");
+        }while (clientSuggestion.isEmpty() && organizationType == null);
         return organizationType;
     }
 }
