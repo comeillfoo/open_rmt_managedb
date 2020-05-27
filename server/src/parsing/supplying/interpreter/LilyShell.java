@@ -10,11 +10,13 @@ import instructions.rotten.base.*;
 import instructions.rotten.extended.*;
 import parsing.Resolver;
 import parsing.supplying.Invoker;
+import parsing.supplying.interpreter.Shell;
 
 import java.io.*;
 
 public final class LilyShell extends Shell {
 
+  private String executed = "";
   public LilyShell(Resolver controller, String filename, Invoker ctrl) {
     super(controller, filename, ctrl);
   }
@@ -23,7 +25,7 @@ public final class LilyShell extends Shell {
     Invoker ptr = CTRL;
     while (ptr instanceof Shell && ptr != null) {
       if (FILE_NAME.equals(((Shell) ptr).FILE_NAME)) return new Report(25,
-          "Исполнение скрипта остановлено: обнаружена попытка создания рекурсии");
+          "Исполнение скрипта остановлено: обнаружена попытка создания рекурсии\n");
       ptr = ((Shell) ptr).CTRL;
     }
     String sep = System.getProperty("file.separator");
@@ -37,15 +39,15 @@ public final class LilyShell extends Shell {
   	  while (realfReader.ready()) {
   	    String anotherLine = realfReader.readLine();
   	    RawDecree parsedCommand = parse(anotherLine, realfReader);
-  	    if (parsedCommand == null) return new Report(404, "Не удалось найти команду");
+  	    if (parsedCommand == null) executed += "Не удалось разобрать строку "  + anotherLine + "\n";
   	    MAGIV.getInstBuilder().make(new QueryBag(null, parsedCommand), MAGIV.getFate());
       }
   	} catch (FileNotFoundException e) {
-  	  return new Report(404, "Не удалось найти файл по укзанному имени");
+  	  executed += "Не удалось найти файл по указанному имени\n";
   	} catch (IOException e) {
-  		return new Report(4, "Не удалось получить доступ к потоку ввода для чтения файла");
+  		executed += "Не удалось получить доступ к потоку ввода для чтения файла\n";
   	}
-  	return new Report(0, "Скрипт по имени " + FILE_NAME + " успешно исполнен");
+  	return new Report(0, "Скрипт по имени " + FILE_NAME + " обработан\nЗапись обработки файла:\n" + executed);
   }
 
   @Override
@@ -72,7 +74,7 @@ public final class LilyShell extends Shell {
     }
   }
 
-  private class CommandDefiner {
+  class CommandDefiner {
     private final BufferedReader cReader;
 
     public CommandDefiner(BufferedReader cReader) {
@@ -93,17 +95,37 @@ public final class LilyShell extends Shell {
       // тут все норм, свич юзает иквалз и все хорошо
       // солнышко светит, команды определяются
       switch (command_name) {
-        case "help": return new RawHelp();
-        case "info": return new RawInfo();
-        case "clear": return new RawClear();
-        case "sum_of_annual_turnover": return new RawSumOfAnnualTurnover();
-        case "max_by_creation_date": return new RawMaxByDate();
+        case "help": {
+          executed += "Выполнена команда: " + command_name + "\n";
+          return new RawHelp();
+        }
+        case "info": {
+          executed += "Выполнена команда: " + command_name + "\n";
+          return new RawInfo();
+        }
+        case "clear": {
+          executed += "Выполнена команда: " + command_name + "\n";
+          return new RawClear();
+        }
+        case "show": {
+          executed += "Выполнена команда: " + command_name + "\n";
+          return new RawShow();
+        }
+        case "sum_of_annual_turnover": {
+          executed += "Выполнена команда: " + command_name + "\n";
+          return new RawSumOfAnnualTurnover();
+        }
+        case "max_by_creation_date": {
+          executed += "Выполнена команда: " + command_name + "\n";
+          return new RawMaxByDate();
+        }
         case "remove_lower": {
           ParamDefiner prmDeaf = new ParamDefiner(cReader);
           Junker element = prmDeaf.define();
-          if (element != null)
+          if (element != null) {
+            executed += "Выполнена команда: " + command_name + "\n";
             return new RawRemoveLower(element);
-          else return null;
+          } else return null;
         }
         // тут солнышко скроется, команда не настроится
         default: return null;
@@ -121,13 +143,16 @@ public final class LilyShell extends Shell {
             case "remove_key": {
               Integer key = Integer.valueOf(argument); // переводим аргумент в число
               if (key == null) return null; // если вышло null, то и команда не определена
+              executed += "Выполнена команда: " + command_name + "\n";
               return new RawRemoveKey(key); // иначе вернуть нормальную команду
             }
-            case "execute_script":
+            case "execute_script": {
+              executed += "Выполнена команда: " + command_name + "\n";
               return new RawExecuteScript(argument);
-            case "filter_contains_name":
+            } case "filter_contains_name": {
+              executed += "Выполнена команда: " + command_name + "\n";
               return new RawFilterContainsName(argument);
-            default:
+            } default:
               return null;
           }
         } else {
@@ -140,22 +165,26 @@ public final class LilyShell extends Shell {
               case "insert": {
                 Integer key = Integer.valueOf(argument);
                 if (key == null) return null;
+                executed += "Выполнена команда: " + command_name + "\n";
                 return new RawInsert(key, element);
               }
               case "update": {
                 Integer id = Integer.valueOf(argument);
                 if (id == null) return null;
+                executed += "Выполнена команда: " + command_name + "\n";
                 return new RawUpdate(id, element);
               }
               case "remove_lower": return new RawRemoveLower(element);
               case "replace_if_lower": {
                 Integer key = Integer.valueOf(argument);
                 if (key == null) return null;
+                executed += "Выполнена команда: " + command_name + "\n";
                 return new RawReplaceIfLower(key, element);
               }
               case "replace_if_greater": {
                 Integer key = Integer.valueOf(argument);
                 if (key == null) return null;
+                executed += "Выполнена команда: " + command_name + "\n";
                 return new RawReplaceIfGreater(key, element);
               }
               default: return null;
@@ -166,17 +195,17 @@ public final class LilyShell extends Shell {
     }
   }
 
-  private class ParamDefiner {
+  class ParamDefiner {
     private final BufferedReader pReader;
     public ParamDefiner(BufferedReader paramReader) {
       pReader = paramReader;
     }
 
     private boolean checkFilling(Object[] parameters) {
-      boolean flag = true;
+      boolean flag = false;
       for (Object param : parameters)
         if (param == null) {
-          flag = false;
+          flag = true;
           return flag;
         }
       return flag;

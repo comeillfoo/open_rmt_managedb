@@ -8,6 +8,7 @@ import parsing.customer.Receiver;
 
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -46,7 +47,10 @@ public class MaxBy<K extends Integer, V extends Mappable<K>, R extends Comparabl
         buffer.entrySet()
         .stream()
         .max((Map.Entry<K, R> enter1, Map.Entry<K, R> enter2)->(enter1.getValue().compareTo(enter2.getValue())));
-    K maxim_key = maxim.get().getKey();//TODO: NoSuchElementException
+    K maxim_key;
+    try {
+      maxim_key = maxim.get().getKey();
+    } catch (NoSuchElementException e) { return new Report(404, "Подходящий элемент не найден, проверьте размер коллекции"); }
     // найти в исходной коллекции тот элемент
     Organization recology = null;
     Organization[] recologys = new Organization[]{recology};

@@ -211,7 +211,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
   @Override
   public void clear() {
     database.clear(); // очистка коллекции стандартным методом
-    peacher().notify(0, "Коллекции успешно очищена");
+    peacher().logboard(0, "Коллекция успешно очищена");
   }
 
   /**
