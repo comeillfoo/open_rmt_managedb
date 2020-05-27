@@ -8,10 +8,14 @@ import instructions.rotten.base.*;
 import instructions.rotten.extended.*;
 import instructions.rotten.RawDecree;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Звено проверки аргументов команд.Реализация паттерна "Цепочка обязанностей" (Chain of Responsibility)
@@ -40,57 +44,47 @@ public class ArgumentHandler extends DataHandler{
     public RawDecree handle(Segment parcel) throws CommandSyntaxException {
         String tempCommand = parcel.getStringData()[0];
 
+        boolean isLimited = true;
+        Map.Entry<String,String> foundedCommand = commandMap.entrySet().stream().filter((a) -> (a.getValue().equals(tempCommand))).findFirst().get();
+        if (foundedCommand.getKey().matches(".*\\s*\\[(key|id)\\].*")) {
+            isLimited = false;
+        }
+
         String stringArgument = "";
         try {
-            stringArgument = parcel.getStringData()[1];
-            if (parcel.getStringData().length > 2) {
-                throw new CommandSyntaxException("Wrongly entered argument part of command!");
+            if (parcel.getStringData()[1] != null)
+            for (int i = 1; i < parcel.getStringData().length; i++) {
+                stringArgument += parcel.getStringData()[i] ;
+                if (i != parcel.getStringData().length - 1) {
+                    stringArgument += " ";
+                }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CommandSyntaxException("Command should have at list one argument!");
+             throw new CommandSyntaxException("Command should have at list one argument!");
         }
-
-        if(parcel.getStringData()[0].equals(RawExecuteScript.NAME)) {
-            return new RawExecuteScript(stringArgument);
-        }
-
         Integer intArgument = null;
-        try {
-            intArgument = Integer.valueOf(stringArgument);
-            if(intArgument < 0) throw new NumberFormatException();
-        } catch (NumberFormatException e) {
-            throw new CommandSyntaxException("Entered argument should be a positive integer!");
-        }
-        //паттерн регулярного выражения для определния,что для комманды необходимо получить дополнительне параметры
-        Pattern argumentCommandPattern = Pattern.compile(".*\\{.+}");
-        Matcher matcher = null;
-        String key = "";
-        for (Map.Entry<String, String> entry : commandMap.entrySet()) {
-            key = entry.getKey().split(" ")[0];
-            matcher = argumentCommandPattern.matcher(entry.getKey());
-            if (key.equals(tempCommand)) {
-                if (matcher.find()) {
-                    //взываем к конструктору junker'а
-                    switch (key) {
-                        case RawInsert.NAME:
-                            return new RawInsert(intArgument,junkerCreator.prepareJunker());
-                        case RawUpdate.NAME:
-                            return new RawUpdate(intArgument,junkerCreator.prepareJunker());
-                        case RawRemoveLower.NAME:
-                            return new RawRemoveLower(junkerCreator.prepareJunker());
-                        case RawReplaceIfLower.NAME:
-                            return new RawReplaceIfLower(intArgument,junkerCreator.prepareJunker());
-                        case RawReplaceIfGreater.NAME:
-                            return new RawReplaceIfGreater(intArgument,junkerCreator.prepareJunker());
-                    }
-                } else {
-                    switch (key) {
-                        case RawRemoveKey.NAME:
-                            return new RawRemoveKey(intArgument);
-                        case RawFilterContainsName.NAME:
-                            return new RawFilterContainsName(stringArgument);
-                    }
+        if (!isLimited) {
+            try {
+                intArgument = Integer.valueOf(stringArgument);
+                if (intArgument < 0) throw new NumberFormatException();
+                if (parcel.getStringData().length > 2) {
+                    throw new CommandSyntaxException("Argument should be only one number!");
                 }
+            } catch (NumberFormatException e) {
+                throw new CommandSyntaxException("Entered argument should be one positive integer!");
+            }
+            switch (foundedCommand.getValue()) {
+                case RawRemoveKey.NAME: return new RawRemoveKey(intArgument);
+                case RawInsert.NAME: return new RawInsert(intArgument, junkerCreator.prepareJunker());
+                case RawUpdate.NAME: return new RawUpdate(intArgument, junkerCreator.prepareJunker());
+                case RawReplaceIfLower.NAME: return new RawReplaceIfLower(intArgument, junkerCreator.prepareJunker());
+                case RawReplaceIfGreater.NAME: return new RawReplaceIfGreater(intArgument, junkerCreator.prepareJunker());
+            }
+        }else {
+            switch (foundedCommand.getValue()) {
+                case RawExecuteScript.NAME: return new RawExecuteScript(stringArgument);
+                case RawFilterContainsName.NAME: return new RawFilterContainsName(stringArgument);
+                case RawRemoveLower.NAME: return new RawRemoveLower(junkerCreator.prepareJunker());
             }
         }
         return null;

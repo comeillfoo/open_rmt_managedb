@@ -3,6 +3,7 @@ package communication;
 import instructions.rotten.RawDecree;
 
 import java.io.Serializable;
+import java.util.Timer;
 
 /**
  * Класс, объектами которого возможно будет осуществляться обмен с сервером.
@@ -48,5 +49,5 @@ public class ClientPackage implements Serializable {
     /**
      * @return Report
      */
-    public Report getReport() {return report;}
+    public Report getReport() {return report; }
 }

@@ -1,12 +1,7 @@
 package parsing.customer.bootstrapper;
 
-import communication.Component;
-import communication.Report;
-import communication.wrappers.AlertBag;
-import czerkaloggers.RadioLogger;
 import entities.Organization;
 import entities.Organizations;
-import parsing.SubProcessController;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -32,14 +27,12 @@ import java.util.regex.Pattern;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @see LoaferLoader
  */
-public final class NakedCrateLoader implements LoaferLoader<Organization>, Component {
-  private final SubProcessController CORE;
+public final class NakedCrateLoader implements LoaferLoader<Organization> {
   private static final String TEST_MODE = "DEBUG"; // маркер для определения подгрузки тестовой коллекции
   private static final String CAL_FOLDER = "storage"; // директория, хранящая все коллекции
   private String birthDay = ZonedDateTime.now().toString(); // дата создания загрузчика коллекции или файла с коллекцией
   private String environment; // название переменной окружения
   private boolean loaded = false; // признак того, что коллекция уже загружена
-  private final RadioLogger BOOT_LOAF;
   /**
    * Метод подгрузки коллекции из локального хранилища,
    * так, чтобы не бомбило сидалище.
@@ -66,12 +59,14 @@ public final class NakedCrateLoader implements LoaferLoader<Organization>, Compo
     // Ооо, первый try поехал, а вместе с ней и кукуха
     try {
       if (!checkFile(fuck)) {
-        BOOT_LOAF.logboard(15, "Обнаружена ошибка синтаксиса в файле! Коллекция не была подгружена!");
+        // TODO: подергать не кота за причинное место, а логгер, который расскажет в чем ошибка
         // А пока подергаем стандартный поток ошибок
+        System.err.println("Обнаружена ошибка синтаксиса в файле!\nКоллекция не была подгружена!");
         return (companies = NothingButVoid()).getCompanies();
       }
     } catch (IOException e) {
-      BOOT_LOAF.logboard(10, "Не удалось корректно проверить файл");
+      // TODO: также, лучше дергать логгер
+      System.err.println(e.getMessage()); // здесь все равно мало, что полезного выведется, но хотя бы что-то
     }
     // берем прокачанный File методом конвертером
     Path urineBrickedPath = fuck.toPath();
@@ -95,24 +90,27 @@ public final class NakedCrateLoader implements LoaferLoader<Organization>, Compo
         companies = (Organizations) standartenfuhrer.unmarshal(assWorm); // пытаемся распарсить файл силами библиотеки
       } catch (JAXBException e) {
         // хорошее исключение (одно за всех) - и сообщения интересные (нет, чаще это null'ы)
-        BOOT_LOAF.logboard(10, "Произошла критическая ошибка при загрузке с помощью этой тупой библиотеки, которая не умеет предотвращать никакие ошибки");
-        CORE.ImmediateStop(new AlertBag(null, new Report(10, "Произошла критическая ошибка при загрузке с помощью этой тупой библиотеки, которая не умеет предотвращать никакие ошибки")));
+        // TODO: высрать этот null логгеру, пока срем по ГОСТУ
+        System.err.println(e.getMessage());
+        System.err.println(e.getStackTrace());
+        System.err.println("Произошла критическая ошибка при загрузке с помощью этой\n" +
+            "тупой библиотеки, которая не умеет предотвращать никакие ошибки");
         // здесь уже медицина бессильна, поэтому остается только уйти незаметно
         System.exit(0);
       }
     } catch (FileNotFoundException e) {
       // не нашли нужный файл, загрузим свой - не жадные
-      BOOT_LOAF.notify(0xFFE, "Файл с заданным именем не найден. Будет загружена тестовая коллекция");
+      System.err.println("Файл с заданным именем не найден. Будет загружена тестовая коллекция"); // TODO: также это все срет логгер, и лучше уведомить клиента
       return (companies = NothingButVoid()).getCompanies(); // держим курс на черную дыру
     } catch (IOException e) {
       // чувствительное исключение, выкинулось даже, когда права не выдал
-      BOOT_LOAF.notify(10, "Не удалось получить доступ к файлам");
-      CORE.ImmediateStop(new AlertBag(null, new Report(10, "Не удалось получить доступ к файлам")));
+      System.err.println("Произошла критическая ошибка в вашей файловой системе.\n" +
+          "Запустите ее диагностику с помощью соотвествующей утилиты вашей ОС.");
       // здесь уже медицина бессильна, поэтому остается только уйти незаметно
       System.exit(0);
     }
     // по сусекам поскребли, по полками помели и, что нашли, то и вернули
-    BOOT_LOAF.notify(0, "Файл успешно обработан");
+    // TODO: желательно составить рапорт (Report) об успешности загрузки (дабы уведомить клиента) и подергать логгер, выше тоже проверить
     loaded = true;
     return companies.getCompanies();
   }
@@ -129,6 +127,10 @@ public final class NakedCrateLoader implements LoaferLoader<Organization>, Compo
     String sptr = System.getProperty("file.separator");
     // также получаем имя файла, куда срать будем, и формируем путь до него
     String fuck = sayMyFileName();
+    if (fuck == "") {
+      System.err.println("Коллекция для сохранения не была онаружена.");
+      return;
+    }
     String pathname = System.getProperty("user.dir") + sptr + CAL_FOLDER + sptr + fuck;
     // начинается попа-боль
     // создаем выходной поток, и виновника, от души которого все блага отпускаем
@@ -146,20 +148,21 @@ public final class NakedCrateLoader implements LoaferLoader<Organization>, Compo
     } catch (FileNotFoundException e) {
       // фрайер файлик не нашел, значит фрайер - дурачок;
       // все вопросы к администратору, что не выделил файл под клиента
-      BOOT_LOAF.notify(0xFFE, "Файл, не найден, проверьте: выделил ли ваш хозяин вам место в хранилище сервера");
+      // TODO: выпад FNF-исключения дает Вам право на две шкатулки - в одной уведомление клиенту, в другой - одинокий логгер
+      System.err.println("Файл, не найден, проверьте: выделил ли ваш хозяин вам место в хранилище сервера");
     } catch (IOException e) {
-      BOOT_LOAF.notify(10, "Не удалось получить доступ к файлам");
-      CORE.ImmediateStop(new AlertBag(null, new Report(10, "Не удалось получить доступ к файлам")));
+      // TODO: ошибка на сервере, потому сектор "логгер" на барабане
+      System.err.println("Произошла критическая ошибка в вашей ФС: проверьте ее с помощью утилит или посмотрите имеете ли вы полный к ней доступ.");
       // я сказал: приложение вырубай, здесь запуск серверов запрещен
       System.exit(0);
     } catch (JAXBException e) {
       // наше любимое исключение, что готово заменить все имеющиеся
-      BOOT_LOAF.notify(10, "Произошла критическая ошибка при попытке сохранить коллекцию с помощью этой дурацкой библиотеки");
-      CORE.ImmediateStop(new AlertBag(null, new Report(10, "Произошла критическая ошибка при попытке сохранить коллекцию с помощью этой дурацкой библиотеки")));
+      System.err.println("Произошла критическая ошибка при попытке сохранить коллекцию\n" +
+          "с помощью этой дурацкой библиотеки");
       System.exit(0); // выйди отсюда, розбийник
     }
+    // TODO: левой рукой клиента тереблю, правой - логгер щекочу
     // уведомить о suckцессе
-    BOOT_LOAF.logboard(0, "Коллекция успешно выгружена");
   }
 
   /**
@@ -188,13 +191,18 @@ public final class NakedCrateLoader implements LoaferLoader<Organization>, Compo
    * @return название файла с коллекцией
    */
   private String sayMyFileName() {
-    if (environment.equals(TEST_MODE)) {
-      BOOT_LOAF.logboard(1, "Вниманиме! Так как Ваша коллекция не была найдена, то будет загружена заготовленная тестовая коллекция:");
-      //BOOT_LOAF.logboard(1, "Usage: java -jar [jarfile] [varenv]");
-      //BOOT_LOAF.logboard(1, "[jarfile] - the path or just name for server jar executable file;");
-      //BOOT_LOAF.logboard(1, "[varenv] - the name of environment variable within relative path to XML collection file (like DBPATH or etc.)");
-      return "tutor.xml";
-    } else return System.getenv(environment);
+    try {
+      if (TEST_MODE.equals(environment)) {
+        // TODO: логирование, уведомление что работаем с тестовой коллекцией
+        System.err.println("Вниманиме! Так как Ваша коллекция не была найдена, то будет загружена заготовленная тестовая коллекция:");
+//      System.err.println("Usage: java -jar [jarfile] [varenv]");
+//      System.err.println("[jarfile] - the path or just name for server jar executable file;");
+//      System.err.println("[varenv] - the name of environment variable within relative path to XML collection file (like DBPATH or etc.)");
+        return "tutor.xml";
+      } else return System.getenv(environment);
+    }catch (NullPointerException ex) {
+      return "";
+    }
   }
 
   /**
@@ -302,10 +310,5 @@ public final class NakedCrateLoader implements LoaferLoader<Organization>, Compo
   @Override
   public String Birth() {
     return birthDay;
-  }
-
-  public NakedCrateLoader(SubProcessController core, RadioLogger logger) {
-    CORE = core;
-    BOOT_LOAF = logger;
   }
 }

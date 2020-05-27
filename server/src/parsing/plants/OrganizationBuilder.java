@@ -102,7 +102,8 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
     float annualTurnover = Float.MIN_VALUE;
     // проверка на меньше нуля с машинной погрешностью, относительно типа одинарной точности
     if (!(cogits[0] + Float.MIN_VALUE < 0.0)) annualTurnover = (float) cogits[0];
-    return new Organization(name, fullname, annualTurnover, employeesCount, type, cord, address);
+//    return new Organization(name, fullname, annualTurnover, employeesCount, type, cord, address);
+    return new Organization(name, cord, annualTurnover, fullname, employeesCount, type,  address);
   }
 
   /**

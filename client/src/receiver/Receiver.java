@@ -46,13 +46,10 @@ public class Receiver extends AReceiver{
             parcel.setMarker(Markers.WRITE);
 //            System.out.println(query.Message());
             mediator.notify(this,parcel);
-        }catch (EOFException ex) {
-            parcel.setMarker(Markers.INTERRUPTED);
-            System.err.println("─────Connection interrupted─────");
-            mediator.notify(this,parcel);
         }catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            //TODO:write an handling to this type of error
+            parcel.setMarker(Markers.INTERRUPTED);
+            System.err.println("────>Connection interrupted< <─w─");
+            mediator.notify(this,parcel);
         }catch (ClassNotFoundException ex) {
             System.out.println(ex.getException());
             //TODO:write an handling to this type of error

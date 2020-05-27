@@ -60,6 +60,4 @@ public final class InstructionBuilder implements Component {
       MAGIV.notify(this, new ExecuteBag(flesh.Channel(), HOMIE.make((RawCommitter) command, receiver, MARDUK)));
     else MAGIV.notify(this, new ExecuteBag(flesh.Channel(), JUSTIFY.make(command, receiver)));
   }
-
-
 }

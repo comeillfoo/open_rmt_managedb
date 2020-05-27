@@ -11,7 +11,7 @@ import parsing.customer.Receiver;
  */
 public final class SumOfAnnualTurnover extends SumOfAnnual<Integer, Organization, Float> {
   public static final String NAME = "sum_of_annual_turnover";
-  public static final String BRIEF = "выводит сумму поля \\\"turnover\\\" всех элементов коллекции";
+  public static final String BRIEF = "выводит сумму поля \"turnover\" всех элементов коллекции";
   public static final String SYNTAX = NAME;
   public static final int ARGNUM = 0;
   /**
@@ -21,7 +21,7 @@ public final class SumOfAnnualTurnover extends SumOfAnnual<Integer, Organization
    * @param sieve текущий управленец коллекцией
    */
   public SumOfAnnualTurnover(Receiver sieve) {
-    super(sieve, Organization::getAnnualTurnover);
+    super(sieve, Organization::getAnnualTurnOver);
   }
 
   @Override

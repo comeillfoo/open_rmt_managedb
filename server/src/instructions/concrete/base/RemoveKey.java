@@ -45,7 +45,7 @@ public final class RemoveKey extends ConDecree {
     if (buffers[0] == null)
       return new Report(0xCCCF, "Элемента по заданному ключу не существует");
     else {
-      realSiever.remove(keys, new Organization[]{}, (org)->(true));
+      realSiever.remove(keys, new Organization[]{buffer}, (org)->(true));
       return new Report(0, "Элемент успешно удален");
     }
   }

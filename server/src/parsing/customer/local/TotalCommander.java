@@ -1,14 +1,14 @@
 package parsing.customer.local;
 
+import entities.Mappable;
 import entities.Organization;
 import czerkaloggers.RadioLogger;
 import parsing.customer.Indicator;
 import parsing.customer.Receiver;
 import parsing.customer.bootstrapper.LoaferLoader;
+import entities.HashMapS;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Конкретный пацан в паттерне. Оперирует организациями, как
@@ -58,8 +58,8 @@ public class TotalCommander extends Commander<Integer, Organization> {
       // проверка: нужно ли добавлять данное детище
       if (menace.verify(value[0]))
         value[0] = database.put(key[0] == null? value[0].Key() : key[0], value[0]);
-      else peacher().notify(3, "Не удалось добавить элемент: не удовлетворяет условию");
-    } else peacher().notify(1, "Обнаружена попытка добавления пустого элемента: выполнение метода прервано");
+      else peacher().logboard(3, "Не удалось добавить элемент: не удовлетворяет условию");
+    } else peacher().logboard(1, "Обнаружена попытка добавления пустого элемента: выполнение метода прервано");
   }
 
   /**
@@ -124,9 +124,9 @@ public class TotalCommander extends Commander<Integer, Organization> {
         // проверяем: а нужно ли нам все это
           if (menace.verify(value[0])) {
           // проверяем: удалилось ли
-          if (database.remove(key[0], value[0])) peacher().notify(0, "Удаление прошло успешно");
+          if (database.remove(key[0], value[0])) peacher().logboard(0, "Удаление прошло успешно");
           else peacher().notify(1, "Не удалось удалить элемент по ключу " + key[0] + " и значению " + value[0]);
-        } else peacher().notify(3, "Не удалось удалить элемент: не подходит под условия");
+        } else peacher().logboard(3, "Не удалось удалить элемент: не подходит под условия");
       } else peacher().logboard(2, "Данные для удаления не найдены в коллекции");
     } else peacher().logboard(0xEE, "Произошел неправильный вызов метода remove");
   }
@@ -147,12 +147,12 @@ public class TotalCommander extends Commander<Integer, Organization> {
       // проверка: есть ли данный ключ в коллекции
       if (database.containsKey(key[0])) {
         Organization buffer = database.getOrDefault(key[0], value[0]); // сохраняем найденный элемент
-        peacher().notify(0, "В базе найдены данные по Вашему ключу " + key[0]);
+        peacher().logboard(0, "В базе найдены данные по Вашему ключу " + key[0]);
         if (menace.verify(buffer)) {
           value[0] = buffer; // возвращаем найденное наверх
-          peacher().notify(0, "Условие удовлетворено, данные предоставлены");
+          peacher().logboard(0, "Условие удовлетворено, данные предоставлены");
         } else peacher().notify(3, "Условие не удовлетворено, данные не могут быть предоставлены");
-      } else peacher().notify(1, "Ключ " + key[0] + " отсутствует в коллекции, данные по нему не могут быть найдены");
+      } else peacher().logboard(1, "Ключ " + key[0] + " отсутствует в коллекции, данные по нему не могут быть найдены");
     } else if ((key[0] == null) && (value[0] != null)) {
       // проверка: есть ли элемент в коллекции
       if (database.containsValue(value[0])) {
@@ -189,16 +189,19 @@ public class TotalCommander extends Commander<Integer, Organization> {
   public String survey(Indicator menace) {
     StringBuilder bufferSurvey = new StringBuilder();
     // добавляем к текущей пустой строке весь текст с готовой информацией
-    bufferSurvey.append(database.entrySet() // получаем пары ключ-значение
-        .stream() // преобразуем в поток, дабы быть на волне
-        .filter(entry -> menace.verify(entry.getValue())) // отсеиваем только не нужные
-        .map((entry)->("KEY: " + entry.getKey() + ";\n\tVALUE: " + entry.getValue() + "\n")) // преобразуем в строки с информацией
-        .reduce((left, right)->(left + right))); // формируем единый текст
+    LinkedHashMap<Integer,Organization> tempCollection = ((HashMapS)database).sortByNameOfOrganization();
+    Optional result = tempCollection.entrySet() // получаем пары ключ-значение
+            .stream() // преобразуем в поток, дабы быть на волне
+            .filter(entry -> menace.verify(entry.getValue())) // отсеиваем только не нужные
+            .map((entry)->("\tKEY: " + entry.getKey() + ";\n\tVALUE: " + entry.getValue() + "\n")) // преобразуем в строки с информацией
+            .reduce((left, right)->(left.concat(right)));
+
+    bufferSurvey.append(result.isPresent()? result.get() : "no elements"); // формируем единый текст
     // Нужно юзать Stream API
     // for (Map.Entry<Integer, Organization> entry : database.entrySet())
     //  if (menace.verify(entry.getValue()))
     //    bufferSurvey.append("KEY: " + entry.getKey() + ";\n\tVALUE: " + entry.getValue() + "\n");
-    peacher().notify(0, "Данные по элементам коллекции предоставлены");
+    peacher().logboard(0, "Данные по элементам коллекции предоставлены");
     return bufferSurvey.toString(); // возвращаем результат
   }
 
@@ -247,6 +250,6 @@ public class TotalCommander extends Commander<Integer, Organization> {
         .stream()
         .forEach((Map.Entry<Integer, Organization> org)->{ unload.add(org.getValue()); });
     breadLoader.unload(unload);
-    peacher().notify(0, "Коллекция успешно сохранена");
+    //peacher().notify(0, "Коллекция успешно сохранена");
   }
 }

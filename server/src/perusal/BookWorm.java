@@ -31,8 +31,6 @@ public final class BookWorm extends QueryReader {
   // наш буфер с приходящими данными все 2 Кибибайта наши на веки-вечные
   private final ByteBuffer BYTE_BUFFER = ByteBuffer.allocate(3*1024);
 
-  // builders
-
   // главный конструктор
   /**
    * Проектный конструктор по умолчанию,
@@ -45,8 +43,6 @@ public final class BookWorm extends QueryReader {
     CHRONICLER = (HawkPDroid<BookWorm>) C9_T9_GE3.assemble(this, C9_T9_GE3::new);
     CHRONICLER.logboard(0,"Собран логгер модуля чтения");
   }
-
-  // methods
 
   // главный метод взятия запроса с клиента
   /**
@@ -67,8 +63,8 @@ public final class BookWorm extends QueryReader {
         throw new EOFException("Достигнут конец потока");
     } catch (EOFException e) {
       CHRONICLER.logboard(0xe0f,"Неожиданно достигнут конец потока");
-      CHRONICLER.notify(0xe0f,"Неожиданно достигнут конец потока");
-      KAPELLMEISTER.ImmediateStop(new AlertBag(null, new Report(0xe0f, "Неожиданно достигнут конец потока")));
+//      CHRONICLER.notify(0xe0f,"Неожиданно достигнут конец потока");
+      KAPELLMEISTER.ImmediateStop(new AlertBag((SocketChannel) parcel.Channel(), new Report(0xe0f, "Неожиданно достигнут конец потока")));
       return;
     } catch (IOException e) {
       CHRONICLER.logboard(10,"Не удалось прочитать пользовательский запрос");
@@ -131,33 +127,4 @@ public final class BookWorm extends QueryReader {
     if ((sender == CHRONICLER) || (sender == this))
       KAPELLMEISTER.notify(this, data);
   }
-
-  /*
-  // Антон це твое
-  // я это переписал, чтобы
-  // избавиться от лишних полей в классе
-  public void retrieveOld(DossierBag parcel) {
-    BYTE_BUFFER.clear();
-    SocketChannel tempChannel = (SocketChannel) parcel.Channel();
-    try {
-      if (tempChannel.read(BYTE_BUFFER) == -1) {
-        throw new IOException();
-      }
-      BYTE_BUFFER.flip();
-      ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(BYTE_BUFFER.array());
-      ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-      ClientPackage query = (ClientPackage) objectInputStream.readObject();
-      KAPELLMEISTER.notify(this, new Segment(tempChannel, (Serializable) query));
-    }catch (IOException e) {
-    } catch (ClassNotFoundException e) {
-    }finally {
-      try {
-        byteArrayInputStream.close();
-        objectInputStream.close();
-      }catch (IOException |NullPointerException e) {
-        System.err.println("Ты как сюда добрался? O.O");
-      }
-    }
-  }
-  */
 }

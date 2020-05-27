@@ -5,7 +5,9 @@ import instructions.rotten.IClued;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;
 
-public final class RawUpdate extends RawCommitter implements IClued, IJunked {
+import java.io.Serializable;
+
+public final class RawUpdate extends RawCommitter implements IClued, IJunked, Serializable {
     public final static String NAME = "update";
     public static final String BRIEF = "Заменяет объект коллекции,соответствующий id, на новый, составленный пользователем,";
     public static final String SYNTAX = "update [id] {element}";

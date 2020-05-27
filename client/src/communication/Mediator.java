@@ -56,7 +56,7 @@ public class Mediator implements Mediating {
      */
     @Override
     public void notify(Component component, Segment parcel) {
-        if (component == servant) dispatcher.giveOrder(parcel);
+        if (component == servant && parcel.getMarker() == Markers.WRITE) dispatcher.giveOrder(parcel);
         if (component == dispatcher && parcel.getMarker() == Markers.INTERRUPTED) servant.resetConnection();
         if ((component == dispatcher || component == servant) && parcel.getMarker() == Markers.STOP) client.stopAndClose();
         if (component == client && parcel.getMarker() == Markers.WRITE) servant.order(parcel);

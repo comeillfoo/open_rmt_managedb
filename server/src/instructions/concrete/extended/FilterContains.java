@@ -5,7 +5,9 @@ import entities.Mappable;
 import parsing.customer.Receiver;
 import instructions.concrete.ConDecree;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -57,10 +59,13 @@ public class FilterContains<K, V extends Mappable<K>, R> extends ConDecree {
           correct.put(enter.getKey(), enter.getValue());
         });
     // массив ключей элементов, что содержат нужное поле
-    Map.Entry<K, K>[] keys = (Map.Entry<K, K>[]) realkeys
+    List<Map.Entry<K,K>> keys = new ArrayList<>();
+    realkeys
         .entrySet()
         .stream()
-        .filter((Map.Entry<K, K> enter) -> (correct.containsKey(enter.getKey()))).toArray();
+        .filter((Map.Entry<K, K> enter) -> (correct.containsKey(enter.getKey()))).forEach((key) -> {
+             keys.add(key);
+    });
     // очистили, чтобы заполнить
     realkeys.clear();
     // заполняем пустую коллекцию из фильтрованного массива

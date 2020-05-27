@@ -28,7 +28,7 @@ public final class ExecuteScript extends ConDecree {
    * Общий метод исполнения для всех исполняемых комманд
    */
   @Override
-  public Report execute() { return null; }
+  public Report execute() { return new Report(-1,null); }
 
   public static final String NAME = "execute_script";
   public static final String BRIEF = "исполняет скрипт по указанному имени файла";

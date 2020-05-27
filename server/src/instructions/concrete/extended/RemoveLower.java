@@ -30,22 +30,26 @@ public final class RemoveLower extends RemoveThan {
    */
   @Override
   public final Report execute() {
-    Receiver<Integer, Organization> REAL = (Receiver<Integer, Organization>) SIEVE;
-    StringBuilder result = new StringBuilder();
-    Map<Integer, Integer> keys = REAL.getBy(Organization::Key);
-    keys
-        .entrySet()
-        .stream()
-        .forEach((Map.Entry<Integer, Integer> e)-> {
-          Organization taken = null;
-          Organization[] takens = new Organization[]{taken};
-          REAL.search(new Integer[]{e.getKey()}, takens, (org)->(true));
-          OrganizationTitleComparator cmp = new OrganizationTitleComparator();
-          REAL.remove(new Integer[]{e.getKey()}, new Organization[]{EMBEDDED}, MENACE);
-          result.append("Элемент " + takens[0] + " по ключу " + e.getKey() + " удален\n");
-        });
-    result.append("Нужные элементы успешно удалены");
-    return new Report(0, result.toString());
+        int[] deletedNumber = new int[]{0};
+        Receiver<Integer, Organization> REAL = (Receiver<Integer, Organization>) SIEVE;
+        StringBuilder result = new StringBuilder();
+        Map<Integer, Integer> keys = REAL.getBy(Organization::Key);
+        keys
+            .entrySet()
+            .stream()
+            .forEach((Map.Entry<Integer, Integer> e)-> {
+              Organization taken = null;
+              Organization[] takens = new Organization[]{taken};
+              REAL.search(new Integer[]{e.getKey()}, takens, (org)->(true));
+              OrganizationTitleComparator cmp = new OrganizationTitleComparator();
+              REAL.remove(new Integer[]{e.getKey()}, new Organization[]{takens[0]}, MENACE);
+                  if (MENACE.verify(takens[0])) {
+                      result.append("Элемент " + takens[0] + " по ключу " + e.getKey() + " удален\n");
+                      deletedNumber[0]++;
+                  }
+            });
+        result.append("Элементов удалено: " + deletedNumber[0]);
+        return new Report(0, result.toString());
   }
 
   public static final String NAME = "remove_lower";

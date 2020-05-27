@@ -27,7 +27,7 @@ public final class ReplaceIfLower extends ReplaceIf {
       boolean isReplaced = new OrganizationTitleComparator().compare(EMBEDDED, replaceds[0]) < 0;
       REAL.add(KEYS, new Organization[]{EMBEDDED}, (org)->(isReplaced));
       REAL.search(KEYS, replaceds, (org)->(true));
-      if ((replaceds[0] == EMBEDDED) && (isReplaced))
+      if (!(replaceds[0] == EMBEDDED) && (isReplaced))
         return new Report(0, "Проведена успешная замена по ключу: " + KEYS[0]);
       else return new Report(0, "Заменить элемент не удалось, т.к. "
           + (isReplaced? "элемент оказался больше" : "произошла ошибка при замене"));
