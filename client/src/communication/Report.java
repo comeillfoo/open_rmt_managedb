@@ -13,13 +13,9 @@ import java.io.Serializable;
  * </ul>
  */
 public final class Report implements Serializable {
-    // fields
     private final int ERROR_CODE; // код ошибки
     private final String MESSAGE; // сообщение
 
-    // builders
-
-    // главный конструктор
     /**
      * Основной конструктор, устанавливающий
      * параметры отправляемого ответа
@@ -31,7 +27,6 @@ public final class Report implements Serializable {
         MESSAGE = (message == null)? "" : message;
     }
 
-    // properties and methods
     /**
      * Свойство, определяющее успешность
      * выполнения операции

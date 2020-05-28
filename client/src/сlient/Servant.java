@@ -49,7 +49,7 @@ public class Servant extends AServant {
         while (true){
             try{
                 client.killSocket();
-            }catch (NullPointerException e) { /*NOP*/}
+            }catch (NullPointerException e) { /*NOPE*/}
             if (client.connect("localhost", 0xdead)) break;
                 String answer = "";
                 while (true){
