@@ -12,13 +12,18 @@ public class Descriptor {
     public ArrayList<String> discript(String fileName) throws IOException{
         String fullPathToScript = SCRIPTS_PATH + System.getProperty("file.separator") + (fileName.contains(".pt") ? fileName : fileName + ".pt");
         ArrayList<String> scriptParts = new ArrayList<>();
+        String tempLine = "";
         try (
                 FileInputStream fileInputStream = new FileInputStream(fullPathToScript);
                 InputStreamReader rawReader = new InputStreamReader(fileInputStream);
                 BufferedReader bufferedReader = new BufferedReader(rawReader);
         ){
             while (bufferedReader.ready()) {
-                scriptParts.add(bufferedReader.readLine());
+                tempLine = bufferedReader.readLine();
+                System.out.println(tempLine);
+                if(!tempLine.equals("")){
+                    scriptParts.add(tempLine);
+                }
             }
         }catch (FileNotFoundException e) {
             throw new FileNotFoundException("Не удалось найти файл по указанному имени");

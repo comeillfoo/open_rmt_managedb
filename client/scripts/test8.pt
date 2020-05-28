@@ -1,5 +1,4 @@
 max_by_creation_date
-
 insert 243
 org.name:shih
 org.coordinates
@@ -8,25 +7,6 @@ coord.y:12
 org.fullname:1923964890668809886525197716-
 org.employees-count:1
 org.annual-turnover:0.4
-org.type:public
+org.type:
 org.address
 addr.zipCode:hhh
-loc.x:153381
-loc.y:-7055309
-loc.z:-15994656
-show
-update -1885836258
-org.name:-3727526011384929494-680138931
-org.coordinates
-coord.x:346
-coord.y:67
-org.fullname:19239648906688098895876944016689366138
-org.annual-turnover:0.005540933102543777
-org.employees-count:89
-org.type:public
-org.address
-addr.zipCode:-700294838-1101702986-201816493977215159599892195
-loc.x:153381150
-loc.y:-705530940
-loc.z:-1599465618
-
