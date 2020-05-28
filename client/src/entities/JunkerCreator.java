@@ -43,7 +43,7 @@ public class JunkerCreator {
 
         return new Junker(new long[]{(long) employeesCount},
                 new double[]{(double) annualTurnover},
-                new String[]{name,fullName,organizationType.toString()},
+                new String[]{name,fullName,(organizationType == null ? null : organizationType.toString())},
                 new Junker[]{coordinates,officialAddress});
     }
 
@@ -98,8 +98,8 @@ public class JunkerCreator {
                     organizationType = tempType;
                 }
             }
-            if (!clientSuggestion.isEmpty() && organizationType == null) System.err.println("Entered invalid organization type.");
-        }while (clientSuggestion.isEmpty() && organizationType == null);
+            if (!clientSuggestion.equals("") && organizationType == null) System.err.println("Entered invalid organization type.");
+        }while (!clientSuggestion.equals("") && !(organizationType == null));
         return organizationType;
     }
 }

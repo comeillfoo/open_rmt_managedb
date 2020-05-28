@@ -60,7 +60,7 @@ public final class Update extends Committer {
   }
   public static final String NAME = "update";
   public static final String BRIEF = "Обновляет значение элемента, id которого равен заданному";
-  public static final String SYNTAX = NAME + "[id] {element}";
+  public static final String SYNTAX = NAME + " [id] {element}";
   public static final int ARGNUM = 2;
 
   @Override

@@ -20,7 +20,6 @@ public class Descriptor {
         ){
             while (bufferedReader.ready()) {
                 tempLine = bufferedReader.readLine();
-                System.out.println(tempLine);
                 if(!tempLine.equals("")){
                     scriptParts.add(tempLine);
                 }
