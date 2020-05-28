@@ -16,6 +16,7 @@ import parsing.supplying.interpreter.LilyShell;
  * @author Leargy aka Anton Sushkevich
  */
 public class LilyInvoker extends FondleEmulator {
+  private Report collectorReports = new Report(0,"");
 
   /**
    * Конструктор, устанавливающий
@@ -47,7 +48,12 @@ public class LilyInvoker extends FondleEmulator {
     }else {
       result = concmd.execute();
     }
-    Report respond = new Report(0, "Команда " + concmd + " успешно выполнена с результатом:\n" + result.Message());
+    Report respond = new Report(0, "Команда " + concmd + " выполнена с результатом:\n\t" + result.Message());
+    if (concmd instanceof ExecuteScript) {
+      respond = new Report(0,respond.Message() + collectorReports.Message());
+      MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
+    }
+    collectorReports = new Report(0,collectorReports.Message()+respond.Message()+"\n");
     if (!(concmd instanceof Save) && cmd.Channel() != null)
       MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
   }

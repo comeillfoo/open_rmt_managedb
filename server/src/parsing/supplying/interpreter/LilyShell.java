@@ -73,7 +73,8 @@ public final class LilyShell extends Shell {
   	}
 
      */
-  	return new Report(0, "Скрипт по имени " + " обработан\nЗапись обработки файла:\n" + executed);
+  	return new Report(0, "Скрипт" + " обработан\nЗапись обработки файла:\n" + executed);
+  	//TODO: Защита на update и ему подобные команды в скримпте без предоставляемых данных.
   }
 
   @Override
@@ -82,7 +83,6 @@ public final class LilyShell extends Shell {
     if (line == null || line.isEmpty()) return null;
     // иначе делим по пробелам
     String[] lineParts = line.split(" ");
-    System.out.println(lineParts[0]); //<----
     // проверяем смогли ли поделить
     if (lineParts == null || lineParts.length == 0)
       return null;
