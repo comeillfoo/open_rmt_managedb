@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <organizations>
-    <organization id="27985" name="sosi bibu" annual-turnover="1.0" employees-count="1">
-        <coordinates x="1" y="1.0"/>
-        <fullname>sam
- sosi</fullname>
-        <organization-type>trust</organization-type>
-        <official-address zipcode="0">
-            <town x="0" y="2" z="1.0"/>
+    <organization id="51053" name="adventure" annual-turnover="2.0" employees-count="3">
+        <coordinates x="3" y="1.0"/>
+        <fullname>ee</fullname>
+        <official-address zipcode="16">
+            <town x="0" y="2" z="3.0"/>
         </official-address>
     </organization>
     <organization id="3412" name="atsosi" annual-turnover="1.0" employees-count="2">
@@ -32,5 +30,5 @@
         <official-address zipcode="11">
             <town x="0" y="55" z="33.0"/>
         </official-address>
-    </organization></organizations>
- 
+    </organization>
+</organizations>

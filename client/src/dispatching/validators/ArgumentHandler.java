@@ -54,19 +54,20 @@ public class ArgumentHandler extends DataHandler{
         }
 
         String stringArgument = "";
-        try {
-            if (parcel.getStringData()[1] != null)
-            for (int i = 1; i < parcel.getStringData().length; i++) {
-                stringArgument += parcel.getStringData()[i] ;
-                if (i != parcel.getStringData().length - 1) {
-                    stringArgument += " ";
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-             throw new CommandSyntaxException("Command should have at list one argument!");
-        }
-        Integer intArgument = null;
         if (!isLimited) {
+            try {
+                if (parcel.getStringData()[1] != null)
+                for (int i = 1; i < parcel.getStringData().length; i++) {
+                    stringArgument += parcel.getStringData()[i] ;
+                    if (i != parcel.getStringData().length - 1) {
+                        stringArgument += " ";
+                    }
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                 throw new CommandSyntaxException("Command should have at list one argument!");
+            }
+
+            Integer intArgument = null;
             try {
                 intArgument = Integer.valueOf(stringArgument);
                 if (intArgument < 0) throw new NumberFormatException();

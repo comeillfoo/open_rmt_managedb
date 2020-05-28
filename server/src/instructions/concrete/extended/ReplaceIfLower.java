@@ -30,7 +30,7 @@ public final class ReplaceIfLower extends ReplaceIf {
       if (!(replaceds[0] == EMBEDDED) && (isReplaced))
         return new Report(0, "Проведена успешная замена по ключу: " + KEYS[0]);
       else return new Report(0, "Заменить элемент не удалось, т.к. "
-          + (isReplaced? "элемент оказался больше" : "произошла ошибка при замене"));
+          + (isReplaced? "произошла ошибка при замене": "элемент оказался больше" ));
     } else return new Report(2, "Ключ " + KEY + " не найден в коллекции");
   }
 

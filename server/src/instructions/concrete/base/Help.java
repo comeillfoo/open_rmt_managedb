@@ -21,7 +21,6 @@ public final class Help extends instructions.concrete.ConDecree {
     CMDS.add(new String[]{ Info.NAME, Info.BRIEF, Info.SYNTAX });
     CMDS.add(new String[]{ Insert.NAME, Insert.BRIEF, Insert.SYNTAX });
     CMDS.add(new String[]{ RemoveKey.NAME, RemoveKey.BRIEF, RemoveKey.SYNTAX });
-    CMDS.add(new String[]{ Save.NAME, Save.BRIEF, Save.SYNTAX });
     CMDS.add(new String[]{ Show.NAME, Show.BRIEF, Show.SYNTAX });
     CMDS.add(new String[]{ Update.NAME, Update.BRIEF, Update.SYNTAX });
     CMDS.add(new String[]{ ExecuteScript.NAME, ExecuteScript.BRIEF, ExecuteScript.SYNTAX });

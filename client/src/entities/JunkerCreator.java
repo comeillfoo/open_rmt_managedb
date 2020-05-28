@@ -99,7 +99,7 @@ public class JunkerCreator {
                 }
             }
             if (!clientSuggestion.equals("") && organizationType == null) System.err.println("Entered invalid organization type.");
-        }while (!clientSuggestion.equals("") && !(organizationType == null));
+        }while (!clientSuggestion.equals("") && organizationType == null);
         return organizationType;
     }
 }
