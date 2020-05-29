@@ -24,8 +24,8 @@ import java.nio.channels.ServerSocketChannel;
  *   <li>модуля обработки запросов</li>
  *   <li>модуля отправки результатов обработки запросов</li>
  * </ul>
- *  @author Come_1LL_F00 aka Lenar Khannanov
- *  @author Leargy aka Anton Sushkevich
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
  */
 public final class SystemAdmin implements Mediator {
   private final String NAME;
@@ -44,6 +44,8 @@ public final class SystemAdmin implements Mediator {
    *   <li>7 Создать и сконфигурировать контроллер сервера</li>
    *   <li>8 Получить от контроллера, сконфигурированный сервер</li>
    * </ol>
+   * @param hostname сервера
+   * @param port настройки сервера
    */
   public void install(String hostname, int port) {
 
@@ -53,9 +55,8 @@ public final class SystemAdmin implements Mediator {
       TONGUE.logboard(1, NAME + ": у меня не получилось поднять сервер");
       System.exit(1);
     }
-
     // попытка связать открытый канал с нужным адресом
-    try { firstChannel.bind(new InetSocketAddress(InetAddress.getByName(hostname), port)); } catch (UnknownHostException outer) {
+    try { firstChannel.bind(new InetSocketAddress(hostname, port)); } catch (UnknownHostException outer) {
       TONGUE.logboard(1, NAME + ": у меня не получилось найти хост, помогите");
       try { firstChannel.close(); } catch (IOException inner) {
         TONGUE.logboard(1, NAME + ": у меня не получилось закрыть каналы");
@@ -126,6 +127,7 @@ public final class SystemAdmin implements Mediator {
 
   /**
    * Надстройка над конструктором, чтобы веселее было
+   * @param name имя сисадмина
    * @return сына маминой подруги, который поставит сервер по майнкрафту
    */
   public static SystemAdmin summon(String name) { return new SystemAdmin(name); }
