@@ -1,0 +1,59 @@
+672  [main] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Успешно собран логгер модуля обработки запросов
+677  [main] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Успешно создан загрузчик коллекции
+692  [main] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Успешно создан менеджер коллекции
+695  [main] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Успешно создан вызыватель комманд
+697  [main] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Успешно создана фабрика элементов коллекции
+703  [main] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Успешно создана фабрика вызываемых комманд
+706  [main] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Меня успешно собрали и я работаю
+707  [main] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Успешное создание сервера
+708  [main] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Успешное создание модуля обработки клиентов
+710  [main] INFO  czerkaloggers.perusal.C9_T9_GE3 - [0] : Собран логгер модуля чтения
+710  [main] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Успешное создание модуля чтения
+711  [main] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Успешное создание модуля отправки
+711  [main] INFO  czerkaloggers.systemcore.C7_E3_GE3 - [0] : Андрей: подняль сервер
+4538 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Получено сообщение от сервера с запросом на регистрацию клиента
+4538 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Запрос перенаправлен на ресепшен
+4538 [Thread-2] INFO  czerkaloggers.receiver.S_0D3_GE3 - [0] : Установлено соединение с данным клиентом: IP: 127.0.0.1 PORT: 62471
+4538 [Thread-2] INFO  czerkaloggers.receiver.S_0D3_GE3 - [0] : Настройка клиентского канала прошла успешно
+4538 [Thread-2] INFO  czerkaloggers.receiver.S_0D3_GE3 - [0] : Регистрация клиента успешно завершена
+7823 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Получен запрос
+7823 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Запрос отправлен на чтение
+7835 [Thread-2] INFO  czerkaloggers.perusal.C9_T9_GE3 - [0] : Данные успешно прочитаны -- сформирован запрос
+7835 [Thread-2] INFO  czerkaloggers.perusal.C9_T9_GE3 - [0] : Запрос отправлен на обработку
+7835 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Пришел прочитанный запрос
+7835 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Данные отправлены в модуль обработки запросов
+7835 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Начинаем обработку запроса
+7835 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : В первый раз? Загружаем Вашу коллекцию
+7836 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Строим окружение
+7837 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Коллекция загружена
+7840 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Коллекция успешно загружена
+7840 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Менеджер поставлен на загруженную коллекцию
+7840 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Отправляем запрос на настройку
+7840 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Начинаем конфигурировать запрос
+7842 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Пытаемся вызвать команду: Help
+7843 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Отправляем результаты клиенту
+7843 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Получено уведомление для клиента
+7843 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Производим перессылку
+7845 [Thread-2] INFO  czerkaloggers.dispatching.TT_32_GE3 - [0] : Поток сериализации успешно создан
+7847 [Thread-2] INFO  czerkaloggers.dispatching.TT_32_GE3 - [0] : Данные успешно отправлены
+15293 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Получен запрос
+15293 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Запрос отправлен на чтение
+15296 [Thread-2] INFO  czerkaloggers.perusal.C9_T9_GE3 - [0] : Данные успешно прочитаны -- сформирован запрос
+15296 [Thread-2] INFO  czerkaloggers.perusal.C9_T9_GE3 - [0] : Запрос отправлен на обработку
+15296 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Пришел прочитанный запрос
+15297 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Данные отправлены в модуль обработки запросов
+15297 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Начинаем обработку запроса
+15297 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : В первый раз? Загружаем Вашу коллекцию
+15297 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Строим окружение
+15297 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Коллекция загружена
+15297 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Коллекция успешно загружена
+15297 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Менеджер поставлен на загруженную коллекцию
+15297 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Отправляем запрос на настройку
+15297 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Начинаем конфигурировать запрос
+15299 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Пытаемся вызвать команду: Show
+15302 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Данные по элементам коллекции предоставлены
+15303 [Thread-2] INFO  czerkaloggers.customer.B_4D4_GE3 - [0] : Отправляем результаты клиенту
+15303 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Получено уведомление для клиента
+15303 [Thread-2] INFO  czerkaloggers.systemcore.S4_C8_GE3 - [0] : Производим перессылку
+15303 [Thread-2] INFO  czerkaloggers.dispatching.TT_32_GE3 - [0] : Поток сериализации успешно создан
+15303 [Thread-2] INFO  czerkaloggers.dispatching.TT_32_GE3 - [0] : Данные успешно отправлены
