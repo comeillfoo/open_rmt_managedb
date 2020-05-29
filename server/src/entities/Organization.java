@@ -136,14 +136,21 @@ public class Organization implements Mappable<Integer> {
   public Organization(String name, Coordinates coordinates,
                       float annualTurnover, String fullname,
                       int employeesCount, OrganizationType type, Address officialAddress) {
-    this.name = name;
-    this.coordinates = coordinates;
-    this.annualTurnover = annualTurnover;
-    this.fullname = fullname;
-    this.employeesCount = employeesCount;
+    // проверили корректность названия
+    this.name = (name.isEmpty() || (name == null))? "SampleOrganization" : name;
+    // проверили корректность полного названия
+    this.fullname = (fullname == null)? "" : fullname;
+    // проверка корректности координат
+    this.coordinates = (coordinates == null)? new Coordinates() : coordinates;
+    // проверка корректности прибыли
+    this.annualTurnover = annualTurnover > 0? annualTurnover : Float.MIN_VALUE;
+    // проверка корректности числа сотрудников
+    this.employeesCount = employeesCount > 0? employeesCount : 1;
     this.type = type;
     this.officialAddress = officialAddress;
-    id = Math.abs(hashCode()) + count++;
+    // организуем буферное значение, дабы не было отрицательных идентификаторов
+    int buffer = hashCode() + count++;
+    id = (buffer == Integer.MIN_VALUE)? --buffer : Math.abs(buffer);
   }
 
   /**
@@ -167,12 +174,31 @@ public class Organization implements Mappable<Integer> {
 
   @Override
   public boolean equals(Object other) {
-    return true;
+    if (other == null) return false;
+    if (this == other) return true;
+    if (!this.getClass().getName().equals(other.getClass().getName())) return false;
+    Organization another = (Organization) other;
+    return (id == another.id)
+            && (employeesCount == another.employeesCount)
+            && (annualTurnover == another.annualTurnover)
+            && (type == another.type)
+            && (name.equals(another.name))
+            && (fullname.equals(another.fullname))
+            && (coordinates.equals(another.coordinates))
+            && ((officialAddress == null) ? false : officialAddress.equals(another.officialAddress))
+            && (creationDate.isEqual(another.creationDate));
   }
 
   @Override
   public int hashCode() {
-    return (int)((name.hashCode() + fullname.hashCode()) * (annualTurnover % employeesCount) + creationDate.hashCode() + coordinates.hashCode() /* + type.hashCode() + officialAddress.hashCode()*/) % 0xdead;
+    return (int) (
+            name.hashCode() + fullname.hashCode()
+                    + (employeesCount + annualTurnover) % 2
+                    + (coordinates.hashCode()
+                    + ((officialAddress != null)? officialAddress.hashCode() : 0)) % 3
+                    + creationDate.hashCode()
+                    + ((type == null)? 0 : type.hashCode())
+    );
   }
 
   /**

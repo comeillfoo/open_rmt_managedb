@@ -52,7 +52,7 @@ public final class Insert extends Committer {
     buffers[0] = EMBEDDED;
     Organization[] added = new Organization[]{EMBEDDED};
     realSiever.add(keys, added, (org)->(true));
-    if (buffers[0].equals(added[0]))
+    if (added[0] == null)
       return new Report(0, "Элемент успешно добавлен");
     else return new Report(0xCCCF, "Возникли ошибки при попытки добавления элемента");
   }
