@@ -28,11 +28,16 @@ public final class B_4D4_GE3 extends HawkPDroid<Resolver> implements Component {
   private static final Logger log = LoggerFactory.getLogger(B_4D4_GE3.class);
 
   // builders
+  /**
+   * Конструктор, задающий
+   * отправителя логов
+   * @param controller отправитель логов
+   */
   public B_4D4_GE3(Mediator controller) { super((Resolver) controller); }
 
   /**
-   * Помимо логгирования, еще и составляет протокол действий.
-   *
+   * Помимо логгирования, еще и
+   * составляет протокол действий.
    * @param errorCode код ошибки
    * @param message передаваемое сообщение
    */
@@ -46,7 +51,6 @@ public final class B_4D4_GE3 extends HawkPDroid<Resolver> implements Component {
 
   /**
    * Выполняет логгирование всех действий.
-   *
    * @param errorCode код ошибки
    * @param message   передаваемое сообщение
    */

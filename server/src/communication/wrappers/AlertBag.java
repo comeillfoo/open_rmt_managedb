@@ -40,6 +40,10 @@ public final class AlertBag extends TunnelBag {
    */
   public final Report Notify() { return NOTIFICATION; }
 
+  /**
+   * Свойство взятия пользовательского канала
+   * @return пользовательский канал
+   */
   public final SocketChannel Channel() {
     return (SocketChannel) super.CHANNEL;
   }

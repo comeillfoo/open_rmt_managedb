@@ -41,6 +41,7 @@ public final class Help extends instructions.concrete.ConDecree {
   /**
    * Пишем альманах всех комманд,
    * дабы друиды могли вызвать сатану
+   * @return отчет о работе команды
    */
   @Override
   public Report execute() {
@@ -74,6 +75,11 @@ public final class Help extends instructions.concrete.ConDecree {
   public static final String SYNTAX = NAME;
   public static final int ARGNUM = 0;
 
+  /**
+   * Метод возврата
+   * названия команды
+   * @return название команды
+   */
   @Override
   public String toString() { return NAME; }
 }

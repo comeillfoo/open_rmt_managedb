@@ -9,14 +9,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import receiver.Receptionist;
 
+/**
+ * Угадайте: что за класс.
+ * А это логгер для модуля
+ * записи клиентов
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
+ */
 public final class S_0D3_GE3 extends HawkPDroid<Receptionist> implements Component {
 
   private static final Logger log = LoggerFactory.getLogger(S_0D3_GE3.class);
   // builders
+
+  /**
+   * Конструктор для присваивания
+   * отправителя логов
+   * @param controller отправитель логов
+   */
   public S_0D3_GE3(Mediator controller) { super((Receptionist) controller); }
   /**
    * Помимо логгирования, еще и составляет протокол действий.
-   *
    * @param errorCode код ошибки
    * @param message   отправляемое сообщение
    */
@@ -25,7 +37,6 @@ public final class S_0D3_GE3 extends HawkPDroid<Receptionist> implements Compone
 
   /**
    * Выполняет логгирование всех действий.
-   *
    * @param errorCode код ошибки
    * @param message   передаваемое сообщение
    */

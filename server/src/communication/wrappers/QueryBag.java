@@ -26,7 +26,6 @@ public final class QueryBag extends TunnelBag {
    * а также его запрос о команде,
    * что нужно выполнить
    * @param channel  канал клиента
-   * @param customer досье на клиента
    * @param query команда на исполнение
    */
   public QueryBag(SocketChannel channel, RawDecree query) {

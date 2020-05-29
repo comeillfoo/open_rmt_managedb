@@ -3,7 +3,7 @@ package entities;
 import java.io.Serializable;
 
 /**
- * Юнкер? Нет, бл*ть Мусорщик. Хранит параметры
+ * Юнкер? Нет, ***** Мусорщик. Хранит параметры
  * передаваемых объектов.
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
@@ -17,9 +17,15 @@ public final class Junker implements Serializable {
   private final double[] cogits;
   // массив текстовых параметров
   private final String[] lines;
+
   /**
-   * Полновесный конструктор, устанавливающий все параметры
-   * Сериализуемого класса.
+   * Полновесный конструктор, устанавливающий
+   * все параметры
+   * сериализуемого класса.
+   * @param digits все целочисленные параметры
+   * @param cogits все действительные параметры
+   * @param lines все строковые параметры
+   * @param guts все составные параметры
    */
   public Junker(long[] digits, double[] cogits, String[] lines, Junker[] guts) {
     this.digits = digits;

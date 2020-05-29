@@ -15,8 +15,8 @@ import parsing.customer.Receiver;
 public final class Clear extends ConDecree {
   /**
    * Конструктор, устанавливающий ссылку на
-   * управленца коллекцией
-   *
+   * управленца коллекцией, для команды
+   * по очистке коллекции
    * @param sieve текущий управленец коллекцией
    */
   public Clear(Receiver sieve) {
@@ -25,6 +25,7 @@ public final class Clear extends ConDecree {
 
   /**
    * Магия, очищающая коллекцию
+   * @return отчет об успешности выполнения команды
    */
   @Override
   public Report execute() {
@@ -42,6 +43,12 @@ public final class Clear extends ConDecree {
   public static final String SYNTAX = NAME;
   public static final int ARGNUM = 0;
 
+  /**
+   * Стандартный метод из
+   * object'а, возвращающий строку
+   * как результат
+   * @return название команды
+   */
   @Override
   public String toString() { return NAME; }
 }

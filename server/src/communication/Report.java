@@ -11,6 +11,9 @@ import java.io.Serializable;
  *   <li>Хранения результатов чтения запросов</li>
  *   <li>Хранения результатов попытки отправки результатов обработки запросов</li>
  * </ul>
+ * Но по факту, используется лишь для отправки результатов
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
  */
 public final class Report implements Serializable {
   // fields

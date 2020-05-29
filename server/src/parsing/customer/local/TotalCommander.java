@@ -1,12 +1,11 @@
 package parsing.customer.local;
 
-import entities.Mappable;
 import entities.Organization;
 import czerkaloggers.RadioLogger;
 import parsing.customer.Indicator;
 import parsing.customer.Receiver;
 import parsing.customer.bootstrapper.LoaferLoader;
-import entities.HashMapS;
+import entities.HashMax;
 
 import java.util.*;
 
@@ -192,7 +191,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
   public String survey(Indicator menace) {
     StringBuilder bufferSurvey = new StringBuilder();
     // добавляем к текущей пустой строке весь текст с готовой информацией
-    LinkedHashMap<Integer,Organization> tempCollection = ((HashMapS)database).sortByNameOfOrganization();
+    LinkedHashMap<Integer,Organization> tempCollection = ((HashMax)database).sortByNameOfOrganization();
     Optional result = tempCollection.entrySet() // получаем пары ключ-значение
             .stream() // преобразуем в поток, дабы быть на волне
             .filter(entry -> menace.verify(entry.getValue())) // отсеиваем только не нужные

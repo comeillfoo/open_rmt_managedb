@@ -10,16 +10,28 @@ import dispatching.Dispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Сущность, логирующая сообщения,
+ * присылаемые от контроллера
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
+ */
 public final class TT_32_GE3 extends HawkPDroid<Dispatcher> implements Component {
 
   private static final Logger log = LoggerFactory.getLogger(TT_32_GE3.class);
 
+  /**
+   * Конструктор, установки
+   * отправителя сообщения для
+   * логов
+   * @param controller отправитель логов
+   */
   public TT_32_GE3(Mediator controller) { super((Dispatcher) controller); }
 
 
   /**
-   * Помимо логгирования, еще и составляет протокол действий.
-   *
+   * Помимо логгирования, еще и
+   * составляет протокол действий.
    * @param errorCode код ошибки
    * @param message   отправляемое сообщение
    */

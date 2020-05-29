@@ -11,9 +11,20 @@ import systemcore.ServerController;
 import java.io.*;
 import java.nio.ByteBuffer;
 
+/**
+ * Конкретный отправщик данных
+ * клиенту от сервера
+ * @author Leargy aka Anton Sushkevich
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @see Dispatcher
+ */
 public final class AliExpress extends Dispatcher {
   private final HawkPDroid<AliExpress> PENTODE;
 
+  /**
+   * Реализация метода отправки результатов клиенту
+   * @param postcard данные об отправлении
+   */
   @Override
   public void send(AlertBag postcard) {
     if ((postcard == null) || (postcard.Channel() == null)) {
@@ -57,11 +68,22 @@ public final class AliExpress extends Dispatcher {
     }
   }
 
+  /**
+   * Конструктор, устанавливающий
+   * контроллер модуля
+   * @param m контроллер модуля
+   */
   public AliExpress(ServerController m) {
     super(m);
     PENTODE = (HawkPDroid<AliExpress>) TT_32_GE3.assemble(this, TT_32_GE3::new);
   }
 
+  /**
+   * Просто реализация паттерна посредник,
+   * а именно его метода
+   * @param sender отправитель данных
+   * @param data сами данные
+   */
   @Override
   public void notify(Component sender, Valuable data) {
     if (sender == PENTODE)

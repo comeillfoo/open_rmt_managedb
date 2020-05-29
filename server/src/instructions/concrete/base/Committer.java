@@ -26,6 +26,11 @@ public abstract class Committer extends ConDecree {
     EMBEDDED = added;
   }
 
+  /**
+   * Метод, возвращающий
+   * название команды
+   * @return название команды
+   */
   @Override
   public String toString() { return NAME; }
 }

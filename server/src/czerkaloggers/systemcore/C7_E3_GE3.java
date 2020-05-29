@@ -7,6 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import systemcore.SystemAdmin;
 
+/**
+ * Где киса? Вот..., а
+ * стоп, это очередной логгер
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
+ */
 public final class C7_E3_GE3 extends HawkPDroid<SystemAdmin> implements Component {
 
   private static final Logger log = LoggerFactory.getLogger(C7_E3_GE3.class);
@@ -17,7 +23,6 @@ public final class C7_E3_GE3 extends HawkPDroid<SystemAdmin> implements Componen
 
   /**
    * Помимо логгирования, еще и составляет протокол действий.
-   *
    * @param errorCode код ошибки
    * @param message   отправляемое сообщение
    */
@@ -26,7 +31,6 @@ public final class C7_E3_GE3 extends HawkPDroid<SystemAdmin> implements Componen
 
   /**
    * Выполняет логгирование всех действий.
-   *
    * @param errorCode код ошибки
    * @param message   передаваемое сообщение
    */

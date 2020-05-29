@@ -15,7 +15,7 @@ public interface RadioLogger {
    * @param message отправляемое сообщение
    */
   void notify(Integer errorCode, String message);
-  // TODO: Подумать нужен ли он здесь, так, чтобы соответствовало логике
+
   /**
    * Выполняет логгирование всех действий.
    * @param errorCode код ошибки

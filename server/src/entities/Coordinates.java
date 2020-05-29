@@ -20,8 +20,7 @@ public final class Coordinates {
   private final int x;
 
   /**
-   * Координата по оси
-   * абсцисс
+   * Координата по оси абсцисс
    * @return целочисленная координата по оси OX
    */
   public int getX() { return x; }

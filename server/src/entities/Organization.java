@@ -6,15 +6,6 @@ import com.sun.istack.internal.Nullable;
 import javax.xml.bind.annotation.*;
 import java.time.ZonedDateTime;
 
-// TODO: (*желательно) добавить описание полям на SQL
-/**
- * Основной класс, выполняющий роль элемента коллекции
- * @author Come_1LL_F00 aka Lenar Khannanov
- * @author Leargy aka Anton Sushkevich
- * @see Mappable
- */
-
-// TODO: (*желательно) добавить описание полям на SQL
 /**
  * Основной класс, выполняющий роль элемента коллекции
  * @author Come_1LL_F00 aka Lenar Khannanov
@@ -32,21 +23,15 @@ public class Organization implements Mappable<Integer> {
   @NotNull
   private final String name;
 
-  /**
-   * Геттер для получения имени элемента,
-   * написан лишь, чтобы корректно работала библиотека JAXB
-   * (переопределен из интерфейса Mappable)
-   * @return String name название организации
-   */
   @XmlElement(name = "coordinates")
   @NotNull
   private final Coordinates coordinates;
 
   /**
-   * Геттер для получения имени элемента,
+   * Геттер для получения координат элемента,
    * написан лишь, чтобы корректно работала библиотека JAXB
-   * (переопределен из интерфейса Mappble)
-   * @return String name название организации
+   * (переопределен из интерфейса Mappable)
+   * @return координаты организации
    */
   public Coordinates getCoordinates() { return coordinates; }
   @XmlTransient
@@ -54,10 +39,10 @@ public class Organization implements Mappable<Integer> {
   private final ZonedDateTime creationDate = ZonedDateTime.now();
 
   /**
-   * Геттер для получения имени элемента,
+   * Геттер для получения даты создания элемента,
    * написан лишь, чтобы корректно работала библиотека JAXB
-   * (переопределен из интерфейса Mappble)
-   * @return String name название организации
+   * (переопределен из интерфейса Mappable)
+   * @return дата создания организации
    */
   public ZonedDateTime getCreationDate() { return creationDate; }
 
@@ -65,9 +50,11 @@ public class Organization implements Mappable<Integer> {
   private final float annualTurnover;
 
   /**
-   * Геттер для получения имени элемента,
+   * Геттер для получения ежегодной прибыли организации,
+   * к сожалению, не может быть отрицательной. Хотелось
+   * чтобы и в жизни так было.
    * написан лишь, чтобы корректно работала библиотека JAXB
-   * (переопределен из интерфейса Mappble)
+   * (переопределен из интерфейса Mappable)
    * @return String name название организации
    */
   public float getAnnualTurnOver() { return annualTurnover; }
@@ -77,10 +64,10 @@ public class Organization implements Mappable<Integer> {
   private final String fullname;
 
   /**
-   * Геттер для получения имени элемента,
+   * Геттер для получения полного имени элемента,
    * написан лишь, чтобы корректно работала библиотека JAXB
-   * (переопределен из интерфейса Mappble)
-   * @return String name название организации
+   * (переопределен из интерфейса Mappable)
+   * @return полное название организации
    */
   public String getFullname() { return fullname; }
 
@@ -88,10 +75,11 @@ public class Organization implements Mappable<Integer> {
   private final int employeesCount;
 
   /**
-   * Геттер для получения имени элемента,
+   * Геттер для получения числа сотрудников
+   * организации -- натуральное число;
    * написан лишь, чтобы корректно работала библиотека JAXB
-   * (переопределен из интерфейса Mappble)
-   * @return String name название организации
+   * (переопределен из интерфейса Mappable)
+   * @return число сотрудников в организации
    */
   public int getEmployees() { return employeesCount; }
 
@@ -100,10 +88,10 @@ public class Organization implements Mappable<Integer> {
   private final OrganizationType type;
 
   /**
-   * Геттер для получения имени элемента,
+   * Геттер для получения типа организации
    * написан лишь, чтобы корректно работала библиотека JAXB
-   * (переопределен из интерфейса Mappble)
-   * @return String name название организации
+   * (переопределен из интерфейса Mappable)
+   * @return тип организации
    */
   public OrganizationType getType() { return type; }
 
@@ -112,10 +100,10 @@ public class Organization implements Mappable<Integer> {
   private final Address officialAddress;
 
   /**
-   * Геттер для получения имени элемента,
+   * Геттер для получения адреса организации
    * написан лишь, чтобы корректно работала библиотека JAXB
-   * (переопределен из интерфейса Mappble)
-   * @return String name название организации
+   * (переопределен из интерфейса Mappable)
+   * @return адрес организации
    */
   public Address getAddress() { return officialAddress; }
 
@@ -159,37 +147,49 @@ public class Organization implements Mappable<Integer> {
   }
 
   /**
-   * Геттер для получения id объекта.
-   * @return id
+   * Свойство для получения
+   * идентификатора объекта
+   * @return идентификатор коллекции
    */
   public int getID() {return id;}
-  @Override
 
+  /**
+   * Метод взятия строкового представления
+   * @return
+   */
+  @Override
   public String toString() {
     return "Organization[id: " + id + "; name: " + name + "; coordinates: " + coordinates
             + "; creationDate: " + creationDate + "; annualTurnover: " + annualTurnover
             + "; fullname: " + fullname + "; employeesCount: " + employeesCount
             + "; type: " + type + "; officialAddress: " + officialAddress + "]";
   }
+
   @Override
   public boolean equals(Object other) {
     return true;
   }
+
   @Override
   public int hashCode() {
     return (int)((name.hashCode() + fullname.hashCode()) * (annualTurnover % employeesCount) + creationDate.hashCode() + coordinates.hashCode() /* + type.hashCode() + officialAddress.hashCode()*/) % 0xdead;
   }
 
   /**
-   *Тот же самый getId только getKey)
+   * Тот же самый getId только getKey
    * @return id
    */
-
   @Override
   public Integer Key() {
     return id;
   }
 
+  /**
+   * Свойство для получения имени элемента,
+   * написан лишь, чтобы корректно работала библиотека JAXB
+   * (переопределен из интерфейса Mappable)
+   * @return название организации
+   */
   @Override
   public String Name() {
     return name;

@@ -27,6 +27,7 @@ public final class Info extends ConDecree {
    * Магия, которую Боги даровали
    * нам, чтобы получить информацию о
    * коллекции
+   * @return отчет о работе команде
    */
   @Override
   public Report execute() {
@@ -42,6 +43,11 @@ public final class Info extends ConDecree {
   public static final String SYNTAX = NAME;
   public static final int ARGNUM = 0;
 
+  /**
+   * Я этим достаю из широких
+   * штанин название команды
+   * @return название команды
+   */
   @Override
   public String toString() { return NAME; }
 }

@@ -17,7 +17,6 @@ public final class Exit extends ConDecree {
   /**
    * Конструктор, устанавливающий ссылку на
    * управленца коллекцией
-   *
    * @param sieve текущий управленец коллекцией
    */
   public Exit(Receiver sieve) {
@@ -25,7 +24,9 @@ public final class Exit extends ConDecree {
   }
 
   /**
-   * Общий метод исполнения для всех исполняемых комманд
+   * Алгоритм исполнения выхода
+   * из программы
+   * @return отчет о выполнении команды
    */
   @Override
   public Report execute() {
@@ -35,11 +36,16 @@ public final class Exit extends ConDecree {
     System.exit(0);
     return new Report(0xDEAD, "Критическая ошибка: не удалось завершить работу сервера");
   }
+
   public static final String NAME = "exit";
   public static final String BRIEF = "завершить программу";
   public static final String SYNTAX = NAME;
   public static final int ARGNUM = 0;
 
+  /**
+   * Метод возврата названия команды
+   * @return название команды
+   */
   @Override
   public String toString() { return NAME; }
 }

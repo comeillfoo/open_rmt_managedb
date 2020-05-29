@@ -4,9 +4,20 @@ import sun.nio.cs.CharsetMapping;
 
 import java.util.*;
 
-public class HashMapS<K, V extends Organization> extends HashMap {
-
-    public LinkedHashMap<Integer, Organization>  sortByNameOfOrganization() { //Вот эта вот херня была придумана Укропами, была взята прям с боем.
+/**
+ * Допсущность взятия, сортированной
+ * коллекции организаций
+ * @param <K> ключи отображения
+ * @param <V> элементы отображения
+ */
+public class HashMax<K, V extends Organization> extends HashMap {
+    /**
+     * Вот эта вот херня была придумана Укропами,
+     * была взята прям с боем.
+     * Метод сортировки элементов по имени
+     * @return отображение, хранящее порядок элементов
+     */
+    public LinkedHashMap<Integer, Organization>  sortByNameOfOrganization() {
         ArrayList<Organization> organizationArrayList = new ArrayList<>();
         LinkedHashMap<Integer, Organization> newOrganizationHashMap = new LinkedHashMap<>();
         Iterator<Entry<Integer, Organization>> iter1 = ((HashMap<Integer,Organization>)this).entrySet().iterator();
