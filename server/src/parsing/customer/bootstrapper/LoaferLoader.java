@@ -8,7 +8,9 @@ import java.util.List;
 
 /**
  * Скелет подгрузчика коллекции и этим все сказано
- * @param <V> тип элементов подгружаемой коллекции
+ * @param <V> тип элементов подгружаемой коллекции.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public interface LoaferLoader<V extends Mappable> {
   List<V> load();

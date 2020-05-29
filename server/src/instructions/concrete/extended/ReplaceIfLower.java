@@ -9,6 +9,11 @@ import parsing.customer.distro.LimboKeeper;
 
 import java.util.Map;
 
+/**
+ * "Сырая" команда "replace_if_lower".
+ * содержит основную информацию о команде.
+ * заменяет на новое значение по ключу [key], если оно меньше старого.
+ */
 public final class ReplaceIfLower extends ReplaceIf {
   public ReplaceIfLower(LimboKeeper r, Integer p, Organization o) { super(r, p, o); }
 

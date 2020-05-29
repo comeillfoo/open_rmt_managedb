@@ -44,7 +44,6 @@ public class Receiver extends AReceiver{
             Report query = (Report) objectInputStream.readObject();
             parcel.setClientPackage(new ClientPackage(null,query));
             parcel.setMarker(Markers.WRITE);
-//            System.out.println(query.Message());
             mediator.notify(this,parcel);
         }catch (IOException ex) {
             parcel.setMarker(Markers.INTERRUPTED);

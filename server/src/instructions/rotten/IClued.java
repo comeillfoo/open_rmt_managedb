@@ -6,6 +6,8 @@ package instructions.rotten;
  * (ключевой) параметр, который нужно учесть
  * при создании точной команды
  * @param <K> ключ элементов коллекции
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public interface IClued {
   /**

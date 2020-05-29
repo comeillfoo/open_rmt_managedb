@@ -38,7 +38,7 @@ public class ArgumentHandler extends DataHandler{
     }
 
     /**
-     * Метод седержащий логику проверки аргумента.
+     * Метод седержащий логику проверки аргументной части команды.
      * @param parcel
      * @return RawDecree
      * @throws CommandSyntaxException

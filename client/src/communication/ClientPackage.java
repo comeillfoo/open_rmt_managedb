@@ -17,6 +17,7 @@ public class ClientPackage implements Serializable {
     private Report report;
 
     /**
+     * конструктор, принимающий единственный аргумент: объект "сырой" команды.
      * @param command
      */
     public ClientPackage(RawDecree command) {
@@ -24,6 +25,7 @@ public class ClientPackage implements Serializable {
     }
 
     /**
+     * конструктор, принимающий объект "сырой" команды и Объект, содержащий отчет о работе сервера.
      * @param commandData
      * @param stringData
      */
@@ -32,22 +34,13 @@ public class ClientPackage implements Serializable {
         this.report = stringData;
     }
 
-    /**
-     * @param report
-     */
     public void setReport(Report report) {
         this.report = report;
     }
 
-    /**
-     * @return RawDecree
-     */
     public RawDecree getCommand() {
         return command;
     }
 
-    /**
-     * @return Report
-     */
     public Report getReport() {return report; }
 }

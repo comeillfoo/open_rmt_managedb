@@ -24,7 +24,6 @@ import java.nio.channels.SocketChannel;
  * @see QueryReader
  */
 public final class BookWorm extends QueryReader {
-  // fields
   private final HawkPDroid<BookWorm> CHRONICLER; // логирующий элемент
   private ByteArrayInputStream byteArrayInputStream;
   private ObjectInputStream objectInputStream;
@@ -44,7 +43,6 @@ public final class BookWorm extends QueryReader {
     CHRONICLER.logboard(0,"Собран логгер модуля чтения");
   }
 
-  // главный метод взятия запроса с клиента
   /**
    * Метод чтения клиентского запроса
    * @param parcel копромат на клиента
@@ -55,7 +53,6 @@ public final class BookWorm extends QueryReader {
     BYTE_BUFFER.clear();
     // выделяем переменную под клиентский канал/анал
     SocketChannel tmpChannel = (SocketChannel) parcel.Channel();
-
     // пытаемся прочитать данные с нашей Шанель в буфер
     try {
       // если резко достигли конца потока, то выкидываем исключение
@@ -97,7 +94,6 @@ public final class BookWorm extends QueryReader {
       CHRONICLER.notify(10,"Не удалось десериализовать данные из потока");
       return;
     }
-    // TODO: разобраться с присылаемыми данными
     // формируем команду, требующую исполнения
     RawDecree decree = query.getCommand();
     CHRONICLER.logboard(0,"Данные успешно прочитаны -- сформирован запрос");
@@ -111,7 +107,6 @@ public final class BookWorm extends QueryReader {
     notify(this, q);
   }
 
-  // метод отправки запроса
   /**
    * Метод отправки всех благ
    * от души -- отправляем данные

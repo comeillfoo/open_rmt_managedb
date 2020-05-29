@@ -7,6 +7,11 @@ import instructions.rotten.RawCommitter;
 
 import java.io.Serializable;
 
+/**
+ * Абстрактный класс для команд, отвечающих за замены по условию.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
+ */
 public abstract class RawReplaceIf extends RawCommitter implements IClued, IJunked, Serializable {
   protected final Integer KEY;
 
@@ -20,11 +25,19 @@ public abstract class RawReplaceIf extends RawCommitter implements IClued, IJunk
     KEY = key;
   }
 
+  /**
+   * Возвращает объект, содержащий данные об объекте коллекции.
+   * @return Junker
+   */
   @Override
   public final Junker Params() {
     return JUNK;
   }
 
+  /**
+   * Возвращает "ключ" объекта.
+   * @return Integer
+   */
   @Override
   public final Integer Key() { return KEY; }
 }

@@ -19,7 +19,6 @@ import java.util.*;
  * @see Commander
  */
 public class TotalCommander extends Commander<Integer, Organization> {
-  // builders
 
   /**
    * Стандартный конструктор
@@ -242,7 +241,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
   }
 
   /**
-   *
+   * Метод сохранения коллекции в xml файл.
    */
   @Override
   public void save() {

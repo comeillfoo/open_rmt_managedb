@@ -18,15 +18,16 @@ import parsing.customer.distro.LimboKeeper;
 import parsing.supplying.interpreter.Shell;
 
 /**
- *
+ * Фабрика по созданию "конкретных" комманд без аргументов.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class JustCommandBuilder {
   /**
-   *
-   * @param c
-   * @param receiver
-   * @param parser
-   * @return
+   * Метод по формированию "конкретных" команд без аргументов.
+   * @param c RawDecree
+   * @param receiver LimboKeeper
+   * @return ConDecree
    */
   public ConDecree make(RawDecree c, LimboKeeper receiver) {
     if (c instanceof ITitled) {

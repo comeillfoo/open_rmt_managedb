@@ -13,8 +13,7 @@ import java.util.*;
  */
 public abstract class Prompter implements Invoker {
   protected final Map<String, ConDecree> availableCommands; // доступные к вызову команды
-  protected final SortedSet<String> junkedCommands = new TreeSet<String>()
-      {
+  protected final SortedSet<String> junkedCommands = new TreeSet<String>() {
           {
               add("insert");
               add("update");

@@ -80,7 +80,7 @@ public class Client extends AClient implements Component, Runnable {
         while (socketChannel.isConnected()) {
             try {
                 Thread.sleep(800);
-            }catch (InterruptedException ex) {/*NOP*/}
+            }catch (InterruptedException ex) {/*NOPE*/}
             try {
                 if (selector.selectNow() == 0) continue;
             } catch (IOException e) {
