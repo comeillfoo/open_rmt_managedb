@@ -9,6 +9,8 @@ import java.io.Serializable;
  * "Сырая" команда "filter_contains_name".
  * содержит основную информацию о команде.
  * Находит элементы коллекции по заданному имени.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class RawFilterContainsName extends RawDecree implements ITitled, Serializable {
     public static final String NAME = "filter_contains_name";

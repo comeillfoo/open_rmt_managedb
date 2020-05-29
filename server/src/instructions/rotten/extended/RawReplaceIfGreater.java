@@ -8,6 +8,8 @@ import java.io.Serializable;
  * "Сырая" команда "replace_if_greater".
  * содержит основную информацию о команде.
  * заменяет объект новым, если одно из полей превосходит сопоставимое ему поле из старого объекта.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class RawReplaceIfGreater extends RawReplaceIf implements Serializable {
     public static final String NAME = "replace_if_greater";

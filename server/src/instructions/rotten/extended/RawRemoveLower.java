@@ -10,6 +10,8 @@ import java.io.Serializable;
  * "Сырая" команда "remove_lover".
  * содержит основную информацию о команде.
  * удаляет из коллекции элементы, меньшие чем заданный.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class RawRemoveLower extends RawCommitter implements IJunked, Serializable {
     public static final String NAME = "remove_lower";

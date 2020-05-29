@@ -20,6 +20,8 @@ import java.nio.channels.SocketChannel;
 /**
  * Шаблон класса модуля, вытаскивающего пользовательский запрос
  * и делегирующий свою работу по обработке готовым классам.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public abstract class Resolver implements Mediator, Component {
   protected ServerController CONTROLLER; // контроллер модуля

@@ -30,6 +30,10 @@ public final class SubProcessController extends Resolver {
   private final static String VAR_NAME = "DBPATH";
   private HawkPDroid<SubProcessController> RADIOMAN; // ссылка на логгер
 
+  /**
+   * Конструктор, отвечающий за инициалезацию: логгера, загрузчика коллекции, менеджера коллекции, вызывателя команд,
+   * фабрики команд, фабрики элементов коллекции.
+   */
   public SubProcessController() {
     serverListener = new ServerListener(this); //the point of conversation with server_console.
     serverListener.start();

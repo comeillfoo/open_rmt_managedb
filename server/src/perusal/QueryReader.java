@@ -19,7 +19,6 @@ public abstract class QueryReader implements Component, Mediator {
   protected SocketChannel client;
   protected final ServerController KAPELLMEISTER; // контроллер модуля
 
-  // главный метод чтения
   /**
    * Этот метод, как плазменный резак --
    * вычленяет нужное из клиента,

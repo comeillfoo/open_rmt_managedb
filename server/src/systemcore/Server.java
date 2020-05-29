@@ -118,6 +118,10 @@ public final class Server implements Runnable, Component {
     CORE.notify(this, wrap);
   }
 
+  /**
+   * метод закрытия сокета клиента.
+   * @param parcel
+   */
   public void closeConnection(AlertBag parcel) {
     try {
       Socket client = parcel.Channel().socket();

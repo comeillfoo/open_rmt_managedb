@@ -11,6 +11,8 @@ import java.io.Serializable;
  * "Сырая" команда "update".
  * содержит основную информацию о команде.
  * Заменяет объект коллекции,соответствующий id, на новый, составленный пользователем.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class RawUpdate extends RawCommitter implements IClued, IJunked, Serializable {
     public final static String NAME = "update";

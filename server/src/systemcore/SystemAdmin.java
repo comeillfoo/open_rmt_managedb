@@ -24,6 +24,8 @@ import java.nio.channels.ServerSocketChannel;
  *   <li>модуля обработки запросов</li>
  *   <li>модуля отправки результатов обработки запросов</li>
  * </ul>
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class SystemAdmin implements Mediator {
   private final String NAME;

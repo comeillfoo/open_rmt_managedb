@@ -10,6 +10,8 @@ import java.util.ArrayList;
  * "Сырая" команда "execute_script".
  * содержит основную информацию о команде.
  * исполняет скрипт по указанному имени файла.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public class RawExecuteScript extends RawDecree implements ITitled, Serializable {
   public static final String NAME = "execute_script";

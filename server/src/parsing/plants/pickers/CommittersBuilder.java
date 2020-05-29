@@ -23,7 +23,19 @@ import parsing.customer.Receiver;
 import parsing.customer.distro.LimboKeeper;
 import parsing.plants.Factory;
 
+/**
+ * Фабрика по созданию "конкретных" комманд, манипулирующих объектом организации.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
+ */
 public final class CommittersBuilder {
+  /**
+   * Метор формирования "конкретной" команды.
+   * @param c RawCommitter
+   * @param r LimboKeeper
+   * @param f Factory of Organization
+   * @return ConDecree
+   */
   public final ConDecree make(RawCommitter c, LimboKeeper r, Factory<Organization> f) {
     Organization o = f.make(((IJunked) c).Params());
     if (c instanceof IClued) {

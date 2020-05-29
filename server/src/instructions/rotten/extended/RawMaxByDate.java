@@ -8,6 +8,8 @@ import java.io.Serializable;
  * "Сырая" команда "max_by_date".
  * содержит основную информацию о команде.
  * находит самый старый элемент коллекции.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class RawMaxByDate extends RawDecree implements Serializable {
     public static final String NAME = "max_by_date";

@@ -8,6 +8,8 @@ import java.io.Serializable;
  * "Сырая" команда "replace_if_lower".
  * содержит основную информацию о команде.
  * заменяет на новое значение по ключу [key], если оно меньше старого.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class RawReplaceIfLower extends RawReplaceIf implements Serializable {
     public static final String NAME = "replace_if_lower";

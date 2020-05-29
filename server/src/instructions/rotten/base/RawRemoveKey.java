@@ -11,6 +11,8 @@ import java.io.Serializable;
  * "Сырая" команда "remove_key".
  * содержит основную информацию о команде.
  * Удаляет элемент по [key].
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class RawRemoveKey extends RawDecree implements IClued, Serializable {
     public static final String NAME = "remove_key";

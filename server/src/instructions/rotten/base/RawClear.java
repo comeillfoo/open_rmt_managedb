@@ -8,6 +8,8 @@ import java.io.Serializable;
  * "Сырая" команда "clear".
  * содержит основную информацию о команде.
  * очищает коллекцию.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class RawClear extends RawDecree implements Serializable {
   public static final String NAME = "clear";

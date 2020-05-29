@@ -8,6 +8,8 @@ import java.io.Serializable;
  * "Сырая" команда "sum_of_annual_turnover".
  * содержит основную информацию о команде.
  * выводит сумму поля \"turnover\" всех элементов коллекции.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public final class RawSumOfAnnualTurnover extends RawDecree implements Serializable {
     public static final String NAME = "sum_of_annual_turnover";

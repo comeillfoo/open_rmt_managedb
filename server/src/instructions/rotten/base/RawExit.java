@@ -6,6 +6,8 @@ import instructions.rotten.RawDecree;
  * "Сырая" команда "exit".
  * содержит основную информацию о команде.
  * заканчивает работу приложения.
+ *  @author Come_1LL_F00 aka Lenar Khannanov
+ *  @author Leargy aka Anton Sushkevich
  */
 public class RawExit extends RawDecree {
     public static final String NAME = "exit";
