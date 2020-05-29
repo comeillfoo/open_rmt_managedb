@@ -30,7 +30,7 @@ public class LilyInvoker extends FondleEmulator {
   /**
    * Метод записи комманды в
    * список обслуживаемых комманд
-   * @param commandName название команды
+   * @param command название команды
    */
   @Override
   public void signup(ConDecree command) { availableCommands.put(command.toString(), command); }
@@ -43,9 +43,10 @@ public class LilyInvoker extends FondleEmulator {
   public void invoke(ExecuteBag cmd) {
     ConDecree concmd = cmd.Exec();
     Report result = null;
+    LilyShell shell = new LilyShell(MAGIV, this);
     if (concmd instanceof ExecuteScript) {
-      result = new LilyShell(MAGIV, this).read(cmd);
-    }else {
+      result = shell.read(cmd);
+    } else {
       result = concmd.execute();
     }
     Report respond = new Report(0, "Команда " + concmd + " выполнена с результатом:\n\t" + result.Message());
@@ -53,8 +54,11 @@ public class LilyInvoker extends FondleEmulator {
       respond = new Report(0,respond.Message() + collectorReports.Message());
       MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
     }
-    collectorReports = new Report(0,collectorReports.Message()+respond.Message()+"\n");
-    if (!(concmd instanceof Save) && cmd.Channel() != null)
+    collectorReports = new Report(0,collectorReports.Message() + respond.Message()+"\n");
+    if (!(concmd instanceof Save) && cmd.Channel() != null) {
       MAGIV.notify(this, new AlertBag(cmd.Channel(), respond));
+    } else if (cmd.Channel() == null) {
+      shell.Execution(result.Message());
+    }
   }
 }
